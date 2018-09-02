@@ -19,7 +19,7 @@ class CreateMarkersTable extends Migration {
             $table->float('y');
             $table->float('z');
             $table->string('source');
-            $table->unsignedInteger('type_id');
+            $table->unsignedInteger('marker_type_id');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('sub_category_id');
             $table->timestamps();
@@ -32,6 +32,6 @@ class CreateMarkersTable extends Migration {
      * @return void
      */
     public function down () {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('markers');
     }
 }
