@@ -14,7 +14,7 @@ class CreateMarkersTable extends Migration {
         Schema::create('markers', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('map_region_id');
-            $table->string('name');
+            $table->string('marker_name');
             $table->float('x');
             $table->float('y');
             $table->float('z');
