@@ -20,8 +20,8 @@ class CreateMarkersTable extends Migration {
             $table->float('z');
             $table->string('source');
             $table->unsignedInteger('marker_type_id');
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('sub_category_id');
+            $table->unsignedInteger('marker_category_id');
+            $table->unsignedInteger('marker_sub_category_id');
             $table->timestamps();
         });
     }
