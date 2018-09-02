@@ -11,5 +11,16 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.webpackConfig({
+    module: {
+        rules: [{
+            test: /\.js$/,
+            loader: [
+                'ng-annotate-loader',
+                'babel-loader'
+            ]
+        }]
+    }
+})
+    .js('resources/assets/js/app.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css');
