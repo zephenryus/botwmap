@@ -150,7 +150,7 @@ module.exports = "\r\n@import 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css'
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"map\"></div>\n"
+module.exports = "<div id=\"map\"></div>\r\n"
 
 /***/ }),
 

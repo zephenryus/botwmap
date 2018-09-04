@@ -3,11 +3,6 @@
 use Illuminate\Database\Seeder;
 
 class MarkerNamesTableSeeder extends Seeder {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run () {
         $handle = fopen("database/seeds/unique_names.txt", "r");
 

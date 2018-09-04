@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(MapRegionsSeeder::class);
         $this->call(MarkerNamesTableSeeder::class);
+        $this->call(MarkerTypesTableSeeder::class);
     }
 }

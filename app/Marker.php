@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Marker extends Model {
     public function mapRegion () {
-        return $this->belongsTo(MapRegion::class);
+        return $this->belongsTo(MapRegion::class, 'map_region_id');
     }
 
     public function type () {

@@ -16,6 +16,7 @@ class CreateMarkerNamesTable extends Migration
         Schema::create('marker_names', function (Blueprint $table) {
             $table->increments('id');
             $table->string('marker_name');
+            $table->timestamps();
         });
     }
 
