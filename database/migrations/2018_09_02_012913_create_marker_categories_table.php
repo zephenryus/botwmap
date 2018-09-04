@@ -17,6 +17,7 @@ class CreateMarkerCategoriesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('parent_id')->nullable();
             $table->string('marker_category_name');
+            $table->timestamps();
         });
     }
 

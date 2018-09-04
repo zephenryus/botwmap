@@ -20,6 +20,7 @@ class CreateMapRegionsTable extends Migration
             $table->float('east_boundary');
             $table->float('south_boundary');
             $table->float('west_boundary');
+            $table->timestamps();
         });
     }
 
