@@ -16,6 +16,10 @@ class CreateMapRegionsTable extends Migration
         Schema::create('map_regions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('region_name');
+            $table->float('north_boundary');
+            $table->float('east_boundary');
+            $table->float('south_boundary');
+            $table->float('west_boundary');
             $table->timestamps();
         });
     }
