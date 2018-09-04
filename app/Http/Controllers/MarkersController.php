@@ -13,7 +13,7 @@ class MarkersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return Marker::orderBy('marker_name_id', 'desc')->get();
+        return Marker::orderBy('marker_name', 'desc')->get();
     }
 
     /**
