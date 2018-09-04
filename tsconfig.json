@@ -19,7 +19,8 @@
     ]
   },
   "include": [
-    "resources/assets/js"
+    "tsconfig.app.json",
+    "tsconfig.spec.json"
   ],
   "exclude": [
     "node_modules",
