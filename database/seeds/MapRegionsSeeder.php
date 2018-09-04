@@ -20,8 +20,6 @@ class MapRegionsSeeder extends Seeder {
                     'east_boundary' => ($alpha - 5) * 1000,
                     'south_boundary' => ($integer - 4) * 1000 + 1000,
                     'west_boundary' => ($alpha - 5) * 1000 + 1000,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             }
         }

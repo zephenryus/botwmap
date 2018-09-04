@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarkerCategoriesTable extends Migration
+class CreateMarkerNamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateMarkerCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('marker_categories', function (Blueprint $table) {
+        Schema::create('marker_names', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('parent_id')->nullable();
-            $table->string('marker_category_name');
+            $table->string('marker_name');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateMarkerCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marker_categories');
+        Schema::dropIfExists('marker_names');
     }
 }
