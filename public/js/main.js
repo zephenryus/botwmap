@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header></header>\r\n\r\n<main id=\"app\">\r\n    <app-map></app-map>\r\n</main>\r\n\r\n<footer></footer>"
+module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <div id=\"header-wrapper\">\r\n            <div id=\"main-menu\" class=\"d-flex align-items-center\">\r\n                <button class=\"btn\">\r\n                    <div class=\"menu-icon flex-shrink-1\"></div>\r\n                </button>\r\n\r\n                <div id=\"search\" class=\"flex-grow-1\">\r\n                    <input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <aside id=\"map-modifiers\">\r\n        <button id=\"layers\" class=\"btn btn-primary\">\r\n            L\r\n        </button>\r\n\r\n        <div id=\"sidebar\">\r\n            <button id=\"close-sidebar\">\r\n                X\r\n            </button>\r\n\r\n            <main style=\"background: white;\">\r\n                <div class=\"d-flex flex-wrap\">\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n    </aside>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
 
 /***/ }),
 
@@ -65,7 +65,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
-        this.title = 'example';
     }
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

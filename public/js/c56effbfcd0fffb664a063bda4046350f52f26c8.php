@@ -29,9 +29,9 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<main id="app">
+
     <?php echo $__env->yieldContent('content'); ?>
-</main>
+
 
 <script src="<?php echo e(asset('js/runtime.js')); ?>"></script>
 <script src="<?php echo e(asset('js/polyfills.js')); ?>"></script>

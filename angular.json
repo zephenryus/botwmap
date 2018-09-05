@@ -8,7 +8,11 @@
       "sourceRoot": "resources/assets/js/app",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -67,7 +71,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "resources/assets/js/karma.conf.js",
             "styles": [
-              "resources/assets/js/styles.css"
+              "resources/assets/sass/app.scss"
             ],
             "scripts": [],
             "assets": [
