@@ -29,9 +29,9 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<main id="app">
+{{--<main id="app">--}}
     @yield('content')
-</main>
+{{--</main>--}}
 
 <script src="{{ asset('js/runtime.js') }}"></script>
 <script src="{{ asset('js/polyfills.js') }}"></script>
