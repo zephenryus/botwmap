@@ -1,15 +1,19 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet/dist/leaflet.js';
+import { Marker } from "../markers/marker";
+import { MarkersService } from "../markers/markers.service";
+import { Subscription } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
-export class MapService implements OnInit, OnDestroy {
+export class MapService {
     map: Leaflet;
-    private isMapGenerated: boolean;
+    isMapGenerated: boolean;
+    markers: Marker[];
+    markersSubscription: Subscription;
 
-    constructor() {
-    }
+    constructor(private markersService: MarkersService) {}
 
     generateMap() {
         if (!this.isMapGenerated) {
@@ -28,6 +32,7 @@ export class MapService implements OnInit, OnDestroy {
             })
                 .on('load', () => {
                     this.isMapGenerated = true;
+                    this.markersService.getMarkers()
                 })
                 .on('zoomend', (e) => {
                     if (this.map) {
@@ -47,11 +52,5 @@ export class MapService implements OnInit, OnDestroy {
                 tileSize: 200
             }).addTo(this.map);
         }
-    }
-
-    ngOnDestroy(): void {
-    }
-
-    ngOnInit(): void {
     }
 }
