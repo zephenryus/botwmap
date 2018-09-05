@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { MapService } from './map/map.service';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { MapService } from './map/map.service';
         MapComponent
     ],
     imports: [
-        BrowserModule
+        BrowserModule,
+        HttpClientModule
     ],
     providers: [
         MapService
