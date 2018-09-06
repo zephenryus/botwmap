@@ -260,8 +260,8 @@ var MapService = /** @class */ (function () {
             })
                 .setView([-187.5, 187.5])
                 .setZoom(3);
-            var southWest = this.map.unproject([0, 375], 0);
-            var northEast = this.map.unproject([375, 0], 0);
+            var southWest = this.map.unproject([-62.5, 437.5], 0);
+            var northEast = this.map.unproject([437.5, -62.5], 0);
             var bounds = new leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["LatLngBounds"](southWest, northEast);
             this.map.setMaxBounds(bounds);
             leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["tileLayer"]('../hyrule/{z}/{y}/{x}.png', {

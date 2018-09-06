@@ -48,8 +48,8 @@ export class MapService {
                 .setView([-187.5, 187.5])
                 .setZoom(3);
 
-            const southWest = this.map.unproject([0, 375], 0);
-            const northEast = this.map.unproject([375, 0], 0);
+            const southWest = this.map.unproject([-62.5, 437.5], 0);
+            const northEast = this.map.unproject([437.5, -62.5], 0);
             const bounds = new Leaflet.LatLngBounds(southWest, northEast);
             this.map.setMaxBounds(bounds);
 
