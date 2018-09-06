@@ -1,16 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Response } from '@angular/http';
+import { map } from 'rxjs/operators';
 import { Marker } from "./marker";
-import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MarkersService {
-    constructor(private http: HttpClient) {
+    constructor(private http: Http) {
+
     }
 
-    getMarkers(): Observable<Marker[]> {
-        return this.http.get<Marker[]>('/markers');
+    getMarkers () {
+        return this.http.get('/markers')
+            .pipe(map(
+                (response: Response) => {
+                    let markers = response.json();
+
+                    for (let marker in markers) {
+                        if (markers.hasOwnProperty(marker)) {
+                            markers[marker] = new Marker(markers[marker]);
+                            markers[marker].id = marker;
+                        }
+                    }
+
+                    return markers;
+                }
+            ))
     }
 }
