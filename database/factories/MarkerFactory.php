@@ -8,7 +8,7 @@ $factory->define(App\Marker::class, function (Faker $faker) {
             return factory(App\MapRegion::class)->create()->id;
         },
         'marker_name' => $faker->word,
-        'x' => $faker->randomFloat(null, -5000, 5000),
+        'x' => $faker->randomFloat(null, -8000, 8000),
         'y' => $faker->randomFloat(null, 0, 8000),
         'z' => $faker->randomFloat(null, -8000, 8000),
         'source' => $faker->word,

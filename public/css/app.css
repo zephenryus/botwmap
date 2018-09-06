@@ -6933,9 +6933,41 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 33vh; }
-    #app #marker-details.open {
-      height: auto;
-      top: 0; }
+    height: 33vh;
+    transition: height 300ms ease-in-out; }
+    @media (min-width: 768px) {
+      #app #marker-details {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: auto;
+        height: calc(100vh - 7.5px);
+        width: 450px;
+        margin-left: -10px;
+        margin-top: 7.5px;
+        transition: width 300ms ease-in-out; } }
+    @media (max-width: 991.98px) {
+      #app #marker-details.open {
+        height: calc(100vh - 100px); } }
+    #app #marker-details #marker-details-wrapper {
+      position: relative;
+      margin: 0 15px 7.5px;
+      padding: 7.5px 15px;
+      background: white;
+      border-radius: 3px;
+      height: calc(100% - 7.5px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.08); }
+      @media (min-width: 768px) {
+        #app #marker-details #marker-details-wrapper {
+          padding-top: 80px; } }
+      #app #marker-details #marker-details-wrapper #marker-details-close {
+        position: absolute;
+        top: 0;
+        right: 0; }
+        @media (min-width: 768px) {
+          #app #marker-details #marker-details-wrapper #marker-details-close {
+            top: 80px; } }
 
 /*# sourceMappingURL=app.css.map */
