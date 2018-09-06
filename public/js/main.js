@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <div id=\"header-wrapper\">\r\n            <div id=\"main-menu\" class=\"d-flex align-items-center\">\r\n                <button class=\"btn\">\r\n                    <div class=\"menu-icon flex-shrink-1\"></div>\r\n                </button>\r\n\r\n                <div id=\"search\" class=\"flex-grow-1\">\r\n                    <input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <aside id=\"map-modifiers\">\r\n        <button id=\"layers\" class=\"btn btn-primary\">\r\n            L\r\n        </button>\r\n\r\n        <div id=\"sidebar\">\r\n            <button id=\"close-sidebar\">\r\n                X\r\n            </button>\r\n\r\n            <main style=\"background: white;\">\r\n                <div class=\"d-flex flex-wrap\">\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n    </aside>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
+module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <div id=\"header-wrapper\">\r\n            <div id=\"main-menu\" class=\"d-flex align-items-center\">\r\n                <button class=\"btn\">\r\n                    <div class=\"menu-icon flex-shrink-1\"></div>\r\n                </button>\r\n\r\n                <div id=\"search\" class=\"flex-grow-1\">\r\n                    <input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <aside id=\"map-modifiers\">\r\n        <button id=\"layers\" class=\"btn btn-primary\">\r\n            L\r\n        </button>\r\n\r\n        <div id=\"sidebar\">\r\n            <button id=\"close-sidebar\">\r\n                X\r\n            </button>\r\n\r\n            <main style=\"background: white;\">\r\n                <div class=\"d-flex flex-wrap\">\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n    </aside>\r\n\r\n    <aside id=\"marker-details\">\r\n\r\n    </aside>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
 
 /***/ }),
 
@@ -285,6 +285,7 @@ var MapService = /** @class */ (function () {
         this.loadLayers();
     };
     MapService.prototype.loadLayers = function () {
+        var _this = this;
         console.log('Loading layers...');
         var newLayers = [];
         for (var layer in this.layers) {
@@ -293,19 +294,17 @@ var MapService = /** @class */ (function () {
                 for (var marker in this.layers[layer]) {
                     if (this.layers[layer].hasOwnProperty(marker)) {
                         this.layers[layer][marker].pointer = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["circle"]([
-                            (((this.layers[layer][marker].z + 6000) / 12000) * -375),
-                            (((this.layers[layer][marker].x + 6000) / 12000) * 375)
-                            // -1000 + 8000 = 7000
-                            // Should be about
-                            // -8000 = 0
-                            // 0 = -101
-                            // 8000 = -200
-                            // Time to do some math on paper...
+                            // ((coordinate + 6000) / 12000) * 375
+                            (this.layers[layer][marker].z + 6000) * -0.03125,
+                            (this.layers[layer][marker].x + 6000) * 0.03125
                         ], {
                             color: 'red',
                             fillColor: 'red',
                             radius: 0.1,
                             title: this.layers[layer][marker].marker_name
+                        })
+                            .on('click', function (event) {
+                            _this.showMarkerDetails(parseInt(event.target.markerId));
                         });
                         this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
                         this.layers[layer][marker].pointer.layerId = layer;
@@ -323,6 +322,9 @@ var MapService = /** @class */ (function () {
                 this.layers[layer].addTo(this.map);
             }
         }
+    };
+    MapService.prototype.showMarkerDetails = function (markerId) {
+        console.log(this.markers[markerId]);
     };
     MapService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

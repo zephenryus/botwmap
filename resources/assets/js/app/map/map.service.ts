@@ -86,14 +86,9 @@ export class MapService {
                     if (this.layers[layer].hasOwnProperty(marker)) {
                         this.layers[layer][marker].pointer = Leaflet.circle(
                             [
-                                (((this.layers[layer][marker].z + 6000) / 12000) * -375),
-                                (((this.layers[layer][marker].x + 6000) / 12000) * 375)
-                                // -1000 + 8000 = 7000
-                                // Should be about
-                                // -8000 = 0
-                                // 0 = -101
-                                // 8000 = -200
-                                // Time to do some math on paper...
+                                // ((coordinate + 6000) / 12000) * 375
+                                (this.layers[layer][marker].z + 6000) * -0.03125,
+                                (this.layers[layer][marker].x + 6000) * 0.03125
                             ],
                             {
                                 color: 'red',
@@ -101,7 +96,10 @@ export class MapService {
                                 radius: 0.1,
                                 title: this.layers[layer][marker].marker_name
                             }
-                        );
+                        )
+                            .on('click', (event) => {
+                                this.showMarkerDetails(parseInt(event.target.markerId));
+                            });
 
                         this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
                         this.layers[layer][marker].pointer.layerId = layer;
@@ -122,5 +120,9 @@ export class MapService {
                 this.layers[layer].addTo(this.map);
             }
         }
+    }
+
+    showMarkerDetails(markerId: number) {
+        console.log(this.markers[markerId]);
     }
 }

@@ -25,12 +25,12 @@ body {
     //width:    100vw;
     overflow: hidden;
 
-    #map-header, #map-modifiers {
-        z-index:  1000;
+    #map-header, #map-modifiers, #marker-details {
         position: absolute;
     }
 
     #map-header {
+        z-index:  1000;
         top:      0;
         left:     0;
         right:    0;
@@ -98,6 +98,7 @@ body {
     }
 
     #map-modifiers {
+        z-index:  900;
         top:      100px;
         right:    0;
         overflow: hidden;
@@ -216,6 +217,19 @@ body {
                     left: 50%;
                 }
             }
+        }
+    }
+
+    #marker-details {
+        z-index:    950;
+        bottom:     0;
+        left:       0;
+        right:      0;
+        height:     33vh;
+
+        &.open {
+            height: auto;
+            top:    0;
         }
     }
 }

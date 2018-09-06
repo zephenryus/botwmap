@@ -6803,10 +6803,10 @@ body {
 #app {
   position: relative;
   overflow: hidden; }
-  #app #map-header, #app #map-modifiers {
-    z-index: 1000;
+  #app #map-header, #app #map-modifiers, #app #marker-details {
     position: absolute; }
   #app #map-header {
+    z-index: 1000;
     top: 0;
     left: 0;
     right: 0;
@@ -6854,6 +6854,7 @@ body {
             #app #map-header #header-wrapper #main-menu #search #q:focus {
               outline: none; }
   #app #map-modifiers {
+    z-index: 900;
     top: 100px;
     right: 0;
     overflow: hidden; }
@@ -6927,5 +6928,14 @@ body {
       #app.is-loading #loader #loader-orb-wrapper #loader-orb-5 {
         top: 86%;
         left: 50%; }
+  #app #marker-details {
+    z-index: 950;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 33vh; }
+    #app #marker-details.open {
+      height: auto;
+      top: 0; }
 
 /*# sourceMappingURL=app.css.map */
