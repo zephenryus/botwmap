@@ -95,7 +95,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ "./resources/assets/js/app/app.component.ts");
 /* harmony import */ var _map_map_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map/map.component */ "./resources/assets/js/app/map/map.component.ts");
 /* harmony import */ var _map_map_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./map/map.service */ "./resources/assets/js/app/map/map.service.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -119,7 +119,7 @@ var AppModule = /** @class */ (function () {
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"]
+                _angular_http__WEBPACK_IMPORTED_MODULE_5__["HttpModule"]
             ],
             providers: [
                 _map_map_service__WEBPACK_IMPORTED_MODULE_4__["MapService"]
@@ -230,6 +230,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var MapService = /** @class */ (function () {
     function MapService(markersService) {
         this.markersService = markersService;
+        this.layers = [];
     }
     MapService.prototype.generateMap = function () {
         var _this = this;
@@ -238,15 +239,18 @@ var MapService = /** @class */ (function () {
                 crs: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["CRS"].Simple,
                 continuousWorld: false,
                 minZoom: 0,
-                maxZoom: 7,
+                maxZoom: 6,
                 noWrap: true,
                 maxBoundsViscosity: 0.75,
-                bounds: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["bounds"](leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["point"](-5000, -4000), leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["point"](5000, 4000)),
                 zoomControl: false
             })
                 .on('load', function () {
                 _this.isMapGenerated = true;
-                _this.markersService.getMarkers();
+                _this.markersService.getMarkers()
+                    .subscribe(function (markers) {
+                    _this.markers = markers;
+                    _this.loadMarkers();
+                }, function (error) { return console.log(error); });
             })
                 .on('zoomend', function (e) {
                 if (_this.map) {
@@ -254,15 +258,70 @@ var MapService = /** @class */ (function () {
                     console.log(zoom);
                 }
             })
-                .setView([-131.375, 84.125])
-                .setZoom(5);
-            var southWest = this.map.unproject([0, 200], 0);
-            var northEast = this.map.unproject([200, 0], 0);
+                .setView([-187.5, 187.5])
+                .setZoom(3);
+            var southWest = this.map.unproject([0, 375], 0);
+            var northEast = this.map.unproject([375, 0], 0);
             var bounds = new leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["LatLngBounds"](southWest, northEast);
             this.map.setMaxBounds(bounds);
             leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["tileLayer"]('../hyrule/{z}/{y}/{x}.png', {
-                tileSize: 200
+                tileSize: 375
             }).addTo(this.map);
+        }
+    };
+    MapService.prototype.loadMarkers = function () {
+        console.log('loading markers...');
+        if (this.markers.length > 0) {
+            for (var _i = 0, _a = this.markers; _i < _a.length; _i++) {
+                var marker = _a[_i];
+                if (this.layers.hasOwnProperty(marker.marker_type_id)) {
+                    this.layers[marker.marker_type_id].push(marker);
+                }
+                else {
+                    this.layers[marker.marker_type_id] = [marker];
+                }
+            }
+        }
+        this.loadLayers();
+    };
+    MapService.prototype.loadLayers = function () {
+        console.log('Loading layers...');
+        var newLayers = [];
+        for (var layer in this.layers) {
+            var layerMarkers = [];
+            if (this.layers.hasOwnProperty(layer)) {
+                for (var marker in this.layers[layer]) {
+                    if (this.layers[layer].hasOwnProperty(marker)) {
+                        this.layers[layer][marker].pointer = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["circle"]([
+                            (((this.layers[layer][marker].z + 6000) / 12000) * -375),
+                            (((this.layers[layer][marker].x + 6000) / 12000) * 375)
+                            // -1000 + 8000 = 7000
+                            // Should be about
+                            // -8000 = 0
+                            // 0 = -101
+                            // 8000 = -200
+                            // Time to do some math on paper...
+                        ], {
+                            color: 'red',
+                            fillColor: 'red',
+                            radius: 0.1,
+                            title: this.layers[layer][marker].marker_name
+                        });
+                        this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
+                        this.layers[layer][marker].pointer.layerId = layer;
+                        layerMarkers.push(this.layers[layer][marker].pointer);
+                    }
+                }
+                newLayers[layer] = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["layerGroup"](layerMarkers);
+            }
+        }
+        this.layers = newLayers;
+        console.log('Adding markers to map...');
+        console.log(this.layers);
+        for (var layer in this.layers) {
+            if (this.layers.hasOwnProperty(layer)) {
+                this.layers[layer].addTo(this.map);
+            }
         }
     };
     MapService = __decorate([
@@ -272,6 +331,35 @@ var MapService = /** @class */ (function () {
         __metadata("design:paramtypes", [_markers_markers_service__WEBPACK_IMPORTED_MODULE_2__["MarkersService"]])
     ], MapService);
     return MapService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/markers/marker.ts":
+/*!***************************************************!*\
+  !*** ./resources/assets/js/app/markers/marker.ts ***!
+  \***************************************************/
+/*! exports provided: Marker */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Marker", function() { return Marker; });
+var Marker = /** @class */ (function () {
+    function Marker(marker) {
+        this.marker_name = marker.marker_name;
+        this.map_region_id = marker.map_region_id;
+        this.x = marker.x;
+        this.y = marker.y;
+        this.z = marker.z;
+        this.source = marker.source;
+        this.marker_type_id = marker.marker_type_id;
+        this.marker_category_id = marker.marker_category_id;
+        this.marker_sub_category_id = marker.marker_sub_category_id;
+    }
+    return Marker;
 }());
 
 
@@ -289,7 +377,9 @@ var MapService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkersService", function() { return MarkersService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _marker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./marker */ "./resources/assets/js/app/markers/marker.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -301,18 +391,30 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var MarkersService = /** @class */ (function () {
     function MarkersService(http) {
         this.http = http;
     }
     MarkersService.prototype.getMarkers = function () {
-        return this.http.get('/markers');
+        return this.http.get('/markers')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (response) {
+            var markers = response.json();
+            for (var marker in markers) {
+                if (markers.hasOwnProperty(marker)) {
+                    markers[marker] = new _marker__WEBPACK_IMPORTED_MODULE_3__["Marker"](markers[marker]);
+                    markers[marker].id = marker;
+                }
+            }
+            return markers;
+        }));
     };
     MarkersService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"]])
     ], MarkersService);
     return MarkersService;
 }());
