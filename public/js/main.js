@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <div id=\"header-wrapper\">\r\n            <div id=\"main-menu\" class=\"d-flex align-items-center\">\r\n                <button class=\"btn\">\r\n                    <div class=\"menu-icon flex-shrink-1\"></div>\r\n                </button>\r\n\r\n                <div id=\"search\" class=\"flex-grow-1\">\r\n                    <input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <aside id=\"map-modifiers\">\r\n        <button id=\"layers\" class=\"btn btn-primary\">\r\n            L\r\n        </button>\r\n\r\n        <div id=\"sidebar\">\r\n            <button id=\"close-sidebar\">\r\n                X\r\n            </button>\r\n\r\n            <main style=\"background: white;\">\r\n                <div class=\"d-flex flex-wrap\">\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n    </aside>\r\n\r\n    <aside id=\"marker-details\">\r\n\r\n    </aside>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
+module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <div id=\"header-wrapper\">\r\n            <div id=\"main-menu\" class=\"d-flex align-items-center\">\r\n                <button class=\"btn\">\r\n                    <div class=\"menu-icon flex-shrink-1\"></div>\r\n                </button>\r\n\r\n                <div id=\"search\" class=\"flex-grow-1\">\r\n                    <input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <aside id=\"map-modifiers\">\r\n        <button id=\"layers\" class=\"btn btn-primary\">\r\n            L\r\n        </button>\r\n\r\n        <div id=\"sidebar\">\r\n            <button id=\"close-sidebar\">\r\n                X\r\n            </button>\r\n\r\n            <main style=\"background: white;\">\r\n                <div class=\"d-flex flex-wrap\">\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                    <div style=\"height:30px; width:30px\"></div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n    </aside>\r\n\r\n    <app-marker-details></app-marker-details>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
 
 /***/ }),
 
@@ -96,12 +96,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _map_map_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map/map.component */ "./resources/assets/js/app/map/map.component.ts");
 /* harmony import */ var _map_map_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./map/map.service */ "./resources/assets/js/app/map/map.service.ts");
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _marker_details_marker_details_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./marker-details/marker-details.component */ "./resources/assets/js/app/marker-details/marker-details.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -115,7 +117,8 @@ var AppModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
-                _map_map_component__WEBPACK_IMPORTED_MODULE_3__["MapComponent"]
+                _map_map_component__WEBPACK_IMPORTED_MODULE_3__["MapComponent"],
+                _marker_details_marker_details_component__WEBPACK_IMPORTED_MODULE_6__["MarkerDetailsComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -255,11 +258,10 @@ var MapService = /** @class */ (function () {
                 .on('zoomend', function (e) {
                 if (_this.map) {
                     var zoom = _this.map.getZoom();
-                    console.log(zoom);
                 }
             })
                 .setView([-187.5, 187.5])
-                .setZoom(3);
+                .setZoom(6);
             var southWest = this.map.unproject([-62.5, 437.5], 0);
             var northEast = this.map.unproject([437.5, -62.5], 0);
             var bounds = new leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["LatLngBounds"](southWest, northEast);
@@ -270,7 +272,6 @@ var MapService = /** @class */ (function () {
         }
     };
     MapService.prototype.loadMarkers = function () {
-        console.log('loading markers...');
         if (this.markers.length > 0) {
             for (var _i = 0, _a = this.markers; _i < _a.length; _i++) {
                 var marker = _a[_i];
@@ -286,7 +287,6 @@ var MapService = /** @class */ (function () {
     };
     MapService.prototype.loadLayers = function () {
         var _this = this;
-        console.log('Loading layers...');
         var newLayers = [];
         for (var layer in this.layers) {
             var layerMarkers = [];
@@ -315,8 +315,6 @@ var MapService = /** @class */ (function () {
             }
         }
         this.layers = newLayers;
-        console.log('Adding markers to map...');
-        console.log(this.layers);
         for (var layer in this.layers) {
             if (this.layers.hasOwnProperty(layer)) {
                 this.layers[layer].addTo(this.map);
@@ -324,7 +322,17 @@ var MapService = /** @class */ (function () {
         }
     };
     MapService.prototype.showMarkerDetails = function (markerId) {
-        console.log(this.markers[markerId]);
+        this.markersService.setSelectedMarker(this.markers[markerId]);
+        this.map.panTo([
+            this.getCoordY(this.markers[markerId].z),
+            this.getCoordX(this.markers[markerId].x)
+        ]);
+    };
+    MapService.prototype.getCoordX = function (x) {
+        return (x + 6000) * 0.03125;
+    };
+    MapService.prototype.getCoordY = function (x) {
+        return (x + 6000) * -0.03125;
     };
     MapService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -333,6 +341,72 @@ var MapService = /** @class */ (function () {
         __metadata("design:paramtypes", [_markers_markers_service__WEBPACK_IMPORTED_MODULE_2__["MarkersService"]])
     ], MapService);
     return MapService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/marker-details/marker-details.component.html":
+/*!******************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-details/marker-details.component.html ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<aside id=\"marker-details\" [class.open]=\"isOpen\" *ngIf=\"selectedMarker\">\r\n    <div id=\"marker-details-wrapper\" (click)=\"openDetails()\">\r\n        <button id=\"marker-details-close\" class=\"btn\" (click)=\"closeDetails()\">Close</button>\r\n        <h3>{{ selectedMarker.marker_name }}</h3>\r\n\r\n        <div>{{ selectedMarker.marker_category_id }}</div>\r\n\r\n        <div> &lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>\r\n\r\n        <!--<p>{{ selectedMarker.id }}</p>-->\r\n        <!--<p>{{ selectedMarker.map_region_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_name }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_sub_category_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_type_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.source }}</p>-->\r\n\r\n    </div>\r\n</aside>"
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/marker-details/marker-details.component.ts":
+/*!****************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-details/marker-details.component.ts ***!
+  \****************************************************************************/
+/*! exports provided: MarkerDetailsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerDetailsComponent", function() { return MarkerDetailsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _markers_markers_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../markers/markers.service */ "./resources/assets/js/app/markers/markers.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MarkerDetailsComponent = /** @class */ (function () {
+    function MarkerDetailsComponent(markersService) {
+        this.markersService = markersService;
+        this.isOpen = false;
+    }
+    MarkerDetailsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.markerSelectSubscription = this.markersService.onMarkerSelected.subscribe(function (marker) {
+            _this.selectedMarker = marker;
+        });
+    };
+    MarkerDetailsComponent.prototype.openDetails = function () {
+        this.isOpen = true;
+    };
+    MarkerDetailsComponent.prototype.closeDetails = function () {
+        this.isOpen = false;
+        this.selectedMarker = null;
+    };
+    MarkerDetailsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-marker-details',
+            template: __webpack_require__(/*! ./marker-details.component.html */ "./resources/assets/js/app/marker-details/marker-details.component.html")
+        }),
+        __metadata("design:paramtypes", [_markers_markers_service__WEBPACK_IMPORTED_MODULE_1__["MarkersService"]])
+    ], MarkerDetailsComponent);
+    return MarkerDetailsComponent;
 }());
 
 
@@ -382,6 +456,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _marker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./marker */ "./resources/assets/js/app/markers/marker.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -395,9 +470,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var MarkersService = /** @class */ (function () {
     function MarkersService(http) {
         this.http = http;
+        this.onMarkerSelected = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
     }
     MarkersService.prototype.getMarkers = function () {
         return this.http.get('/markers')
@@ -411,6 +488,12 @@ var MarkersService = /** @class */ (function () {
             }
             return markers;
         }));
+    };
+    MarkersService.prototype.setSelectedMarker = function (marker) {
+        if (this.selectedMarker != marker) {
+            this.selectedMarker = marker;
+            this.onMarkerSelected.next(marker);
+        }
     };
     MarkersService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

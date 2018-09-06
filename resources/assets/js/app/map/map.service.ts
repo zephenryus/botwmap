@@ -41,12 +41,11 @@ export class MapService {
                 .on('zoomend', (e) => {
                     if (this.map) {
                         const zoom = this.map.getZoom();
-                        console.log(zoom);
                     }
                 })
                 // .setView([-131.375, 84.125])
                 .setView([-187.5, 187.5])
-                .setZoom(3);
+                .setZoom(6);
 
             const southWest = this.map.unproject([-62.5, 437.5], 0);
             const northEast = this.map.unproject([437.5, -62.5], 0);
@@ -60,7 +59,6 @@ export class MapService {
     }
 
     loadMarkers() {
-        console.log('loading markers...');
         if (this.markers.length > 0) {
             for (let marker of this.markers) {
                 if (this.layers.hasOwnProperty(marker.marker_type_id)) {
@@ -75,7 +73,6 @@ export class MapService {
     }
 
     loadLayers() {
-        console.log('Loading layers...');
         let newLayers = [];
 
         for (let layer in this.layers) {
@@ -113,8 +110,6 @@ export class MapService {
 
         this.layers = newLayers;
 
-        console.log('Adding markers to map...');
-        console.log(this.layers);
         for (let layer in this.layers) {
             if (this.layers.hasOwnProperty(layer)) {
                 this.layers[layer].addTo(this.map);
@@ -123,6 +118,18 @@ export class MapService {
     }
 
     showMarkerDetails(markerId: number) {
-        console.log(this.markers[markerId]);
+        this.markersService.setSelectedMarker(this.markers[markerId]);
+        this.map.panTo([
+            this.getCoordY(this.markers[markerId].z),
+            this.getCoordX(this.markers[markerId].x)
+        ]);
+    }
+
+    getCoordX(x: number) {
+        return (x + 6000) * 0.03125
+    }
+
+    getCoordY(x: number) {
+        return (x + 6000) * -0.03125
     }
 }

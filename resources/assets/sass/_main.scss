@@ -226,10 +226,50 @@ body {
         left:       0;
         right:      0;
         height:     33vh;
+        transition: height 300ms ease-in-out;
+
+        @include media-breakpoint-up(md) {
+            top:         0;
+            left:        0;
+            bottom:      0;
+            right:       auto;
+            height:      calc(100vh - 7.5px);
+            width:       450px;
+            margin-left: -10px;
+            margin-top:  7.5px;
+            transition:  width 300ms ease-in-out;
+        }
 
         &.open {
-            height: auto;
-            top:    0;
+            @include media-breakpoint-down(md) {
+                height: calc(100vh - 100px);
+            }
+        }
+
+        #marker-details-wrapper {
+            position:      relative;
+            margin:        0 15px 7.5px;
+            padding:       7.5px 15px;
+            background:    white;
+            border-radius: 3px;
+            height:        calc(100% - 7.5px);
+            overflow-x:    hidden;
+            overflow-y:    auto;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.08);
+
+            @include media-breakpoint-up(md) {
+                padding-top: 80px;
+            }
+
+            #marker-details-close {
+                position: absolute;
+                top:      0;
+                right:    0;
+
+                @include media-breakpoint-up(md) {
+                    top: 80px;
+                }
+            }
         }
     }
 }

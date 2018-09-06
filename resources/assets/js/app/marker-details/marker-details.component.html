@@ -1,0 +1,18 @@
+<aside id="marker-details" [class.open]="isOpen" *ngIf="selectedMarker">
+    <div id="marker-details-wrapper" (click)="openDetails()">
+        <button id="marker-details-close" class="btn" (click)="closeDetails()">Close</button>
+        <h3>{{ selectedMarker.marker_name }}</h3>
+
+        <div>{{ selectedMarker.marker_category_id }}</div>
+
+        <div> &lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>
+
+        <!--<p>{{ selectedMarker.id }}</p>-->
+        <!--<p>{{ selectedMarker.map_region_id }}</p>-->
+        <!--<p>{{ selectedMarker.marker_name }}</p>-->
+        <!--<p>{{ selectedMarker.marker_sub_category_id }}</p>-->
+        <!--<p>{{ selectedMarker.marker_type_id }}</p>-->
+        <!--<p>{{ selectedMarker.source }}</p>-->
+
+    </div>
+</aside>
