@@ -56,6 +56,6 @@ class MarkersTableSeeder extends Seeder {
             'x' => -8000,
             'z' => -8000,
         ]);
-        factory(App\Marker::class, 10000)->create();
+        factory(App\Marker::class, 80)->create();
     }
 }

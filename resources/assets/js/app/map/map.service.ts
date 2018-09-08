@@ -1,20 +1,36 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Response } from '@angular/http';
 import * as Leaflet from 'leaflet/dist/leaflet.js';
 import { Marker } from "../markers/marker";
 import { MarkersService } from "../markers/markers.service";
+import { MarkerTypesService } from "../marker-types/marker-types.service";
+import { MarkerType } from "../marker-types/marker-type";
 import { Subscription } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
-export class MapService {
+export class MapService implements OnInit, OnDestroy {
     map: Leaflet;
     isMapGenerated: boolean;
     markers: Marker[];
-    layers = [];
 
-    constructor(private markersService: MarkersService) {}
+    selectedLayersSubscription: Subscription;
+    layers = [];
+    selectedLayers: MarkerType[];
+    defaultShowMarkers = [1, 2, 3];
+
+    constructor(
+        private markersService: MarkersService,
+        private markerTypesService: MarkerTypesService
+    ) {
+    }
+
+    ngOnInit() {
+    }
+
+    ngOnDestroy() {
+        this.selectedLayersSubscription.unsubscribe();
+    }
 
     generateMap() {
         if (!this.isMapGenerated) {
@@ -29,13 +45,25 @@ export class MapService {
             })
                 .on('load', () => {
                     this.isMapGenerated = true;
-                    this.markersService.getMarkers()
+
+                    this.markersService.getMarkers(this.selectedLayers)
                         .subscribe(
                             (markers: Marker[]) => {
                                 this.markers = markers;
                                 this.loadMarkers();
-                            },
-                            (error) => console.log(error)
+                            }
+                        );
+
+                    // this.markerTypesService.setSelectedMarkerTypes(
+                    //
+                    // );
+
+                    this.markerTypesService.onSelectedMarkerTypesChanged
+                        .subscribe(
+                            (markerTypes: MarkerType[]) => {
+                                this.selectedLayers = markerTypes;
+                                this.filterLayers(this.selectedLayers);
+                            }
                         );
                 })
                 .on('zoomend', (e) => {
@@ -74,9 +102,11 @@ export class MapService {
 
     loadLayers() {
         let newLayers = [];
+        let markerTypes = [];
 
         for (let layer in this.layers) {
             let layerMarkers = [];
+            markerTypes.push(layer);
 
             if (this.layers.hasOwnProperty(layer)) {
                 for (let marker in this.layers[layer]) {
@@ -109,10 +139,25 @@ export class MapService {
         }
 
         this.layers = newLayers;
+        this.filterLayers(this.markerTypesService.getMarkerTypesById(markerTypes));
 
         for (let layer in this.layers) {
             if (this.layers.hasOwnProperty(layer)) {
                 this.layers[layer].addTo(this.map);
+            }
+        }
+    }
+
+    filterLayers(showTypes: MarkerType[]) {
+        for (let layer in this.layers) {
+            if (showTypes[layer] !== undefined) {
+                if (!this.map.hasLayer(this.layers[layer])) {
+                    this.layers[layer].addTo(this.map)
+                }
+            } else {
+                if (this.map.hasLayer(this.layers[layer])) {
+                    this.layers[layer].remove();
+                }
             }
         }
     }
