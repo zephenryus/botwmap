@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Marker;
+use App\MarkerType;
 use Illuminate\Http\Request;
 
-class MarkersController extends Controller {
+class MarkerTypesController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index () {
-        if (request()->input('filter')) {
-            $filters = explode(',', request()->input('filter'));
-
-            return Marker::whereIn('marker_type_id', $filters)
-                         ->orderBy('marker_name', 'desc')
-                         ->get();
-        }
-        return Marker::orderBy('marker_name', 'desc')->get();
+        return MarkerType::all();
     }
 
     /**
@@ -45,22 +38,22 @@ class MarkersController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Marker $location
+     * @param  \App\MarkerType $markerType
      *
      * @return \Illuminate\Http\Response
      */
-    public function show (Marker $location) {
+    public function show (MarkerType $markerType) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Marker $location
+     * @param  \App\MarkerType $markerType
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit (Marker $location) {
+    public function edit (MarkerType $markerType) {
         //
     }
 
@@ -68,22 +61,22 @@ class MarkersController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Marker              $location
+     * @param  \App\MarkerType          $markerType
      *
      * @return \Illuminate\Http\Response
      */
-    public function update (Request $request, Marker $location) {
+    public function update (Request $request, MarkerType $markerType) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Marker $location
+     * @param  \App\MarkerType $markerType
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy (Marker $location) {
+    public function destroy (MarkerType $markerType) {
         //
     }
 }

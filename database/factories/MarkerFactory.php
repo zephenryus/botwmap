@@ -12,10 +12,10 @@ $factory->define(App\Marker::class, function (Faker $faker) {
         'y' => $faker->randomFloat(null, 0, 8000),
         'z' => $faker->randomFloat(null, -8000, 8000),
         'source' => $faker->word,
-        // 'marker_type_id' => function () {
-        //     return factory(App\MarkerType::class)->create()->id;
-        // },
-        'marker_type_id' => 1,
+        'marker_type_id' => function () {
+            return factory(App\MarkerType::class)->create()->id;
+        },
+        // 'marker_type_id' => 1,
         'marker_category_id' => function () {
             return factory(App\MarkerCategory::class)->create()->id;
         },
