@@ -16,7 +16,7 @@ class CreateMarkerTypesTable extends Migration
         Schema::create('marker_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('marker_type_name');
-            $table->string('marker_type_slug');
+            $table->string('marker_type_slug')->unique();
             $table->string('icon')->default('images/markers/default.png');
             $table->text('marker_type_description')->nullable();
             $table->timestamps();

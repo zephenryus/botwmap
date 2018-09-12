@@ -4,20 +4,20 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarkerCategoriesTable extends Migration
-{
+class CreateMarkerCategoriesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up () {
         Schema::create('marker_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('marker_id');
             $table->string('marker_category_name');
             $table->timestamps();
+
+            $table->foreign('marker_id')->references('id')->on('markers');
         });
     }
 
@@ -26,8 +26,7 @@ class CreateMarkerCategoriesTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down () {
         Schema::dropIfExists('marker_categories');
     }
 }

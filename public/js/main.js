@@ -246,7 +246,7 @@ var MapService = /** @class */ (function () {
         this.markersService = markersService;
         this.markerTypesService = markerTypesService;
         this.layers = [];
-        this.defaultShowMarkers = [1, 2, 3];
+        this.defaultShowMarkers = [];
     }
     MapService.prototype.ngOnInit = function () {
     };
@@ -286,8 +286,8 @@ var MapService = /** @class */ (function () {
                     var zoom = _this.map.getZoom();
                 }
             })
-                .setView([-187.5, 187.5])
-                .setZoom(6);
+                .setView([-245.7, 156.25])
+                .setZoom(4);
             var southWest = this.map.unproject([-62.5, 437.5], 0);
             var northEast = this.map.unproject([437.5, -62.5], 0);
             var bounds = new leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["LatLngBounds"](southWest, northEast);
@@ -321,19 +321,38 @@ var MapService = /** @class */ (function () {
             if (this.layers.hasOwnProperty(layer)) {
                 for (var marker in this.layers[layer]) {
                     if (this.layers[layer].hasOwnProperty(marker)) {
-                        this.layers[layer][marker].pointer = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["circle"]([
+                        console.log(this.layers[layer][marker]);
+                        this.layers[layer][marker].pointer = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["marker"]([
                             // ((coordinate + 6000) / 12000) * 375
                             (this.layers[layer][marker].z + 6000) * -0.03125,
                             (this.layers[layer][marker].x + 6000) * 0.03125
                         ], {
-                            color: 'red',
-                            fillColor: 'red',
-                            radius: 0.1,
-                            title: this.layers[layer][marker].marker_name
+                            icon: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["icon"]({
+                                iconUrl: this.layers[layer][marker].type.icon,
+                                iconSize: [72, 72],
+                            }),
+                            title: this.layers[layer][marker].marker_name,
+                            riseOnHover: true
                         })
                             .on('click', function (event) {
                             _this.showMarkerDetails(parseInt(event.target.markerId));
                         });
+                        // this.layers[layer][marker].pointer = Leaflet.circle(
+                        //     [
+                        //         // ((coordinate + 6000) / 12000) * 375
+                        //         (this.layers[layer][marker].z + 6000) * -0.03125,
+                        //         (this.layers[layer][marker].x + 6000) * 0.03125
+                        //     ],
+                        //     {
+                        //         color: 'red',
+                        //         fillColor: 'red',
+                        //         radius: 0.1,
+                        //         title: this.layers[layer][marker].marker_name
+                        //     }
+                        // )
+                        //     .on('click', (event) => {
+                        //         this.showMarkerDetails(parseInt(event.target.markerId));
+                        //     });
                         this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
                         this.layers[layer][marker].pointer.layerId = layer;
                         layerMarkers.push(this.layers[layer][marker].pointer);
@@ -398,7 +417,7 @@ var MapService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<aside id=\"marker-details\" [class.open]=\"isOpen\" *ngIf=\"selectedMarker\">\r\n    <div id=\"marker-details-wrapper\" (click)=\"openDetails()\">\r\n        <button id=\"marker-details-close\" class=\"btn\" (click)=\"closeDetails()\">Close</button>\r\n        <h3>{{ selectedMarker.marker_name }}</h3>\r\n\r\n        <div>{{ selectedMarker.marker_category_id }}</div>\r\n\r\n        <div> &lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>\r\n\r\n        <!--<p>{{ selectedMarker.id }}</p>-->\r\n        <!--<p>{{ selectedMarker.map_region_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_name }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_sub_category_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_type_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.source }}</p>-->\r\n\r\n    </div>\r\n</aside>"
+module.exports = "<aside id=\"marker-details\" [class.open]=\"isOpen\" *ngIf=\"selectedMarker\">\r\n    <div id=\"marker-details-wrapper\" (click)=\"openDetails()\">\r\n        <button id=\"marker-details-close\" class=\"btn\" (click)=\"closeDetails()\">Close</button>\r\n        <h3>{{ selectedMarker.type.marker_type_name }}</h3>\r\n\r\n\r\n\r\n        <div>&lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>\r\n\r\n        <!--<p>{{ selectedMarker.id }}</p>-->\r\n        <!--<p>{{ selectedMarker.map_region_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_name }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_sub_category_id }}</p>-->\r\n        <!--<p>{{ selectedMarker.marker_type_id }}</p>-->\r\n        <div class=\"marker-meta\">\r\n            <small>\r\n                <div>Marker ID: {{ selectedMarker.id }}</div>\r\n                <div>Source: {{ selectedMarker.source }}</div>\r\n            </small>\r\n        </div>\r\n\r\n    </div>\r\n</aside>"
 
 /***/ }),
 
@@ -497,7 +516,7 @@ var MarkerFilterComponent = /** @class */ (function () {
     function MarkerFilterComponent(markerTypesService, mapService) {
         this.markerTypesService = markerTypesService;
         this.mapService = mapService;
-        this.isOpen = true;
+        this.isOpen = false;
         this.markerLayers = [];
         this.selectedLayers = [];
     }
@@ -690,6 +709,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Marker", function() { return Marker; });
 var Marker = /** @class */ (function () {
     function Marker(marker) {
+        this.id = marker.id;
         this.marker_name = marker.marker_name;
         this.map_region_id = marker.map_region_id;
         this.x = marker.x;
@@ -697,6 +717,7 @@ var Marker = /** @class */ (function () {
         this.z = marker.z;
         this.source = marker.source;
         this.marker_type_id = marker.marker_type_id;
+        this.type = marker.type;
         this.marker_category_id = marker.marker_category_id;
         this.marker_sub_category_id = marker.marker_sub_category_id;
     }

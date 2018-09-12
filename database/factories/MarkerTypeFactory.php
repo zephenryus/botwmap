@@ -51,6 +51,6 @@ $factory->define(App\MarkerType::class, function (Faker $faker) {
         'marker_type_name' => $name,
         'marker_type_slug' => $name,
         'icon' => $icons[~~rand(0, count($icons) - 1)],
-        'marker_type_description' => $faker->paragraph,
+        'marker_type_description' => $faker->sentence,
     ];
 });

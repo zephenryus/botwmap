@@ -17,7 +17,7 @@ export class MapService implements OnInit, OnDestroy {
     selectedLayersSubscription: Subscription;
     layers = [];
     selectedLayers: MarkerType[];
-    defaultShowMarkers = [1, 2, 3];
+    defaultShowMarkers = [];
 
     constructor(
         private markersService: MarkersService,
@@ -72,8 +72,8 @@ export class MapService implements OnInit, OnDestroy {
                     }
                 })
                 // .setView([-131.375, 84.125])
-                .setView([-187.5, 187.5])
-                .setZoom(6);
+                .setView([-245.7, 156.25])
+                .setZoom(4);
 
             const southWest = this.map.unproject([-62.5, 437.5], 0);
             const northEast = this.map.unproject([437.5, -62.5], 0);
@@ -111,22 +111,42 @@ export class MapService implements OnInit, OnDestroy {
             if (this.layers.hasOwnProperty(layer)) {
                 for (let marker in this.layers[layer]) {
                     if (this.layers[layer].hasOwnProperty(marker)) {
-                        this.layers[layer][marker].pointer = Leaflet.circle(
+                        console.log(this.layers[layer][marker]);
+                        this.layers[layer][marker].pointer = Leaflet.marker(
                             [
                                 // ((coordinate + 6000) / 12000) * 375
                                 (this.layers[layer][marker].z + 6000) * -0.03125,
                                 (this.layers[layer][marker].x + 6000) * 0.03125
                             ],
                             {
-                                color: 'red',
-                                fillColor: 'red',
-                                radius: 0.1,
-                                title: this.layers[layer][marker].marker_name
+                                icon: Leaflet.icon({
+                                    iconUrl: this.layers[layer][marker].type.icon,
+                                    iconSize: [72, 72],
+                                }),
+                                title: this.layers[layer][marker].marker_name,
+                                riseOnHover: true
                             }
                         )
                             .on('click', (event) => {
                                 this.showMarkerDetails(parseInt(event.target.markerId));
                             });
+
+                        // this.layers[layer][marker].pointer = Leaflet.circle(
+                        //     [
+                        //         // ((coordinate + 6000) / 12000) * 375
+                        //         (this.layers[layer][marker].z + 6000) * -0.03125,
+                        //         (this.layers[layer][marker].x + 6000) * 0.03125
+                        //     ],
+                        //     {
+                        //         color: 'red',
+                        //         fillColor: 'red',
+                        //         radius: 0.1,
+                        //         title: this.layers[layer][marker].marker_name
+                        //     }
+                        // )
+                        //     .on('click', (event) => {
+                        //         this.showMarkerDetails(parseInt(event.target.markerId));
+                        //     });
 
                         this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
                         this.layers[layer][marker].pointer.layerId = layer;
