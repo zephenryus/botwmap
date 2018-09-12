@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\MarkerType;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MarkerTypesController extends Controller {
     /**
@@ -12,7 +14,7 @@ class MarkerTypesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index () {
-        return MarkerType::all();
+        return DB::select(DB::raw("SELECT * FROM `marker_types` WHERE `marker_type_name` <> `marker_type_slug` ORDER BY `marker_type_name`"));
     }
 
     /**

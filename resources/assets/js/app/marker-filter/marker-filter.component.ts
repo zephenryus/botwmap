@@ -8,7 +8,7 @@ import { MapService } from "../map/map.service";
     templateUrl: './marker-filter.component.html'
 })
 export class MarkerFilterComponent implements OnInit {
-    isOpen = true;
+    isOpen = false;
     markerLayers = [];
     selectedLayers = [];
 
