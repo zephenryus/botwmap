@@ -11,6 +11,7 @@ export class MarkerFilterComponent implements OnInit {
     isOpen = false;
     markerLayers = [];
     selectedLayers = [];
+    iconHref = "images/icons/markers/markers.svg";
 
     constructor(
         private markerTypesService: MarkerTypesService,
@@ -19,64 +20,26 @@ export class MarkerFilterComponent implements OnInit {
 
     toggleDialog() {
         this.isOpen = !this.isOpen;
+        (this.isOpen)
+            ? this.iconHref = "images/icons/markers/close.svg"
+            : this.iconHref = "images/icons/markers/markers.svg";
     }
 
     toggleLayer(index: number) {
+        // console.log(this.markerLayers[index]);
         this.markerLayers[index].selected = !this.markerLayers[index].selected;
-        this.filterMarkers();
-    }
 
-    filterMarkers() {
-        let layers = [];
-
-        for (let markerLayer of this.markerLayers) {
-            if (markerLayer.selected) {
-                layers.push(markerLayer.id);
-            }
+        if (this.markerLayers[index].selected) {
+            this.markerTypesService.selectMarkerType(this.markerLayers[index].id);
+        } else {
+            this.markerTypesService.unselectMarkerType(this.markerLayers[index].id);
         }
-
-        this.markerTypesService.setSelectedMarkerTypes(
-            this.markerTypesService.getMarkerTypesById(layers)
-        );
     }
 
     markSelected() {
-        for (let markerLayer of this.markerLayers) {
-            if (this.selectedLayers.indexOf(markerLayer) > -1) {
-                if (this.markerLayers.hasOwnProperty(markerLayer)) {
-                    this.markerLayers[markerLayer].selected = true;
-                }
-            }
+        for (let markerLayer in this.markerLayers) {
+            this.markerLayers[markerLayer].selected = false;
         }
-    }
-
-    toggleAllLayers() {
-        if (this.selectedLayers.length === this.markerLayers.length) {
-            this.selectNoLayers();
-        } else {
-            this.selectAllLayers();
-        }
-    }
-
-    selectAllLayers() {
-        this.selectedLayers = [];
-
-        for (let markerLayer of this.markerLayers) {
-            this.selectedLayers.push(markerLayer.id);
-            markerLayer.selected = true;
-        }
-
-        this.filterMarkers();
-    }
-
-    selectNoLayers() {
-        this.selectedLayers = [];
-
-        for (let markerLayer of this.markerLayers) {
-            markerLayer.selected = false;
-        }
-
-        this.filterMarkers();
     }
 
     ngOnInit() {
@@ -84,8 +47,9 @@ export class MarkerFilterComponent implements OnInit {
             .subscribe(
                 (markerTypes: MarkerType[]) => {
                     this.markerLayers = markerTypes;
+                    this.selectedLayers = this.mapService.selectedMarkerTypes;
                     this.markSelected();
                 }
-            )
+            );
     }
 }

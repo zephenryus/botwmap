@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <div id=\"header-wrapper\">\r\n            <div id=\"main-menu\" class=\"d-flex align-items-center\">\r\n                <button class=\"btn\">\r\n                    <div class=\"menu-icon flex-shrink-1\"></div>\r\n                </button>\r\n\r\n                <div id=\"search\" class=\"flex-grow-1\">\r\n                    <input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n\r\n    <app-marker-filter></app-marker-filter>\r\n\r\n    <app-marker-details></app-marker-details>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
+module.exports = "<main id=\"app\">\r\n    <header id=\"map-header\">\r\n        <!--<div id=\"header-wrapper\">-->\r\n            <!--<div id=\"main-menu\" class=\"d-flex align-items-center\">-->\r\n                <!--<button class=\"btn\">-->\r\n                    <!--<div class=\"menu-icon flex-shrink-1\"></div>-->\r\n                <!--</button>-->\r\n\r\n                <!--<div id=\"search\" class=\"flex-grow-1\">-->\r\n                    <!--<input type=\"search\" id=\"q\" name=\"q\" placeholder=\"Hyrule Castle...\">-->\r\n                <!--</div>-->\r\n            <!--</div>-->\r\n        <!--</div>-->\r\n    </header>\r\n\r\n    <app-marker-filter></app-marker-filter>\r\n\r\n    <app-marker-details></app-marker-details>\r\n\r\n    <div id=\"loader\">\r\n        <div id=\"loader-orb-wrapper\">\r\n            <div id=\"loader-orb-0\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-1\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-2\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-3\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-4\" class=\"loader-orb\"></div>\r\n            <div id=\"loader-orb-5\" class=\"loader-orb\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <app-map></app-map>\r\n</main>"
 
 /***/ }),
 
@@ -194,6 +194,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var MapComponent = /** @class */ (function () {
     function MapComponent(mapService) {
         this.mapService = mapService;
+        this.markers = {};
+        this.selectedMarkerTypes = [100, 498, 932, 2013];
     }
     MapComponent.prototype.ngOnInit = function () {
         this.mapService.generateMap();
@@ -226,8 +228,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! leaflet/dist/leaflet.js */ "./node_modules/leaflet/dist/leaflet.js");
 /* harmony import */ var leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _markers_markers_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../markers/markers.service */ "./resources/assets/js/app/markers/markers.service.ts");
-/* harmony import */ var _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../marker-types/marker-types.service */ "./resources/assets/js/app/marker-types/marker-types.service.ts");
+/* harmony import */ var leaflet_markercluster_dist_leaflet_markercluster_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! leaflet.markercluster/dist/leaflet.markercluster.js */ "./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js");
+/* harmony import */ var leaflet_markercluster_dist_leaflet_markercluster_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(leaflet_markercluster_dist_leaflet_markercluster_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _markers_markers_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../markers/markers.service */ "./resources/assets/js/app/markers/markers.service.ts");
+/* harmony import */ var _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../marker-types/marker-types.service */ "./resources/assets/js/app/marker-types/marker-types.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -241,18 +246,22 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var MapService = /** @class */ (function () {
     function MapService(markersService, markerTypesService) {
+        var _this = this;
         this.markersService = markersService;
         this.markerTypesService = markerTypesService;
-        this.layers = [];
-        this.defaultShowMarkers = [];
+        this.isMapGenerated = false;
+        this.onMarkerSelected = new rxjs__WEBPACK_IMPORTED_MODULE_5__["Subject"]();
+        this.markers = {};
+        this.layers = {};
+        this.selectedMarkerTypes = [100, 498, 932, 2013];
+        this.markerTypesService.onSelectedMarkerTypesChanged.subscribe(function (markerTypes) {
+            _this.getMarkers(markerTypes);
+        });
     }
-    MapService.prototype.ngOnInit = function () {
-    };
-    MapService.prototype.ngOnDestroy = function () {
-        this.selectedLayersSubscription.unsubscribe();
-    };
     MapService.prototype.generateMap = function () {
         var _this = this;
         if (!this.isMapGenerated) {
@@ -267,141 +276,89 @@ var MapService = /** @class */ (function () {
             })
                 .on('load', function () {
                 _this.isMapGenerated = true;
-                _this.markersService.getMarkers(_this.selectedLayers)
-                    .subscribe(function (markers) {
-                    _this.markers = markers;
-                    _this.loadMarkers();
-                });
-                // this.markerTypesService.setSelectedMarkerTypes(
-                //
-                // );
-                _this.markerTypesService.onSelectedMarkerTypesChanged
+                _this.markerTypesService.getMarkerTypes()
                     .subscribe(function (markerTypes) {
-                    _this.selectedLayers = markerTypes;
-                    _this.filterLayers(_this.selectedLayers);
+                    _this.markerTypesService.setSelectedMarkerTypes(_this.selectedMarkerTypes);
+                    _this.getMarkers(_this.selectedMarkerTypes);
                 });
-            })
-                .on('zoomend', function (e) {
-                if (_this.map) {
-                    var zoom = _this.map.getZoom();
-                }
             })
                 .setView([-245.7, 156.25])
                 .setZoom(4);
-            var southWest = this.map.unproject([-62.5, 437.5], 0);
-            var northEast = this.map.unproject([437.5, -62.5], 0);
-            var bounds = new leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["LatLngBounds"](southWest, northEast);
-            this.map.setMaxBounds(bounds);
+            this.map.setMaxBounds(leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["LatLngBounds"](this.map.unproject([-62.5, 437.5], 0), this.map.unproject([437.5, -62.5], 0)));
             leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["tileLayer"]('../hyrule/{z}/{y}/{x}.png', {
                 tileSize: 375
             }).addTo(this.map);
         }
     };
-    MapService.prototype.loadMarkers = function () {
-        if (this.markers.length > 0) {
-            for (var _i = 0, _a = this.markers; _i < _a.length; _i++) {
-                var marker = _a[_i];
-                if (this.layers.hasOwnProperty(marker.marker_type_id)) {
-                    this.layers[marker.marker_type_id].push(marker);
-                }
-                else {
-                    this.layers[marker.marker_type_id] = [marker];
-                }
-            }
-        }
-        this.loadLayers();
-    };
-    MapService.prototype.loadLayers = function () {
+    MapService.prototype.getMarkers = function (markerTypes) {
         var _this = this;
-        var newLayers = [];
-        var markerTypes = [];
-        for (var layer in this.layers) {
-            var layerMarkers = [];
-            markerTypes.push(layer);
-            if (this.layers.hasOwnProperty(layer)) {
-                for (var marker in this.layers[layer]) {
-                    if (this.layers[layer].hasOwnProperty(marker)) {
-                        console.log(this.layers[layer][marker]);
-                        this.layers[layer][marker].pointer = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["marker"]([
-                            // ((coordinate + 6000) / 12000) * 375
-                            (this.layers[layer][marker].z + 6000) * -0.03125,
-                            (this.layers[layer][marker].x + 6000) * 0.03125
-                        ], {
-                            icon: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["icon"]({
-                                iconUrl: this.layers[layer][marker].type.icon,
-                                iconSize: [72, 72],
-                            }),
-                            title: this.layers[layer][marker].marker_name,
-                            riseOnHover: true
-                        })
-                            .on('click', function (event) {
-                            _this.showMarkerDetails(parseInt(event.target.markerId));
-                        });
-                        // this.layers[layer][marker].pointer = Leaflet.circle(
-                        //     [
-                        //         // ((coordinate + 6000) / 12000) * 375
-                        //         (this.layers[layer][marker].z + 6000) * -0.03125,
-                        //         (this.layers[layer][marker].x + 6000) * 0.03125
-                        //     ],
-                        //     {
-                        //         color: 'red',
-                        //         fillColor: 'red',
-                        //         radius: 0.1,
-                        //         title: this.layers[layer][marker].marker_name
-                        //     }
-                        // )
-                        //     .on('click', (event) => {
-                        //         this.showMarkerDetails(parseInt(event.target.markerId));
-                        //     });
-                        this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
-                        this.layers[layer][marker].pointer.layerId = layer;
-                        layerMarkers.push(this.layers[layer][marker].pointer);
-                    }
-                }
-                newLayers[layer] = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["layerGroup"](layerMarkers);
-            }
-        }
-        this.layers = newLayers;
-        this.filterLayers(this.markerTypesService.getMarkerTypesById(markerTypes));
-        for (var layer in this.layers) {
-            if (this.layers.hasOwnProperty(layer)) {
-                this.layers[layer].addTo(this.map);
-            }
+        this.selectedMarkerTypes = markerTypes;
+        this.markersService.getMarkers({
+            types: this.selectedMarkerTypes
+        })
+            .subscribe(function (markers) {
+            _this.addMarkersToMap(markers);
+        });
+    };
+    MapService.prototype.clearMarkers = function () {
+        for (var layer in this.markers) {
+            this.markers[layer].clearLayers();
+            this.map.removeLayer(this.markers[layer]);
         }
     };
-    MapService.prototype.filterLayers = function (showTypes) {
-        for (var layer in this.layers) {
-            if (showTypes[layer] !== undefined) {
-                if (!this.map.hasLayer(this.layers[layer])) {
-                    this.layers[layer].addTo(this.map);
-                }
+    MapService.prototype.addMarkersToMap = function (markersData) {
+        var _this = this;
+        this.clearMarkers();
+        for (var _i = 0, markersData_1 = markersData; _i < markersData_1.length; _i++) {
+            var marker = markersData_1[_i];
+            if (!this.markers.hasOwnProperty(marker.marker_type_id.toString())) {
+                this.markers[marker.marker_type_id.toString()] = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["layerGroup"]();
+            }
+            var markerTypeGroup = this.markers[marker.marker_type_id.toString()];
+            if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
+                var newMarker = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["marker"]([
+                    -this.normalizeCoord(marker.z),
+                    this.normalizeCoord(marker.x)
+                ], {
+                    icon: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["icon"]({
+                        iconUrl: this.markerTypesService.getIcon(marker.marker_type_id),
+                        iconSize: [32, 32]
+                    }),
+                    title: this.markerTypesService.getName(marker.marker_type_id),
+                    zIndexOffset: marker.y
+                }).on('click', function (event) {
+                    _this.showMarkerDetails(event.target);
+                });
+                newMarker.markerId = marker.id;
+                newMarker.layerId = marker.marker_type_id;
+                markerTypeGroup.addLayer(newMarker);
+                this.map.addLayer(markerTypeGroup);
             }
             else {
-                if (this.map.hasLayer(this.layers[layer])) {
-                    this.layers[layer].remove();
-                }
+                console.log('removing layer: ' + markerTypeGroup);
+                this.map.removeLayer(markerTypeGroup);
             }
         }
     };
-    MapService.prototype.showMarkerDetails = function (markerId) {
-        this.markersService.setSelectedMarker(this.markers[markerId]);
-        this.map.panTo([
-            this.getCoordY(this.markers[markerId].z),
-            this.getCoordX(this.markers[markerId].x)
-        ]);
+    MapService.prototype.showMarkerDetails = function (target) {
+        var _this = this;
+        this.markersService.getMarker(target.markerId).subscribe(function (marker) {
+            _this.onMarkerSelected.next(marker);
+            _this.map.panTo([
+                -_this.normalizeCoord(marker.z),
+                _this.normalizeCoord(marker.x)
+            ]);
+        });
     };
-    MapService.prototype.getCoordX = function (x) {
-        return (x + 6000) * 0.03125;
-    };
-    MapService.prototype.getCoordY = function (x) {
-        return (x + 6000) * -0.03125;
+    MapService.prototype.normalizeCoord = function (coord) {
+        return (coord + 6000) * 0.03125;
     };
     MapService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_markers_markers_service__WEBPACK_IMPORTED_MODULE_2__["MarkersService"],
-            _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_3__["MarkerTypesService"]])
+        __metadata("design:paramtypes", [_markers_markers_service__WEBPACK_IMPORTED_MODULE_3__["MarkersService"],
+            _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_4__["MarkerTypesService"]])
     ], MapService);
     return MapService;
 }());
@@ -433,6 +390,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerDetailsComponent", function() { return MarkerDetailsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _markers_markers_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../markers/markers.service */ "./resources/assets/js/app/markers/markers.service.ts");
+/* harmony import */ var _map_map_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../map/map.service */ "./resources/assets/js/app/map/map.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -444,14 +402,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var MarkerDetailsComponent = /** @class */ (function () {
-    function MarkerDetailsComponent(markersService) {
+    function MarkerDetailsComponent(mapService, markersService) {
+        this.mapService = mapService;
         this.markersService = markersService;
         this.isOpen = false;
     }
     MarkerDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.markerSelectSubscription = this.markersService.onMarkerSelected.subscribe(function (marker) {
+        this.markerSelectSubscription = this.mapService.onMarkerSelected.subscribe(function (marker) {
             _this.selectedMarker = marker;
         });
     };
@@ -467,7 +427,7 @@ var MarkerDetailsComponent = /** @class */ (function () {
             selector: 'app-marker-details',
             template: __webpack_require__(/*! ./marker-details.component.html */ "./resources/assets/js/app/marker-details/marker-details.component.html")
         }),
-        __metadata("design:paramtypes", [_markers_markers_service__WEBPACK_IMPORTED_MODULE_1__["MarkersService"]])
+        __metadata("design:paramtypes", [_map_map_service__WEBPACK_IMPORTED_MODULE_2__["MapService"], _markers_markers_service__WEBPACK_IMPORTED_MODULE_1__["MarkersService"]])
     ], MarkerDetailsComponent);
     return MarkerDetailsComponent;
 }());
@@ -483,7 +443,7 @@ var MarkerDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<aside id=\"map-modifiers\">\r\n    <button id=\"layers\" class=\"btn btn-primary\" (click)=\"toggleDialog()\">\r\n        L\r\n    </button>\r\n\r\n    <div id=\"marker-filters\" *ngIf=\"isOpen\">\r\n        <main style=\"background: white;\">\r\n            <div class=\"d-flex flex-wrap justify-content-between\">\r\n                <div class=\"layer-selector\" (click)=\"toggleAllLayers()\">\r\n                    <div class=\"d-block text-center marker-type-label\">\r\n                        <img class=\"marker-type-icon\" src=\"images/icons/markers/default.png\" alt=\"\">\r\n                        <div class=\"marker-type-name\">All</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <div *ngFor=\"let markerLayer of markerLayers; let i = index;\" class=\"layer-selector\" [class.selected]=\"markerLayer.selected\">\r\n                    <label for=\"{{ markerLayer.id }}\" class=\"d-block text-center marker-type-label\">\r\n                        <input type=\"checkbox\" id=\"{{ markerLayer.id }}\" name=\"{{ markerLayer.id }}\" (change)=\"toggleLayer(i)\"\r\n                               [checked]=\"markerLayer.selected\" class=\"d-none\">\r\n                        <img class=\"marker-type-icon\" src=\"{{ markerLayer.icon }}\" alt=\"\">\r\n                        <div class=\"marker-type-name\">{{ markerLayer.marker_type_name }}</div>\r\n                    </label>\r\n                </div>\r\n            </div>\r\n        </main>\r\n    </div>\r\n</aside>"
+module.exports = "<aside id=\"map-modifiers\">\r\n    <button id=\"layers\" class=\"btn btn-primary\" (click)=\"toggleDialog()\">\r\n        <img [src]=\"iconHref\">\r\n    </button>\r\n\r\n    <div id=\"marker-filters\" *ngIf=\"isOpen\">\r\n        <main style=\"background: white;\">\r\n            <!--<div class=\"d-flex flex-wrap justify-content-between\">-->\r\n            <div>\r\n                <div *ngFor=\"let markerLayer of markerLayers; let i = index;\" class=\"layer-selector\" [class.selected]=\"markerLayer.selected\">\r\n                    <!--<label for=\"{{ markerLayer.id }}\" class=\"d-block text-center marker-type-label\">-->\r\n                    <label for=\"{{ markerLayer.id }}\">\r\n                        <input type=\"checkbox\" id=\"{{ markerLayer.id }}\" name=\"{{ markerLayer.id }}\" (change)=\"toggleLayer(i)\"\r\n                               [checked]=\"markerLayer.selected\" class=\"\">\r\n                        <img class=\"marker-type-icon\" src=\"{{ markerLayer.icon }}\" alt=\"\">\r\n                        <span class=\"marker-type-name\">{{ markerLayer.marker_type_name }}</span>\r\n                    </label>\r\n                </div>\r\n            </div>\r\n        </main>\r\n    </div>\r\n</aside>"
 
 /***/ }),
 
@@ -519,64 +479,35 @@ var MarkerFilterComponent = /** @class */ (function () {
         this.isOpen = false;
         this.markerLayers = [];
         this.selectedLayers = [];
+        this.iconHref = "images/icons/markers/markers.svg";
     }
     MarkerFilterComponent.prototype.toggleDialog = function () {
         this.isOpen = !this.isOpen;
+        (this.isOpen)
+            ? this.iconHref = "images/icons/markers/close.svg"
+            : this.iconHref = "images/icons/markers/markers.svg";
     };
     MarkerFilterComponent.prototype.toggleLayer = function (index) {
+        // console.log(this.markerLayers[index]);
         this.markerLayers[index].selected = !this.markerLayers[index].selected;
-        this.filterMarkers();
-    };
-    MarkerFilterComponent.prototype.filterMarkers = function () {
-        var layers = [];
-        for (var _i = 0, _a = this.markerLayers; _i < _a.length; _i++) {
-            var markerLayer = _a[_i];
-            if (markerLayer.selected) {
-                layers.push(markerLayer.id);
-            }
-        }
-        this.markerTypesService.setSelectedMarkerTypes(this.markerTypesService.getMarkerTypesById(layers));
-    };
-    MarkerFilterComponent.prototype.markSelected = function () {
-        for (var _i = 0, _a = this.markerLayers; _i < _a.length; _i++) {
-            var markerLayer = _a[_i];
-            if (this.selectedLayers.indexOf(markerLayer) > -1) {
-                if (this.markerLayers.hasOwnProperty(markerLayer)) {
-                    this.markerLayers[markerLayer].selected = true;
-                }
-            }
-        }
-    };
-    MarkerFilterComponent.prototype.toggleAllLayers = function () {
-        if (this.selectedLayers.length === this.markerLayers.length) {
-            this.selectNoLayers();
+        if (this.markerLayers[index].selected) {
+            this.markerTypesService.selectMarkerType(this.markerLayers[index].id);
         }
         else {
-            this.selectAllLayers();
+            this.markerTypesService.unselectMarkerType(this.markerLayers[index].id);
         }
     };
-    MarkerFilterComponent.prototype.selectAllLayers = function () {
-        this.selectedLayers = [];
-        for (var _i = 0, _a = this.markerLayers; _i < _a.length; _i++) {
-            var markerLayer = _a[_i];
-            this.selectedLayers.push(markerLayer.id);
-            markerLayer.selected = true;
+    MarkerFilterComponent.prototype.markSelected = function () {
+        for (var markerLayer in this.markerLayers) {
+            this.markerLayers[markerLayer].selected = false;
         }
-        this.filterMarkers();
-    };
-    MarkerFilterComponent.prototype.selectNoLayers = function () {
-        this.selectedLayers = [];
-        for (var _i = 0, _a = this.markerLayers; _i < _a.length; _i++) {
-            var markerLayer = _a[_i];
-            markerLayer.selected = false;
-        }
-        this.filterMarkers();
     };
     MarkerFilterComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.markerTypesService.getMarkerTypes()
             .subscribe(function (markerTypes) {
             _this.markerLayers = markerTypes;
+            _this.selectedLayers = _this.mapService.selectedMarkerTypes;
             _this.markSelected();
         });
     };
@@ -670,9 +601,27 @@ var MarkerTypesService = /** @class */ (function () {
             return markerTypes;
         }));
     };
+    MarkerTypesService.prototype.selectMarkerType = function (id) {
+        var index = this.selectedMarkerTypes.indexOf(id);
+        if (index === -1) {
+            this.selectedMarkerTypes.push(id);
+            this.onSelectedMarkerTypesChanged.next(this.selectedMarkerTypes);
+        }
+    };
+    MarkerTypesService.prototype.unselectMarkerType = function (id) {
+        var index = this.selectedMarkerTypes.indexOf(id);
+        if (index > -1) {
+            this.selectedMarkerTypes.splice(index, 1);
+            this.onSelectedMarkerTypesChanged.next(this.selectedMarkerTypes);
+        }
+    };
+    MarkerTypesService.prototype.selectAllMarkerTypes = function () {
+    };
+    MarkerTypesService.prototype.unselectAllMarkerTypes = function () {
+    };
     MarkerTypesService.prototype.setSelectedMarkerTypes = function (types) {
         this.selectedMarkerTypes = types;
-        this.onSelectedMarkerTypesChanged.next(this.selectedMarkerTypes);
+        this.onSelectedMarkerTypesChanged.next(types);
     };
     MarkerTypesService.prototype.getMarkerTypesById = function (ids) {
         var markerTypes = [];
@@ -684,6 +633,23 @@ var MarkerTypesService = /** @class */ (function () {
         }
         return markerTypes;
     };
+    MarkerTypesService.prototype.getById = function (id) {
+        for (var _i = 0, _a = this.markerTypes; _i < _a.length; _i++) {
+            var markerType = _a[_i];
+            if (markerType.id == id) {
+                return markerType;
+            }
+        }
+        return undefined;
+    };
+    MarkerTypesService.prototype.getIcon = function (id) {
+        var markerType = this.getById(id);
+        return markerType.icon;
+    };
+    MarkerTypesService.prototype.getName = function (id) {
+        var markerType = this.getById(id);
+        return markerType.marker_type_name;
+    };
     MarkerTypesService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -691,37 +657,6 @@ var MarkerTypesService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], MarkerTypesService);
     return MarkerTypesService;
-}());
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/app/markers/marker.ts":
-/*!***************************************************!*\
-  !*** ./resources/assets/js/app/markers/marker.ts ***!
-  \***************************************************/
-/*! exports provided: Marker */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Marker", function() { return Marker; });
-var Marker = /** @class */ (function () {
-    function Marker(marker) {
-        this.id = marker.id;
-        this.marker_name = marker.marker_name;
-        this.map_region_id = marker.map_region_id;
-        this.x = marker.x;
-        this.y = marker.y;
-        this.z = marker.z;
-        this.source = marker.source;
-        this.marker_type_id = marker.marker_type_id;
-        this.type = marker.type;
-        this.marker_category_id = marker.marker_category_id;
-        this.marker_sub_category_id = marker.marker_sub_category_id;
-    }
-    return Marker;
 }());
 
 
@@ -740,9 +675,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkersService", function() { return MarkersService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _marker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./marker */ "./resources/assets/js/app/markers/marker.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -755,41 +688,28 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
-
 var MarkersService = /** @class */ (function () {
     function MarkersService(http) {
         this.http = http;
-        this.onMarkerSelected = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
     }
-    MarkersService.prototype.getMarkers = function (filter) {
-        var params = (filter)
-            ? { filter: filter }
-            : {};
-        return this.http.get('/markers', {
-            params: params
-        })
+    MarkersService.prototype.getMarkers = function (options) {
+        var types = options.types.join(',');
+        return this.http.get('/markers?types=' + types)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (markers) {
-            for (var marker in markers) {
-                if (markers.hasOwnProperty(marker)) {
-                    markers[marker] = new _marker__WEBPACK_IMPORTED_MODULE_2__["Marker"](markers[marker]);
-                    markers[marker].id = parseInt(marker);
-                }
-            }
             return markers;
         }));
     };
-    MarkersService.prototype.setSelectedMarker = function (marker) {
-        if (this.selectedMarker != marker) {
-            this.selectedMarker = marker;
-            this.onMarkerSelected.next(marker);
-        }
+    MarkersService.prototype.getMarker = function (id) {
+        return this.http.get('/markers/' + id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (marker) {
+            return marker;
+        }));
     };
     MarkersService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], MarkersService);
     return MarkersService;
 }());
