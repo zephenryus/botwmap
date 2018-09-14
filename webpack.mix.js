@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+let path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,32 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.webpackConfig({
+    resolve: {
+        extensions: [
+            '.ts'
+        ]
+    },
+    module: {
+        rules: [{
+            test: /\.js$/,
+            loader: [
+                'ng-annotate-loader',
+                'babel-loader'
+            ]
+        }, {
+            test: /\.ts$/,
+            loaders: [
+                {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        configFileName: path.resolve(__dirname, 'tsconfig.json')
+                    },
+                },
+                'angular2-template-loader'
+            ]
+        }]
+    }
+})
+    .js('resources/assets/js/main.ts', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css');

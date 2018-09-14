@@ -1,0 +1,32 @@
+<main id="app">
+    <header id="map-header">
+        <div id="header-wrapper">
+            <div id="main-menu" class="d-flex align-items-center">
+                <button class="btn">
+                    <div class="menu-icon flex-shrink-1"></div>
+                </button>
+
+                <div id="search" class="flex-grow-1">
+                    <input type="search" id="q" name="q" placeholder="Hyrule Castle...">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <app-marker-filter></app-marker-filter>
+
+    <app-marker-details></app-marker-details>
+
+    <div id="loader">
+        <div id="loader-orb-wrapper">
+            <div id="loader-orb-0" class="loader-orb"></div>
+            <div id="loader-orb-1" class="loader-orb"></div>
+            <div id="loader-orb-2" class="loader-orb"></div>
+            <div id="loader-orb-3" class="loader-orb"></div>
+            <div id="loader-orb-4" class="loader-orb"></div>
+            <div id="loader-orb-5" class="loader-orb"></div>
+        </div>
+    </div>
+
+    <app-map></app-map>
+</main>

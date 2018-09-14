@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
+
+Route::get('/markers', 'MarkersController@index')->name('markers');
+Route::get('/marker-types', 'MarkerTypesController@index')->name('marker-types');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
