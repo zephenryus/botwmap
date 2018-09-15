@@ -12,6 +12,8 @@ class CreateMarkerCategoriesTable extends Migration {
      */
     public function up () {
         Schema::create('marker_categories', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->unsignedInteger('marker_id');
             $table->string('marker_category_name');

@@ -12,6 +12,8 @@ class CreateMarkersTable extends Migration {
      */
     public function up () {
         Schema::create('markers', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             // $table->unsignedInteger('map_id')->default(1); // For scalability
             $table->unsignedInteger('map_region_id')->default(1);
