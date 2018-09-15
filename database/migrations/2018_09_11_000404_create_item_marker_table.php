@@ -14,6 +14,8 @@ class CreateItemMarkerTable extends Migration
     public function up()
     {
         Schema::create('item_marker', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('marker_id');

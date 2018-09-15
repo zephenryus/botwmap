@@ -14,6 +14,8 @@ class CreateMarkerTypesTable extends Migration
     public function up()
     {
         Schema::create('marker_types', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('marker_type_name');
             $table->string('marker_type_slug')->unique();
