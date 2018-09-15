@@ -14,6 +14,8 @@ class CreateMapRegionsTable extends Migration
     public function up()
     {
         Schema::create('map_regions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('region_name');
             $table->float('north_boundary');
