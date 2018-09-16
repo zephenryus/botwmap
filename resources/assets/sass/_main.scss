@@ -103,7 +103,8 @@ body {
 
     #map-modifiers {
         z-index:    900;
-        top:        100px;
+        //top:        100px; // move back to this point when the search bar is back
+        bottom:     18px;
         right:      0;
         overflow:   hidden;
         text-align: right;
@@ -116,9 +117,7 @@ body {
         #layers {
             height:        64px;
             width:         64px;
-            //border:           0;
             border-radius: 64px;
-            //background-color: white;
             margin:        7.5px 15px 10px auto;
             box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
 
@@ -128,56 +127,47 @@ body {
         }
 
         #marker-filters {
-            max-width: 450px;
+            width: 100vw;
+            //max-width: 450px;
 
             main {
-                max-height: calc(100vh - 100px);
-                overflow-x: hidden;
-                overflow-y: auto;
-                padding:    15px;
+                height:        calc(100vh - 128px);
+                overflow-x:    hidden;
+                overflow-y:    auto;
+                padding:       7.5px;
+                background:    #fff;
+                text-align:    left;
+                margin:        15px;
+                border-radius: 3px;
 
-                .layer-selector {
-                    //cursor:        pointer;
-                    //position:      relative;
-                    //height:        64px;
-                    //width:         64px;
-                    //margin-bottom: 7.5px;
-                    //border:        2px solid rgba(0, 0, 0, 0.02);
-                    //border-radius: 3px;
-                    //transition:    all 150ms ease-in-out;
-                    //overflow:      hidden;
+                .marker-type-wrapper {
+                    width:       100%;
+                    line-height: 3rem;
 
-                    &:hover {
-                        //box-shadow:   0 1.5px 3px rgba(0, 0, 0, 0.08);
-                        //border-color: rgba(0, 0, 0, 0.08);
+                    &.active {
+                        background: rgba($primary, 0.08);
                     }
 
-                    &.selected {
-                        //border-color: $primary;
-                        //background-color: rgba($primary, 0.4);
-                    }
-
-                    .marker-type-label {
-                        //cursor: pointer;
-                        //height: 64px;
-                        //width: 64px;
-
-                        .marker-type-icon {
-                            //cursor: pointer;
-                            //height: 32px;
-                        }
-
-                        .marker-type-name {
-                            //cursor:     pointer;
-                            //font-size:  0.75em;
-                            //position:   absolute;
-                            //left:       0;
-                            //bottom:     0;
-                            //text-align: center;
-                            //width:      100%;
+                    button.expand {
+                        &::after {
+                            display:        inline-block;
+                            width:          0;
+                            height:         0;
+                            margin-left:    .255em;
+                            vertical-align: .255em;
+                            content:        "";
+                            border-top:     .3em solid;
+                            border-right:   .3em solid transparent;
+                            border-bottom:  0;
+                            border-left:    .3em solid transparent;
                         }
                     }
                 }
+
+                .marker-type-wrapper .marker-type-wrapper {
+                    padding-left: 15px;
+                }
+
             }
         }
     }

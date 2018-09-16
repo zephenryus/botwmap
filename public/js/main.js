@@ -100,12 +100,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _markers_markers_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./markers/markers.service */ "./resources/assets/js/app/markers/markers.service.ts");
 /* harmony import */ var _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./marker-types/marker-types.service */ "./resources/assets/js/app/marker-types/marker-types.service.ts");
+/* harmony import */ var _marker_filter_marker_type_marker_type_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./marker-filter/marker-type/marker-type.component */ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -125,7 +127,8 @@ var AppModule = /** @class */ (function () {
                 _app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
                 _map_map_component__WEBPACK_IMPORTED_MODULE_3__["MapComponent"],
                 _marker_details_marker_details_component__WEBPACK_IMPORTED_MODULE_5__["MarkerDetailsComponent"],
-                _marker_filter_marker_filter_component__WEBPACK_IMPORTED_MODULE_6__["MarkerFilterComponent"]
+                _marker_filter_marker_filter_component__WEBPACK_IMPORTED_MODULE_6__["MarkerFilterComponent"],
+                _marker_filter_marker_type_marker_type_component__WEBPACK_IMPORTED_MODULE_10__["MarkerTypeComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -443,7 +446,7 @@ var MarkerDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<aside id=\"map-modifiers\">\r\n    <button id=\"layers\" class=\"btn btn-primary\" (click)=\"toggleDialog()\">\r\n        <img [src]=\"iconHref\">\r\n    </button>\r\n\r\n    <div id=\"marker-filters\" *ngIf=\"isOpen\">\r\n        <main style=\"background: white;\">\r\n            <!--<div class=\"d-flex flex-wrap justify-content-between\">-->\r\n            <div>\r\n                <div *ngFor=\"let markerLayer of markerLayers; let i = index;\" class=\"layer-selector\" [class.selected]=\"markerLayer.selected\">\r\n                    <!--<label for=\"{{ markerLayer.id }}\" class=\"d-block text-center marker-type-label\">-->\r\n                    <label for=\"{{ markerLayer.id }}\">\r\n                        <input type=\"checkbox\" id=\"{{ markerLayer.id }}\" name=\"{{ markerLayer.id }}\" (change)=\"toggleLayer(i)\"\r\n                               [checked]=\"markerLayer.selected\" class=\"\">\r\n                        <img class=\"marker-type-icon\" src=\"{{ markerLayer.icon }}\" alt=\"\">\r\n                        <span class=\"marker-type-name\">{{ markerLayer.marker_type_name }}</span>\r\n                    </label>\r\n                </div>\r\n            </div>\r\n        </main>\r\n    </div>\r\n</aside>"
+module.exports = "<aside id=\"map-modifiers\">\r\n    <div id=\"marker-filters\" *ngIf=\"isOpen\">\r\n        <main>\r\n            <!--<app-marker-type [markerTypes]=\"markerTypes\"></app-marker-type>-->\r\n        </main>\r\n        </main>\r\n    </div>\r\n\r\n    <button id=\"layers\" class=\"btn btn-primary\" (click)=\"toggleDialog()\">\r\n        <img [src]=\"iconHref\">\r\n    </button>\r\n</aside>"
 
 /***/ }),
 
@@ -476,10 +479,191 @@ var MarkerFilterComponent = /** @class */ (function () {
     function MarkerFilterComponent(markerTypesService, mapService) {
         this.markerTypesService = markerTypesService;
         this.mapService = mapService;
-        this.isOpen = false;
+        this.isOpen = true;
         this.markerLayers = [];
         this.selectedLayers = [];
         this.iconHref = "images/icons/markers/markers.svg";
+        this.markerTypes =
+            [
+                {
+                    "id": 'Animal',
+                    "markerTypes": [],
+                    "label": "Animals",
+                    "children": [
+                        {
+                            "id": 'Animal_Bear',
+                            "markerTypes": [57, 3427],
+                            "label": "Bears",
+                            "children": [
+                                {
+                                    "id": 'Animal_Bear_B',
+                                    "markerTypes": [57],
+                                    "label": "Grizzlemaw Bear",
+                                    "children": []
+                                },
+                                {
+                                    "id": 'Animal_Bear_A',
+                                    "markerTypes": [3427],
+                                    "label": "Honeyvore Bear",
+                                    "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": 'Animal_Birds',
+                            "markerTypes": [3095, 3576, 1545, 1542, 1537, 1556, 1549, 1158, 3984, 2846, 3758, 810, 1476,
+                                1473, 563, 1568, 1547, 3851, 3183, 568],
+                            "label": "Birds",
+                            "children": [
+                                {
+                                    "id": 'Animal_Kokko_A',
+                                    "markerTypes": [3095, 3576],
+                                    "label": "Cuccos",
+                                    "children": [
+                                        {
+                                            "id": 'Animal_Kokko_B',
+                                            "markerTypes": [3576],
+                                            "label": "Cuccos (Cado's Cuccos)",
+                                            "children": []
+                                        },
+                                    ]
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [1545, 1542],
+                                    "label": "Crows",
+                                    "children": [
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1542],
+                                            "label": "Crow Swarm",
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [1537],
+                                    "label": "Bright-Chested Duck",
+                                    "children": []
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [1556],
+                                    "label": "Islander Hawk",
+                                    "children": []
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [1549, 1158],
+                                    "label": "Heron",
+                                    "children": [
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1549],
+                                            "label": "Blue-Winged Heron",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1158],
+                                            "label": "Pink Heron",
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [3984, 2846],
+                                    "label": "Seagull",
+                                    "children": [
+                                        {
+                                            "id": '',
+                                            "markerTypes": [2846],
+                                            "label": "Seagull Swarm",
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [3758],
+                                    "label": "Eldin Ostrich",
+                                    "children": []
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [810, 1476, 1473, 563],
+                                    "label": "Pigeons",
+                                    "children": [
+                                        {
+                                            "id": '',
+                                            "markerTypes": [810],
+                                            "label": "Wood Pigeon Swarm",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1476],
+                                            "label": "Rainbow Pigeon",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1473],
+                                            "label": "Rainbow Pigeon Swarm",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [563],
+                                            "label": "White Pigeon",
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": '',
+                                    "markerTypes": [1568, 1547, 3851, 3183, 568],
+                                    "label": "Sparrows",
+                                    "children": [
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1568],
+                                            "label": "Blue Sparrow",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [1547],
+                                            "label": "Common Sparrow",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [3851],
+                                            "label": "Golden Sparrow",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [3183],
+                                            "label": "Rainbow Sparrow",
+                                            "children": []
+                                        },
+                                        {
+                                            "id": '',
+                                            "markerTypes": [568],
+                                            "label": "Red Sparrow",
+                                            "children": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                    ]
+                }
+            ];
     }
     MarkerFilterComponent.prototype.toggleDialog = function () {
         this.isOpen = !this.isOpen;
@@ -520,6 +704,58 @@ var MarkerFilterComponent = /** @class */ (function () {
             _map_map_service__WEBPACK_IMPORTED_MODULE_2__["MapService"]])
     ], MarkerFilterComponent);
     return MarkerFilterComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.html":
+/*!**************************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-filter/marker-type/marker-type.component.html ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"marker-type-wrapper\" *ngFor=\"let markerType of markerTypes\">\r\n    <div class=\"custom-control custom-checkbox\">\r\n        <input type=\"checkbox\" class=\"custom-control-input\" id=\"{{ markerType.id }}\" name=\"{{ markerType.id }}\">\r\n        <label class=\"custom-control-label\" for=\"{{ markerType.id }}\">{{ markerType.label }}</label>\r\n    </div>\r\n\r\n    <!--<button class=\"expand btn ml-auto\">-->\r\n        <!--<span class=\"sr-only\">Expand</span>-->\r\n    <!--</button>-->\r\n\r\n    <app-marker-type *ngIf=\"markerType.children.length > 0\" [markerTypes]=\"markerType.children\"></app-marker-type>\r\n</div>"
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.ts":
+/*!************************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-filter/marker-type/marker-type.component.ts ***!
+  \************************************************************************************/
+/*! exports provided: MarkerTypeComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerTypeComponent", function() { return MarkerTypeComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var MarkerTypeComponent = /** @class */ (function () {
+    function MarkerTypeComponent() {
+    }
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], MarkerTypeComponent.prototype, "markerTypes", void 0);
+    MarkerTypeComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-marker-type',
+            template: __webpack_require__(/*! ./marker-type.component.html */ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.html")
+        })
+    ], MarkerTypeComponent);
+    return MarkerTypeComponent;
 }());
 
 

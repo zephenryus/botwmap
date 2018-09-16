@@ -1,22 +1,12 @@
 <aside id="map-modifiers">
+    <div id="marker-filters" *ngIf="isOpen">
+        <main>
+            <!--<app-marker-type [markerTypes]="markerTypes"></app-marker-type>-->
+        </main>
+        </main>
+    </div>
+
     <button id="layers" class="btn btn-primary" (click)="toggleDialog()">
         <img [src]="iconHref">
     </button>
-
-    <div id="marker-filters" *ngIf="isOpen">
-        <main style="background: white;">
-            <!--<div class="d-flex flex-wrap justify-content-between">-->
-            <div>
-                <div *ngFor="let markerLayer of markerLayers; let i = index;" class="layer-selector" [class.selected]="markerLayer.selected">
-                    <!--<label for="{{ markerLayer.id }}" class="d-block text-center marker-type-label">-->
-                    <label for="{{ markerLayer.id }}">
-                        <input type="checkbox" id="{{ markerLayer.id }}" name="{{ markerLayer.id }}" (change)="toggleLayer(i)"
-                               [checked]="markerLayer.selected" class="">
-                        <img class="marker-type-icon" src="{{ markerLayer.icon }}" alt="">
-                        <span class="marker-type-name">{{ markerLayer.marker_type_name }}</span>
-                    </label>
-                </div>
-            </div>
-        </main>
-    </div>
 </aside>
