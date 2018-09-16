@@ -1,35 +1,36 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet/dist/leaflet.js';
+import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import { Marker } from "../markers/marker";
 import { MarkersService } from "../markers/markers.service";
 import { MarkerTypesService } from "../marker-types/marker-types.service";
 import { MarkerType } from "../marker-types/marker-type";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
-export class MapService implements OnInit, OnDestroy {
+export class MapService {
     map: Leaflet;
-    isMapGenerated: boolean;
-    markers: Marker[];
+
+    isMapGenerated = false;
+
+    onMarkerSelected = new Subject<any>();
+    markers = {};
 
     selectedLayersSubscription: Subscription;
-    layers = [];
-    selectedLayers: MarkerType[];
-    defaultShowMarkers = [];
+    layers = {};
+    selectedMarkerTypes = [100, 498, 932, 2013];
 
     constructor(
         private markersService: MarkersService,
         private markerTypesService: MarkerTypesService
     ) {
-    }
-
-    ngOnInit() {
-    }
-
-    ngOnDestroy() {
-        this.selectedLayersSubscription.unsubscribe();
+        this.markerTypesService.onSelectedMarkerTypesChanged.subscribe(
+            (markerTypes) => {
+                this.getMarkers(markerTypes);
+            }
+        )
     }
 
     generateMap() {
@@ -45,40 +46,21 @@ export class MapService implements OnInit, OnDestroy {
             })
                 .on('load', () => {
                     this.isMapGenerated = true;
-
-                    this.markersService.getMarkers(this.selectedLayers)
-                        .subscribe(
-                            (markers: Marker[]) => {
-                                this.markers = markers;
-                                this.loadMarkers();
-                            }
-                        );
-
-                    // this.markerTypesService.setSelectedMarkerTypes(
-                    //
-                    // );
-
-                    this.markerTypesService.onSelectedMarkerTypesChanged
+                    this.markerTypesService.getMarkerTypes()
                         .subscribe(
                             (markerTypes: MarkerType[]) => {
-                                this.selectedLayers = markerTypes;
-                                this.filterLayers(this.selectedLayers);
+                                this.markerTypesService.setSelectedMarkerTypes(this.selectedMarkerTypes);
+                                this.getMarkers(this.selectedMarkerTypes);
                             }
                         );
                 })
-                .on('zoomend', (e) => {
-                    if (this.map) {
-                        const zoom = this.map.getZoom();
-                    }
-                })
-                // .setView([-131.375, 84.125])
                 .setView([-245.7, 156.25])
                 .setZoom(4);
 
-            const southWest = this.map.unproject([-62.5, 437.5], 0);
-            const northEast = this.map.unproject([437.5, -62.5], 0);
-            const bounds = new Leaflet.LatLngBounds(southWest, northEast);
-            this.map.setMaxBounds(bounds);
+            this.map.setMaxBounds(Leaflet.LatLngBounds(
+                this.map.unproject([-62.5, 437.5], 0),
+                this.map.unproject([437.5, -62.5], 0)
+            ));
 
             Leaflet.tileLayer('../hyrule/{z}/{y}/{x}.png', {
                 tileSize: 375
@@ -86,115 +68,77 @@ export class MapService implements OnInit, OnDestroy {
         }
     }
 
-    loadMarkers() {
-        if (this.markers.length > 0) {
-            for (let marker of this.markers) {
-                if (this.layers.hasOwnProperty(marker.marker_type_id)) {
-                    this.layers[marker.marker_type_id].push(marker);
-                } else {
-                    this.layers[marker.marker_type_id] = [marker];
-                }
-            }
-        }
+    getMarkers(markerTypes) {
+        this.selectedMarkerTypes = markerTypes;
 
-        this.loadLayers();
+        this.markersService.getMarkers({
+            types: this.selectedMarkerTypes
+        })
+            .subscribe(
+                (markers) => {
+                    this.addMarkersToMap(markers);
+                }
+            );
     }
 
-    loadLayers() {
-        let newLayers = [];
-        let markerTypes = [];
+    clearMarkers() {
+        for (let layer in this.markers) {
+            this.markers[layer].clearLayers();
+            this.map.removeLayer(this.markers[layer]);
+        }
+    }
 
-        for (let layer in this.layers) {
-            let layerMarkers = [];
-            markerTypes.push(layer);
+    addMarkersToMap(markersData) {
+        this.clearMarkers();
 
-            if (this.layers.hasOwnProperty(layer)) {
-                for (let marker in this.layers[layer]) {
-                    if (this.layers[layer].hasOwnProperty(marker)) {
-                        console.log(this.layers[layer][marker]);
-                        this.layers[layer][marker].pointer = Leaflet.marker(
-                            [
-                                // ((coordinate + 6000) / 12000) * 375
-                                (this.layers[layer][marker].z + 6000) * -0.03125,
-                                (this.layers[layer][marker].x + 6000) * 0.03125
-                            ],
-                            {
-                                icon: Leaflet.icon({
-                                    iconUrl: this.layers[layer][marker].type.icon,
-                                    iconSize: [72, 72],
-                                }),
-                                title: this.layers[layer][marker].marker_name,
-                                riseOnHover: true
-                            }
-                        )
-                            .on('click', (event) => {
-                                this.showMarkerDetails(parseInt(event.target.markerId));
-                            });
+        for (let marker of markersData) {
+            if (!this.markers.hasOwnProperty(marker.marker_type_id.toString())) {
+                this.markers[marker.marker_type_id.toString()] = Leaflet.layerGroup();
+            }
 
-                        // this.layers[layer][marker].pointer = Leaflet.circle(
-                        //     [
-                        //         // ((coordinate + 6000) / 12000) * 375
-                        //         (this.layers[layer][marker].z + 6000) * -0.03125,
-                        //         (this.layers[layer][marker].x + 6000) * 0.03125
-                        //     ],
-                        //     {
-                        //         color: 'red',
-                        //         fillColor: 'red',
-                        //         radius: 0.1,
-                        //         title: this.layers[layer][marker].marker_name
-                        //     }
-                        // )
-                        //     .on('click', (event) => {
-                        //         this.showMarkerDetails(parseInt(event.target.markerId));
-                        //     });
+            let markerTypeGroup = this.markers[marker.marker_type_id.toString()];
 
-                        this.layers[layer][marker].pointer.markerId = this.layers[layer][marker].id;
-                        this.layers[layer][marker].pointer.layerId = layer;
-                        layerMarkers.push(this.layers[layer][marker].pointer);
+            if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
+                let newMarker = Leaflet.marker([
+                        -this.normalizeCoord(marker.z),
+                        this.normalizeCoord(marker.x)
+                    ],
+                    {
+                        icon: Leaflet.icon({
+                            iconUrl: this.markerTypesService.getIcon(marker.marker_type_id),
+                            iconSize: [32, 32]
+                        }),
+                        title: this.markerTypesService.getName(marker.marker_type_id),
+                        zIndexOffset: marker.y
                     }
-                }
+                ).on('click', (event) => {
+                    this.showMarkerDetails(event.target);
+                });
+                newMarker.markerId = marker.id;
+                newMarker.layerId = marker.marker_type_id;
 
-                newLayers[layer] = Leaflet.layerGroup(layerMarkers);
-            }
-        }
-
-        this.layers = newLayers;
-        this.filterLayers(this.markerTypesService.getMarkerTypesById(markerTypes));
-
-        for (let layer in this.layers) {
-            if (this.layers.hasOwnProperty(layer)) {
-                this.layers[layer].addTo(this.map);
-            }
-        }
-    }
-
-    filterLayers(showTypes: MarkerType[]) {
-        for (let layer in this.layers) {
-            if (showTypes[layer] !== undefined) {
-                if (!this.map.hasLayer(this.layers[layer])) {
-                    this.layers[layer].addTo(this.map)
-                }
+                markerTypeGroup.addLayer(newMarker);
+                this.map.addLayer(markerTypeGroup);
             } else {
-                if (this.map.hasLayer(this.layers[layer])) {
-                    this.layers[layer].remove();
-                }
+                console.log('removing layer: ' + markerTypeGroup);
+                this.map.removeLayer(markerTypeGroup);
             }
         }
     }
 
-    showMarkerDetails(markerId: number) {
-        this.markersService.setSelectedMarker(this.markers[markerId]);
-        this.map.panTo([
-            this.getCoordY(this.markers[markerId].z),
-            this.getCoordX(this.markers[markerId].x)
-        ]);
+    showMarkerDetails(target) {
+        this.markersService.getMarker(target.markerId).subscribe(
+            (marker: Marker) => {
+                this.onMarkerSelected.next(marker);
+                this.map.panTo([
+                    -this.normalizeCoord(marker.z),
+                    this.normalizeCoord(marker.x)
+                ]);
+            }
+        );
     }
 
-    getCoordX(x: number) {
-        return (x + 6000) * 0.03125
-    }
-
-    getCoordY(x: number) {
-        return (x + 6000) * -0.03125
+    normalizeCoord(coord: number) {
+        return (coord + 6000) * 0.03125
     }
 }

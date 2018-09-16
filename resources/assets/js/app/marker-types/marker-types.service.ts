@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 
 import { map } from 'rxjs/operators';
@@ -12,11 +12,12 @@ import { MarkerType } from "./marker-type";
 })
 export class MarkerTypesService {
     markerTypes: MarkerType[] = [];
-    selectedMarkerTypes: MarkerType[] = [];
+    selectedMarkerTypes: number[] = [];
 
-    onSelectedMarkerTypesChanged = new Subject<MarkerType[]>();
+    onSelectedMarkerTypesChanged = new Subject<number[]>();
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
     getMarkerTypes() {
         return this.http.get<MarkerType[]>('/marker-types')
@@ -28,15 +29,38 @@ export class MarkerTypesService {
                             this.markerTypes.push(markerTypes[markerType]);
                         }
                     }
-
                     return markerTypes;
                 }
             ));
     }
 
-    setSelectedMarkerTypes(types: MarkerType[]) {
+    selectMarkerType(id: number) {
+        const index = this.selectedMarkerTypes.indexOf(id);
+        if (index === -1) {
+            this.selectedMarkerTypes.push(id);
+            this.onSelectedMarkerTypesChanged.next(this.selectedMarkerTypes);
+        }
+    }
+
+    unselectMarkerType(id: number) {
+        const index = this.selectedMarkerTypes.indexOf(id);
+        if (index > -1) {
+            this.selectedMarkerTypes.splice(index, 1);
+            this.onSelectedMarkerTypesChanged.next(this.selectedMarkerTypes);
+        }
+    }
+
+    selectAllMarkerTypes() {
+
+    }
+
+    unselectAllMarkerTypes() {
+
+    }
+
+    setSelectedMarkerTypes(types: number[]) {
         this.selectedMarkerTypes = types;
-        this.onSelectedMarkerTypesChanged.next(this.selectedMarkerTypes);
+        this.onSelectedMarkerTypesChanged.next(types);
     }
 
     getMarkerTypesById(ids: number[]) {
@@ -49,5 +73,25 @@ export class MarkerTypesService {
         }
 
         return markerTypes;
+    }
+
+    getById(id: number) {
+        for (let markerType of this.markerTypes) {
+            if (markerType.id == id) {
+                return markerType;
+            }
+        }
+
+        return undefined;
+    }
+
+    getIcon(id) {
+        const markerType = this.getById(id);
+        return markerType.icon;
+    }
+
+    getName(id) {
+        const markerType = this.getById(id);
+        return markerType.marker_type_name;
     }
 }

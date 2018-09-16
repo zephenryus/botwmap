@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Marker;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MarkersController extends Controller {
     /**
@@ -31,7 +32,7 @@ class MarkersController extends Controller {
         //                  ->get();
         // }
 
-        return [];
+        // return [];
     }
 
     /**
@@ -57,12 +58,12 @@ class MarkersController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Marker $location
+     * @param \App\Marker $marker
      *
      * @return \Illuminate\Http\Response
      */
-    public function show (Marker $location) {
-        //
+    public function show (Marker $marker) {
+        return Response(Marker::with(['type', 'mapRegion', 'categories'])->where('id', $marker->id)->get()[0]);
     }
 
     /**

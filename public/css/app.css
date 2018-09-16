@@ -6872,6 +6872,8 @@ body {
       border-radius: 64px;
       margin: 7.5px 15px 10px auto;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.08); }
+      #app #map-modifiers #layers img {
+        height: 30px; }
     #app #map-modifiers #marker-filters {
       max-width: 450px; }
       #app #map-modifiers #marker-filters main {
@@ -6879,37 +6881,6 @@ body {
         overflow-x: hidden;
         overflow-y: auto;
         padding: 15px; }
-        #app #map-modifiers #marker-filters main .layer-selector {
-          cursor: pointer;
-          position: relative;
-          height: 64px;
-          width: 64px;
-          margin-bottom: 7.5px;
-          border: 2px solid rgba(0, 0, 0, 0.02);
-          border-radius: 3px;
-          transition: all 150ms ease-in-out;
-          overflow: hidden; }
-          #app #map-modifiers #marker-filters main .layer-selector:hover {
-            box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.08);
-            border-color: rgba(0, 0, 0, 0.08); }
-          #app #map-modifiers #marker-filters main .layer-selector.selected {
-            border-color: #3490dc;
-            background-color: rgba(52, 144, 220, 0.4); }
-          #app #map-modifiers #marker-filters main .layer-selector .marker-type-label {
-            cursor: pointer;
-            height: 64px;
-            width: 64px; }
-            #app #map-modifiers #marker-filters main .layer-selector .marker-type-label .marker-type-icon {
-              cursor: pointer;
-              height: 32px; }
-            #app #map-modifiers #marker-filters main .layer-selector .marker-type-label .marker-type-name {
-              cursor: pointer;
-              font-size: 0.75em;
-              position: absolute;
-              left: 0;
-              bottom: 0;
-              text-align: center;
-              width: 100%; }
   #app.is-loading #loader {
     position: absolute;
     z-index: 4000;
