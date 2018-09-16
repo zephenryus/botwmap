@@ -9,13 +9,15 @@ import { MarkerFilterComponent } from "./marker-filter/marker-filter.component";
 import { HttpClientModule } from "@angular/common/http";
 import { MarkersService } from "./markers/markers.service";
 import { MarkerTypesService } from "./marker-types/marker-types.service";
+import { MarkerTypeComponent } from "./marker-filter/marker-type/marker-type.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         MapComponent,
         MarkerDetailsComponent,
-        MarkerFilterComponent
+        MarkerFilterComponent,
+        MarkerTypeComponent
     ],
     imports: [
         BrowserModule,

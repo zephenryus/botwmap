@@ -15,11 +15,11 @@ class CreateMarkerCategoriesTable extends Migration {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->unsignedInteger('marker_id');
+            $table->unsignedInteger('parent_category_id')->nullable();
             $table->string('marker_category_name');
             $table->timestamps();
 
-            $table->foreign('marker_id')->references('id')->on('markers');
+            $table->foreign('parent_category_id')->references('id')->on('marker_categories');
         });
     }
 

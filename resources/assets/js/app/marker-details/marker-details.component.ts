@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MarkersService } from "../markers/markers.service";
 import { Marker } from "../markers/marker";
 import { Subscription } from "rxjs";
+import { MapService } from "../map/map.service";
 
 @Component({
     selector: 'app-marker-details',
@@ -12,11 +13,11 @@ export class MarkerDetailsComponent implements OnInit {
     markerSelectSubscription: Subscription;
     isOpen = false;
 
-    constructor (private  markersService: MarkersService) {}
+    constructor (private mapService: MapService, private  markersService: MarkersService) {}
 
     ngOnInit(): void {
-        this.markerSelectSubscription = this.markersService.onMarkerSelected.subscribe(
-            (marker: Marker) => {
+        this.markerSelectSubscription = this.mapService.onMarkerSelected.subscribe(
+            (marker) => {
                 this.selectedMarker = marker;
             }
         )

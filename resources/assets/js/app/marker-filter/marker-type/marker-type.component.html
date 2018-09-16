@@ -1,0 +1,12 @@
+<div class="marker-type-wrapper" *ngFor="let markerType of markerTypes">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="{{ markerType.id }}" name="{{ markerType.id }}">
+        <label class="custom-control-label" for="{{ markerType.id }}">{{ markerType.label }}</label>
+    </div>
+
+    <!--<button class="expand btn ml-auto">-->
+        <!--<span class="sr-only">Expand</span>-->
+    <!--</button>-->
+
+    <app-marker-type *ngIf="markerType.children.length > 0" [markerTypes]="markerType.children"></app-marker-type>
+</div>
