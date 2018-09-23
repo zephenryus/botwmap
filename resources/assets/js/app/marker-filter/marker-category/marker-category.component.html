@@ -1,0 +1,12 @@
+<div class="marker-category-wrapper" *ngFor="let markerCategory of markerCategories">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="{{ markerCategory.id }}" name="{{ markerCategory.id }}"  (change)="toggleLayer(markerCategory)">
+        <label class="custom-control-label" for="{{ markerCategory.id }}">{{ markerCategory.name }}</label>
+    </div>
+
+    <!--<button class="expand btn ml-auto">-->
+        <!--<span class="sr-only">Expand</span>-->
+    <!--</button>-->
+
+    <app-marker-category *ngIf="markerCategory.children.length > 0" [markerCategories]="markerCategory.children"></app-marker-category>
+</div>

@@ -9,17 +9,28 @@ class MapRegionsSeeder extends Seeder {
      * @return void
      */
     public function run () {
-        $chars = 'abcdefghij';
-        for ($alpha = 0; $alpha < 10; $alpha++) {
+        DB::table('map_regions')->insert([
+            'region_name' => "Out of Bounds",
+            'north_boundary' => -8000,
+            'east_boundary' => -8000,
+            'south_boundary' => 8000,
+            'west_boundary' => 8000,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
+        ]);
+
+        $chars = 'zabcdefghijk';
+        for ($alpha = 0; $alpha < 12; $alpha++) {
             $letter = strtoupper(substr($chars, $alpha, 1));
-            for ($integer = 0; $integer < 8; $integer++) {
-                $number = $integer + 1;
+            for ($integer = 0; $integer < 10; $integer++) {
                 DB::table('map_regions')->insert([
-                    'region_name' => "{$letter}-{$number}",
-                    'north_boundary' => ($integer - 4) * 1000,
-                    'east_boundary' => ($alpha - 5) * 1000,
-                    'south_boundary' => ($integer - 4) * 1000 + 1000,
-                    'west_boundary' => ($alpha - 5) * 1000 + 1000,
+                    'region_name' => "{$letter}-{$integer}",
+                    'north_boundary' => ($integer - 5) * 1000,
+                    'east_boundary' => ($alpha - 6) * 1000,
+                    'south_boundary' => ($integer - 5) * 1000 + 1000,
+                    'west_boundary' => ($alpha - 6) * 1000 + 1000,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s"),
                 ]);
             }
         }

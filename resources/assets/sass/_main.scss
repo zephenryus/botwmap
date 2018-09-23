@@ -21,8 +21,8 @@ body {
 
 #app {
     position: relative;
-    //height:   100vh;
-    //width:    100vw;
+    height:   100%;
+    width:    100vw;
     overflow: hidden;
 
     #map-header, #map-modifiers, #marker-details {
@@ -140,7 +140,7 @@ body {
                 margin:        15px;
                 border-radius: 3px;
 
-                .marker-type-wrapper {
+                .marker-category-wrapper {
                     width:       100%;
                     line-height: 3rem;
 
@@ -164,8 +164,8 @@ body {
                     }
                 }
 
-                .marker-type-wrapper .marker-type-wrapper {
-                    padding-left: 15px;
+                .marker-category-wrapper .marker-category-wrapper {
+                    padding-left: 30px;
                 }
 
             }

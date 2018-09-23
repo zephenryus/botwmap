@@ -9,7 +9,8 @@ import { MarkerFilterComponent } from "./marker-filter/marker-filter.component";
 import { HttpClientModule } from "@angular/common/http";
 import { MarkersService } from "./markers/markers.service";
 import { MarkerTypesService } from "./marker-types/marker-types.service";
-import { MarkerTypeComponent } from "./marker-filter/marker-type/marker-type.component";
+import { MarkerCategoryComponent } from "./marker-filter/marker-category/marker-category.component";
+import { MarkerCategoriesService } from "./marker-categories/marker-categories.service";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,7 @@ import { MarkerTypeComponent } from "./marker-filter/marker-type/marker-type.com
         MapComponent,
         MarkerDetailsComponent,
         MarkerFilterComponent,
-        MarkerTypeComponent
+        MarkerCategoryComponent
     ],
     imports: [
         BrowserModule,
@@ -26,7 +27,8 @@ import { MarkerTypeComponent } from "./marker-filter/marker-type/marker-type.com
     providers: [
         MapService,
         MarkersService,
-        MarkerTypesService
+        MarkerTypesService,
+        MarkerCategoriesService
     ],
     bootstrap: [AppComponent]
 })

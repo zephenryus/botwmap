@@ -1,12 +1,13 @@
 <aside id="map-modifiers">
     <div id="marker-filters" *ngIf="isOpen">
         <main>
-            <!--<app-marker-type [markerTypes]="markerTypes"></app-marker-type>-->
-        </main>
+            <form action="">
+                <app-marker-category [markerCategories]="markerCategories"></app-marker-category>
+            </form>
         </main>
     </div>
 
-    <button id="layers" class="btn btn-primary" (click)="toggleDialog()">
-        <img [src]="iconHref">
-    </button>
+    <!--<button id="layers" class="btn btn-primary" (click)="toggleDialog()">-->
+        <!--<img [src]="iconHref">-->
+    <!--</button>-->
 </aside>

@@ -4,8 +4,8 @@ import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import { Marker } from "../markers/marker";
 import { MarkersService } from "../markers/markers.service";
 import { MarkerTypesService } from "../marker-types/marker-types.service";
-import { MarkerType } from "../marker-types/marker-type";
 import { Subject, Subscription } from "rxjs";
+import { MarkerType } from "../marker-types/marker-type";
 
 @Injectable({
     providedIn: 'root'
@@ -99,6 +99,7 @@ export class MapService {
             let markerTypeGroup = this.markers[marker.marker_type_id.toString()];
 
             if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
+                console.log(marker);
                 let newMarker = Leaflet.marker([
                         -this.normalizeCoord(marker.z),
                         this.normalizeCoord(marker.x)

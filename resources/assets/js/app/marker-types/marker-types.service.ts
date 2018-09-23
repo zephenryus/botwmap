@@ -6,7 +6,6 @@ import { Subject } from "rxjs";
 
 import { MarkerType } from "./marker-type";
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -17,18 +16,21 @@ export class MarkerTypesService {
     onSelectedMarkerTypesChanged = new Subject<number[]>();
 
     constructor(private http: HttpClient) {
+        this.getMarkerTypes();
     }
 
     getMarkerTypes() {
         return this.http.get<MarkerType[]>('/marker-types')
             .pipe(map(
                 (markerTypes) => {
-                    for (let markerType in markerTypes) {
-                        if (markerTypes.hasOwnProperty(markerType)) {
-                            markerTypes[markerType] = new MarkerType(markerTypes[markerType]);
-                            this.markerTypes.push(markerTypes[markerType]);
-                        }
-                    }
+                    // console.log(markerTypes);
+                    // for (let markerType in markerTypes) {
+                    //     if (markerTypes.hasOwnProperty(markerType)) {
+                    //         console.log(markerType, markerTypes[markerType]);
+                    //         markerTypes[markerType] = new MarkerType(markerTypes[markerType]);
+                    //         this.markerTypes.push(markerTypes[markerType]);
+                    //     }
+                    // }
                     return markerTypes;
                 }
             ));
@@ -76,6 +78,7 @@ export class MarkerTypesService {
     }
 
     getById(id: number) {
+        console.log(this.markerTypes);
         for (let markerType of this.markerTypes) {
             if (markerType.id == id) {
                 return markerType;
@@ -87,6 +90,7 @@ export class MarkerTypesService {
 
     getIcon(id) {
         const markerType = this.getById(id);
+        console.log(markerType);
         return markerType.icon;
     }
 
