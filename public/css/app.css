@@ -7006,5 +7006,8 @@ body {
         @media (min-width: 768px) {
           #app #marker-details #marker-details-wrapper #marker-details-close {
             top: 80px; } }
+  #app #map {
+    width: 100vw;
+    height: 100%; }
 
 /*# sourceMappingURL=app.css.map */

@@ -1,11 +1,11 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import * as Leaflet from 'leaflet/dist/leaflet.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
-import { Marker } from "../markers/marker";
-import { MarkersService } from "../markers/markers.service";
-import { MarkerTypesService } from "../marker-types/marker-types.service";
+import { Marker } from "../old-markers/marker";
+import { MarkersService } from "../old-markers/markers.service";
+import { MarkerTypesService } from "../old-marker-types/marker-types.service";
 import { Subject, Subscription } from "rxjs";
-import { MarkerType } from "../marker-types/marker-type";
+import { MarkerType } from "../old-marker-types/marker-type";
 
 @Injectable({
     providedIn: 'root'
