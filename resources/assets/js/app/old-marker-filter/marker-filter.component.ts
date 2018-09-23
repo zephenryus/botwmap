@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MarkerTypesService } from "../marker-types/marker-types.service";
-import { MapService } from "../map/map.service";
-import { MarkerCategoriesService } from "../marker-categories/marker-categories.service";
-import { MarkerCategory } from "../marker-categories/marker-category";
+import { MarkerTypesService } from "../old-marker-types/marker-types.service";
+import { MapService } from "../old-map/map.service";
+import { MarkerCategoriesService } from "../old-marker-categories/marker-categories.service";
+import { MarkerCategory } from "../old-marker-categories/marker-category";
 
 @Component({
     selector: 'app-marker-filter',

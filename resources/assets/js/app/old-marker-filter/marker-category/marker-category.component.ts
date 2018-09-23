@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MarkerCategory } from "../../marker-categories/marker-category";
-import { MarkerCategoriesService } from "../../marker-categories/marker-categories.service";
-import { MarkerTypesService } from "../../marker-types/marker-types.service";
+import { MarkerCategory } from "../../old-marker-categories/marker-category";
+import { MarkerCategoriesService } from "../../old-marker-categories/marker-categories.service";
+import { MarkerTypesService } from "../../old-marker-types/marker-types.service";
 
 @Component({
     selector: 'app-marker-category',

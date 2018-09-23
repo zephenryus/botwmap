@@ -1,4 +1,4 @@
-import { MarkerType } from "../marker-types/marker-type";
+import { MarkerType } from "../old-marker-types/marker-type";
 
 export class Marker {
     id: number;
