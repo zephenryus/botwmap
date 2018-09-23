@@ -6802,6 +6802,8 @@ body {
 
 #app {
   position: relative;
+  height: 100%;
+  width: 100vw;
   overflow: hidden; }
   #app #map-header, #app #map-modifiers, #app #marker-details {
     position: absolute; }
@@ -6885,12 +6887,12 @@ body {
         text-align: left;
         margin: 15px;
         border-radius: 3px; }
-        #app #map-modifiers #marker-filters main .marker-type-wrapper {
+        #app #map-modifiers #marker-filters main .marker-category-wrapper {
           width: 100%;
           line-height: 3rem; }
-          #app #map-modifiers #marker-filters main .marker-type-wrapper.active {
+          #app #map-modifiers #marker-filters main .marker-category-wrapper.active {
             background: rgba(52, 144, 220, 0.08); }
-          #app #map-modifiers #marker-filters main .marker-type-wrapper button.expand::after {
+          #app #map-modifiers #marker-filters main .marker-category-wrapper button.expand::after {
             display: inline-block;
             width: 0;
             height: 0;
@@ -6901,8 +6903,8 @@ body {
             border-right: .3em solid transparent;
             border-bottom: 0;
             border-left: .3em solid transparent; }
-        #app #map-modifiers #marker-filters main .marker-type-wrapper .marker-type-wrapper {
-          padding-left: 15px; }
+        #app #map-modifiers #marker-filters main .marker-category-wrapper .marker-category-wrapper {
+          padding-left: 30px; }
   #app.is-loading #loader {
     position: absolute;
     z-index: 4000;

@@ -19,7 +19,7 @@ class CreateMarkerCategoriesTable extends Migration {
             $table->string('marker_category_name');
             $table->timestamps();
 
-            $table->foreign('parent_category_id')->references('id')->on('marker_categories');
+            // $table->foreign('parent_category_id')->references('id')->on('marker_categories');
         });
     }
 

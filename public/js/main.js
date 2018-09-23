@@ -100,13 +100,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _markers_markers_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./markers/markers.service */ "./resources/assets/js/app/markers/markers.service.ts");
 /* harmony import */ var _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./marker-types/marker-types.service */ "./resources/assets/js/app/marker-types/marker-types.service.ts");
-/* harmony import */ var _marker_filter_marker_type_marker_type_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./marker-filter/marker-type/marker-type.component */ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.ts");
+/* harmony import */ var _marker_filter_marker_category_marker_category_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./marker-filter/marker-category/marker-category.component */ "./resources/assets/js/app/marker-filter/marker-category/marker-category.component.ts");
+/* harmony import */ var _marker_categories_marker_categories_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./marker-categories/marker-categories.service */ "./resources/assets/js/app/marker-categories/marker-categories.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -128,7 +130,7 @@ var AppModule = /** @class */ (function () {
                 _map_map_component__WEBPACK_IMPORTED_MODULE_3__["MapComponent"],
                 _marker_details_marker_details_component__WEBPACK_IMPORTED_MODULE_5__["MarkerDetailsComponent"],
                 _marker_filter_marker_filter_component__WEBPACK_IMPORTED_MODULE_6__["MarkerFilterComponent"],
-                _marker_filter_marker_type_marker_type_component__WEBPACK_IMPORTED_MODULE_10__["MarkerTypeComponent"]
+                _marker_filter_marker_category_marker_category_component__WEBPACK_IMPORTED_MODULE_10__["MarkerCategoryComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -137,7 +139,8 @@ var AppModule = /** @class */ (function () {
             providers: [
                 _map_map_service__WEBPACK_IMPORTED_MODULE_4__["MapService"],
                 _markers_markers_service__WEBPACK_IMPORTED_MODULE_8__["MarkersService"],
-                _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_9__["MarkerTypesService"]
+                _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_9__["MarkerTypesService"],
+                _marker_categories_marker_categories_service__WEBPACK_IMPORTED_MODULE_11__["MarkerCategoriesService"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
         })
@@ -319,6 +322,7 @@ var MapService = /** @class */ (function () {
             }
             var markerTypeGroup = this.markers[marker.marker_type_id.toString()];
             if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
+                console.log(marker);
                 var newMarker = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["marker"]([
                     -this.normalizeCoord(marker.z),
                     this.normalizeCoord(marker.x)
@@ -364,6 +368,80 @@ var MapService = /** @class */ (function () {
             _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_4__["MarkerTypesService"]])
     ], MapService);
     return MapService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/marker-categories/marker-categories.service.ts":
+/*!********************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-categories/marker-categories.service.ts ***!
+  \********************************************************************************/
+/*! exports provided: MarkerCategoriesService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerCategoriesService", function() { return MarkerCategoriesService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var MarkerCategoriesService = /** @class */ (function () {
+    function MarkerCategoriesService(http) {
+        this.http = http;
+        this.onSelectedMarkerCategoriesChanged = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+    }
+    MarkerCategoriesService.prototype.getMarkerCategories = function () {
+        var _this = this;
+        return this.http.get('/marker-categories')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (markerCategories) {
+            _this.markerCategories = markerCategories;
+            return markerCategories;
+        }));
+    };
+    MarkerCategoriesService.prototype.toggleSelected = function (markerCategory) {
+        var category = this.getById(markerCategory.id);
+        category.selected = !category.selected;
+        return category.selected;
+    };
+    MarkerCategoriesService.prototype.getById = function (id) {
+        return this.recurseForID(this.markerCategories, id);
+    };
+    MarkerCategoriesService.prototype.recurseForID = function (markerCategories, id) {
+        for (var _i = 0, markerCategories_1 = markerCategories; _i < markerCategories_1.length; _i++) {
+            var markerCategory = markerCategories_1[_i];
+            if (markerCategory.id === id) {
+                return markerCategory;
+            }
+            var idInChild = this.recurseForID(markerCategory.children, id);
+            if (idInChild) {
+                return idInChild;
+            }
+        }
+        return false;
+    };
+    MarkerCategoriesService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], MarkerCategoriesService);
+    return MarkerCategoriesService;
 }());
 
 
@@ -439,6 +517,93 @@ var MarkerDetailsComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js/app/marker-filter/marker-category/marker-category.component.html":
+/*!**********************************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-filter/marker-category/marker-category.component.html ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"marker-category-wrapper\" *ngFor=\"let markerCategory of markerCategories\">\r\n    <div class=\"custom-control custom-checkbox\">\r\n        <input type=\"checkbox\" class=\"custom-control-input\" id=\"{{ markerCategory.id }}\" name=\"{{ markerCategory.id }}\"  (change)=\"toggleLayer(markerCategory)\">\r\n        <label class=\"custom-control-label\" for=\"{{ markerCategory.id }}\">{{ markerCategory.name }}</label>\r\n    </div>\r\n\r\n    <!--<button class=\"expand btn ml-auto\">-->\r\n        <!--<span class=\"sr-only\">Expand</span>-->\r\n    <!--</button>-->\r\n\r\n    <app-marker-category *ngIf=\"markerCategory.children.length > 0\" [markerCategories]=\"markerCategory.children\"></app-marker-category>\r\n</div>"
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/marker-filter/marker-category/marker-category.component.ts":
+/*!********************************************************************************************!*\
+  !*** ./resources/assets/js/app/marker-filter/marker-category/marker-category.component.ts ***!
+  \********************************************************************************************/
+/*! exports provided: MarkerCategoryComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerCategoryComponent", function() { return MarkerCategoryComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _marker_categories_marker_categories_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../marker-categories/marker-categories.service */ "./resources/assets/js/app/marker-categories/marker-categories.service.ts");
+/* harmony import */ var _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../marker-types/marker-types.service */ "./resources/assets/js/app/marker-types/marker-types.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var MarkerCategoryComponent = /** @class */ (function () {
+    function MarkerCategoryComponent(markerCategoriesService, markerTypesService) {
+        this.markerCategoriesService = markerCategoriesService;
+        this.markerTypesService = markerTypesService;
+        this.markerCategories = [];
+    }
+    MarkerCategoryComponent.prototype.toggleLayer = function (markerCategory) {
+        if (this.markerCategoriesService.toggleSelected(markerCategory)) {
+            for (var _i = 0, _a = markerCategory.types; _i < _a.length; _i++) {
+                var markerType = _a[_i];
+                this.markerTypesService.selectMarkerType(markerType);
+            }
+        }
+        else {
+            for (var _b = 0, _c = markerCategory.types; _b < _c.length; _b++) {
+                var markerType = _c[_b];
+                this.markerTypesService.unselectMarkerType(markerType);
+            }
+        }
+        // if (this.markerCategories[index].selected) {
+        //     console.log(this.markerCategories[index]);
+        //     for (let type of this.markerCategories[index].types) {
+        //         console.log(this.markerCategories[index], type);
+        //         this.markerTypesService.selectMarkerType(type);
+        //     }
+        // } else {
+        //     for (let type of this.markerCategories[index].types) {
+        //         console.log(this.markerCategories[index], type);
+        //         this.markerTypesService.unselectMarkerType(type);
+        //     }
+        // }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], MarkerCategoryComponent.prototype, "markerCategories", void 0);
+    MarkerCategoryComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-marker-category',
+            template: __webpack_require__(/*! ./marker-category.component.html */ "./resources/assets/js/app/marker-filter/marker-category/marker-category.component.html")
+        }),
+        __metadata("design:paramtypes", [_marker_categories_marker_categories_service__WEBPACK_IMPORTED_MODULE_1__["MarkerCategoriesService"],
+            _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_2__["MarkerTypesService"]])
+    ], MarkerCategoryComponent);
+    return MarkerCategoryComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/app/marker-filter/marker-filter.component.html":
 /*!****************************************************************************!*\
   !*** ./resources/assets/js/app/marker-filter/marker-filter.component.html ***!
@@ -446,7 +611,7 @@ var MarkerDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<aside id=\"map-modifiers\">\r\n    <div id=\"marker-filters\" *ngIf=\"isOpen\">\r\n        <main>\r\n            <!--<app-marker-type [markerTypes]=\"markerTypes\"></app-marker-type>-->\r\n        </main>\r\n        </main>\r\n    </div>\r\n\r\n    <button id=\"layers\" class=\"btn btn-primary\" (click)=\"toggleDialog()\">\r\n        <img [src]=\"iconHref\">\r\n    </button>\r\n</aside>"
+module.exports = "<aside id=\"map-modifiers\">\r\n    <div id=\"marker-filters\" *ngIf=\"isOpen\">\r\n        <main>\r\n            <form action=\"\">\r\n                <app-marker-category [markerCategories]=\"markerCategories\"></app-marker-category>\r\n            </form>\r\n        </main>\r\n    </div>\r\n\r\n    <!--<button id=\"layers\" class=\"btn btn-primary\" (click)=\"toggleDialog()\">-->\r\n        <!--<img [src]=\"iconHref\">-->\r\n    <!--</button>-->\r\n</aside>"
 
 /***/ }),
 
@@ -463,6 +628,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../marker-types/marker-types.service */ "./resources/assets/js/app/marker-types/marker-types.service.ts");
 /* harmony import */ var _map_map_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../map/map.service */ "./resources/assets/js/app/map/map.service.ts");
+/* harmony import */ var _marker_categories_marker_categories_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../marker-categories/marker-categories.service */ "./resources/assets/js/app/marker-categories/marker-categories.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -475,195 +641,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var MarkerFilterComponent = /** @class */ (function () {
-    function MarkerFilterComponent(markerTypesService, mapService) {
-        this.markerTypesService = markerTypesService;
+    function MarkerFilterComponent(markerCategoriesService, mapService, markerTypesService) {
+        var _this = this;
+        this.markerCategoriesService = markerCategoriesService;
         this.mapService = mapService;
+        this.markerTypesService = markerTypesService;
         this.isOpen = true;
-        this.markerLayers = [];
+        this.markerCategories = [];
         this.selectedLayers = [];
         this.iconHref = "images/icons/markers/markers.svg";
-        this.markerTypes =
-            [
-                {
-                    "id": 'Animal',
-                    "markerTypes": [],
-                    "label": "Animals",
-                    "children": [
-                        {
-                            "id": 'Animal_Bear',
-                            "markerTypes": [57, 3427],
-                            "label": "Bears",
-                            "children": [
-                                {
-                                    "id": 'Animal_Bear_B',
-                                    "markerTypes": [57],
-                                    "label": "Grizzlemaw Bear",
-                                    "children": []
-                                },
-                                {
-                                    "id": 'Animal_Bear_A',
-                                    "markerTypes": [3427],
-                                    "label": "Honeyvore Bear",
-                                    "children": []
-                                }
-                            ]
-                        },
-                        {
-                            "id": 'Animal_Birds',
-                            "markerTypes": [3095, 3576, 1545, 1542, 1537, 1556, 1549, 1158, 3984, 2846, 3758, 810, 1476,
-                                1473, 563, 1568, 1547, 3851, 3183, 568],
-                            "label": "Birds",
-                            "children": [
-                                {
-                                    "id": 'Animal_Kokko_A',
-                                    "markerTypes": [3095, 3576],
-                                    "label": "Cuccos",
-                                    "children": [
-                                        {
-                                            "id": 'Animal_Kokko_B',
-                                            "markerTypes": [3576],
-                                            "label": "Cuccos (Cado's Cuccos)",
-                                            "children": []
-                                        },
-                                    ]
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [1545, 1542],
-                                    "label": "Crows",
-                                    "children": [
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1542],
-                                            "label": "Crow Swarm",
-                                            "children": []
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [1537],
-                                    "label": "Bright-Chested Duck",
-                                    "children": []
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [1556],
-                                    "label": "Islander Hawk",
-                                    "children": []
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [1549, 1158],
-                                    "label": "Heron",
-                                    "children": [
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1549],
-                                            "label": "Blue-Winged Heron",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1158],
-                                            "label": "Pink Heron",
-                                            "children": []
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [3984, 2846],
-                                    "label": "Seagull",
-                                    "children": [
-                                        {
-                                            "id": '',
-                                            "markerTypes": [2846],
-                                            "label": "Seagull Swarm",
-                                            "children": []
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [3758],
-                                    "label": "Eldin Ostrich",
-                                    "children": []
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [810, 1476, 1473, 563],
-                                    "label": "Pigeons",
-                                    "children": [
-                                        {
-                                            "id": '',
-                                            "markerTypes": [810],
-                                            "label": "Wood Pigeon Swarm",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1476],
-                                            "label": "Rainbow Pigeon",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1473],
-                                            "label": "Rainbow Pigeon Swarm",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [563],
-                                            "label": "White Pigeon",
-                                            "children": []
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": '',
-                                    "markerTypes": [1568, 1547, 3851, 3183, 568],
-                                    "label": "Sparrows",
-                                    "children": [
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1568],
-                                            "label": "Blue Sparrow",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [1547],
-                                            "label": "Common Sparrow",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [3851],
-                                            "label": "Golden Sparrow",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [3183],
-                                            "label": "Rainbow Sparrow",
-                                            "children": []
-                                        },
-                                        {
-                                            "id": '',
-                                            "markerTypes": [568],
-                                            "label": "Red Sparrow",
-                                            "children": []
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                    ]
-                }
-            ];
+        this.markerCategoriesService.getMarkerCategories()
+            .subscribe(function (markerCategories) {
+            _this.markerCategories = markerCategories;
+            _this.selectedLayers = _this.mapService.selectedMarkerTypes;
+            _this.markSelected();
+        });
     }
     MarkerFilterComponent.prototype.toggleDialog = function () {
         this.isOpen = !this.isOpen;
@@ -671,117 +665,23 @@ var MarkerFilterComponent = /** @class */ (function () {
             ? this.iconHref = "images/icons/markers/close.svg"
             : this.iconHref = "images/icons/markers/markers.svg";
     };
-    MarkerFilterComponent.prototype.toggleLayer = function (index) {
-        // console.log(this.markerLayers[index]);
-        this.markerLayers[index].selected = !this.markerLayers[index].selected;
-        if (this.markerLayers[index].selected) {
-            this.markerTypesService.selectMarkerType(this.markerLayers[index].id);
-        }
-        else {
-            this.markerTypesService.unselectMarkerType(this.markerLayers[index].id);
-        }
-    };
     MarkerFilterComponent.prototype.markSelected = function () {
-        for (var markerLayer in this.markerLayers) {
-            this.markerLayers[markerLayer].selected = false;
+        for (var markerLayer in this.markerCategories) {
+            this.markerCategories[markerLayer].selected = false;
         }
     };
     MarkerFilterComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.markerTypesService.getMarkerTypes()
-            .subscribe(function (markerTypes) {
-            _this.markerLayers = markerTypes;
-            _this.selectedLayers = _this.mapService.selectedMarkerTypes;
-            _this.markSelected();
-        });
     };
     MarkerFilterComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-marker-filter',
             template: __webpack_require__(/*! ./marker-filter.component.html */ "./resources/assets/js/app/marker-filter/marker-filter.component.html")
         }),
-        __metadata("design:paramtypes", [_marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_1__["MarkerTypesService"],
-            _map_map_service__WEBPACK_IMPORTED_MODULE_2__["MapService"]])
+        __metadata("design:paramtypes", [_marker_categories_marker_categories_service__WEBPACK_IMPORTED_MODULE_3__["MarkerCategoriesService"],
+            _map_map_service__WEBPACK_IMPORTED_MODULE_2__["MapService"],
+            _marker_types_marker_types_service__WEBPACK_IMPORTED_MODULE_1__["MarkerTypesService"]])
     ], MarkerFilterComponent);
     return MarkerFilterComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.html":
-/*!**************************************************************************************!*\
-  !*** ./resources/assets/js/app/marker-filter/marker-type/marker-type.component.html ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"marker-type-wrapper\" *ngFor=\"let markerType of markerTypes\">\r\n    <div class=\"custom-control custom-checkbox\">\r\n        <input type=\"checkbox\" class=\"custom-control-input\" id=\"{{ markerType.id }}\" name=\"{{ markerType.id }}\">\r\n        <label class=\"custom-control-label\" for=\"{{ markerType.id }}\">{{ markerType.label }}</label>\r\n    </div>\r\n\r\n    <!--<button class=\"expand btn ml-auto\">-->\r\n        <!--<span class=\"sr-only\">Expand</span>-->\r\n    <!--</button>-->\r\n\r\n    <app-marker-type *ngIf=\"markerType.children.length > 0\" [markerTypes]=\"markerType.children\"></app-marker-type>\r\n</div>"
-
-/***/ }),
-
-/***/ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.ts":
-/*!************************************************************************************!*\
-  !*** ./resources/assets/js/app/marker-filter/marker-type/marker-type.component.ts ***!
-  \************************************************************************************/
-/*! exports provided: MarkerTypeComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerTypeComponent", function() { return MarkerTypeComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var MarkerTypeComponent = /** @class */ (function () {
-    function MarkerTypeComponent() {
-    }
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Array)
-    ], MarkerTypeComponent.prototype, "markerTypes", void 0);
-    MarkerTypeComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-marker-type',
-            template: __webpack_require__(/*! ./marker-type.component.html */ "./resources/assets/js/app/marker-filter/marker-type/marker-type.component.html")
-        })
-    ], MarkerTypeComponent);
-    return MarkerTypeComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/app/marker-types/marker-type.ts":
-/*!*************************************************************!*\
-  !*** ./resources/assets/js/app/marker-types/marker-type.ts ***!
-  \*************************************************************/
-/*! exports provided: MarkerType */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerType", function() { return MarkerType; });
-var MarkerType = /** @class */ (function () {
-    function MarkerType(markerType) {
-        this.id = markerType.id;
-        this.marker_type_name = markerType.marker_type_name;
-        this.marker_type_slug = markerType.marker_type_slug;
-        this.icon = markerType.icon;
-        this.marker_type_description = markerType.marker_type_description;
-        this.selected = markerType.selected || false;
-    }
-    return MarkerType;
 }());
 
 
@@ -802,7 +702,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _marker_type__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./marker-type */ "./resources/assets/js/app/marker-types/marker-type.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -816,24 +715,25 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var MarkerTypesService = /** @class */ (function () {
     function MarkerTypesService(http) {
         this.http = http;
         this.markerTypes = [];
         this.selectedMarkerTypes = [];
         this.onSelectedMarkerTypesChanged = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        this.getMarkerTypes();
     }
     MarkerTypesService.prototype.getMarkerTypes = function () {
-        var _this = this;
         return this.http.get('/marker-types')
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (markerTypes) {
-            for (var markerType in markerTypes) {
-                if (markerTypes.hasOwnProperty(markerType)) {
-                    markerTypes[markerType] = new _marker_type__WEBPACK_IMPORTED_MODULE_4__["MarkerType"](markerTypes[markerType]);
-                    _this.markerTypes.push(markerTypes[markerType]);
-                }
-            }
+            // console.log(markerTypes);
+            // for (let markerType in markerTypes) {
+            //     if (markerTypes.hasOwnProperty(markerType)) {
+            //         console.log(markerType, markerTypes[markerType]);
+            //         markerTypes[markerType] = new MarkerType(markerTypes[markerType]);
+            //         this.markerTypes.push(markerTypes[markerType]);
+            //     }
+            // }
             return markerTypes;
         }));
     };
@@ -870,6 +770,7 @@ var MarkerTypesService = /** @class */ (function () {
         return markerTypes;
     };
     MarkerTypesService.prototype.getById = function (id) {
+        console.log(this.markerTypes);
         for (var _i = 0, _a = this.markerTypes; _i < _a.length; _i++) {
             var markerType = _a[_i];
             if (markerType.id == id) {
@@ -880,6 +781,7 @@ var MarkerTypesService = /** @class */ (function () {
     };
     MarkerTypesService.prototype.getIcon = function (id) {
         var markerType = this.getById(id);
+        console.log(markerType);
         return markerType.icon;
     };
     MarkerTypesService.prototype.getName = function (id) {

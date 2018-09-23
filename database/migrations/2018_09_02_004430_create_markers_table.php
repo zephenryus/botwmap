@@ -26,8 +26,8 @@ class CreateMarkersTable extends Migration {
             $table->string('source');
             $table->timestamps();
 
-            $table->foreign('map_region_id')->references('id')->on('map_regions');
-            $table->foreign('marker_type_id')->references('id')->on('marker_types');
+            // $table->foreign('map_region_id')->references('id')->on('map_regions');
+            // $table->foreign('marker_type_id')->references('id')->on('marker_types');
 
             $table->index('marker_name');
             $table->index('marker_type_id');
