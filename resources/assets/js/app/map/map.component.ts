@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { Marker } from "../marker/marker.model";
 
 import * as Leaflet from 'leaflet/dist/leaflet.js';
@@ -10,6 +10,8 @@ import * as Leaflet from 'leaflet/dist/leaflet.js';
 export class MapComponent implements OnInit, OnChanges {
     @Input() selectedMarkerTypes: number[];
     @Input() selectedMarker: Marker;
+
+    // @Output() markerSelected: any;
 
     public isMapGenerated: boolean = false;
     private map: Leaflet;
@@ -49,5 +51,18 @@ export class MapComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         console.log(changes);
+        if (changes.hasOwnProperty('selectedMarkerTypes')) {
+            this.selectedMarkersChanged(changes.selectedMarkerTypes);
+        }
+    }
+
+    selectedMarkersChanged(values: {currentValue: number[], previousValue: number[], firstChange: boolean}) {
+        if (! values.firstChange) {
+            let added = values.currentValue.filter(item => values.previousValue.indexOf(item) < 0);
+            let removed = values.previousValue.filter(item => values.currentValue.indexOf(item) < 0);
+            console.log(added, removed);
+        } else {
+            console.log(values.currentValue);
+        }
     }
 }

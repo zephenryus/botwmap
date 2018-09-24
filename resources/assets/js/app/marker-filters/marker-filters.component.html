@@ -1,1 +1,6 @@
-<p>marker filters working!</p>
+<div id="marker-filters">
+    <div class="custom-control custom-checkbox" *ngFor="let markerCategory of markerCategories">
+        <input type="checkbox" class="custom-control-input" id="marker-type-{{ markerCategory.id }}" name="marker-type-{{ markerCategory.id }}" (change)="toggleType($event)" [value]="markerCategory.id" [checked]="markerCategory.selected">
+        <label class="custom-control-label" for="marker-type-{{ markerCategory.id }}">{{ markerCategory.id }}</label>
+    </div>
+</div>

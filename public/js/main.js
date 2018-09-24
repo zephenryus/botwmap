@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"app\">\r\n    <!--<div id=\"menu\"></div>-->\r\n\r\n    <!--<div id=\"search\"></div>-->\r\n\r\n    <!--<app-marker-filters></app-marker-filters>-->\r\n\r\n    <app-marker-details></app-marker-details>\r\n\r\n    <app-map\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        [selectedMarker]=\"selectedMarker\"\r\n        (markerSelected)=\"onMarkerSelected($event)\"\r\n    ></app-map>\r\n</div>"
+module.exports = "<div id=\"app\">\r\n    <!--<div id=\"menu\"></div>-->\r\n\r\n    <!--<div id=\"search\"></div>-->\r\n\r\n    <app-marker-filters\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        (selectedMarkerTypesChanged)=\"onSelectedMarkerTypesChanged($event)\"\r\n    ></app-marker-filters>\r\n\r\n    <!--<app-marker-details></app-marker-details>-->\r\n\r\n    <app-map\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        [selectedMarker]=\"selectedMarker\"\r\n        (markerSelected)=\"onMarkerSelected($event)\"\r\n    ></app-map>\r\n</div>"
 
 /***/ }),
 
@@ -69,6 +69,9 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.onMarkerSelected = function (event) {
         console.log(event);
+    };
+    AppComponent.prototype.onSelectedMarkerTypesChanged = function (selectedMarkerTypes) {
+        this.selectedMarkerTypes = selectedMarkerTypes;
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -179,6 +182,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var MapComponent = /** @class */ (function () {
     function MapComponent() {
+        // @Output() markerSelected: any;
         this.isMapGenerated = false;
         this.mapLayers = [];
     }
@@ -210,6 +214,19 @@ var MapComponent = /** @class */ (function () {
     };
     MapComponent.prototype.ngOnChanges = function (changes) {
         console.log(changes);
+        if (changes.hasOwnProperty('selectedMarkerTypes')) {
+            this.selectedMarkersChanged(changes.selectedMarkerTypes);
+        }
+    };
+    MapComponent.prototype.selectedMarkersChanged = function (values) {
+        if (!values.firstChange) {
+            var added = values.currentValue.filter(function (item) { return values.previousValue.indexOf(item) < 0; });
+            var removed = values.previousValue.filter(function (item) { return values.currentValue.indexOf(item) < 0; });
+            console.log(added, removed);
+        }
+        else {
+            console.log(values.currentValue);
+        }
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -284,7 +301,7 @@ var MarkerDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>marker filters working!</p>"
+module.exports = "<div id=\"marker-filters\">\r\n    <div class=\"custom-control custom-checkbox\" *ngFor=\"let markerCategory of markerCategories\">\r\n        <input type=\"checkbox\" class=\"custom-control-input\" id=\"marker-type-{{ markerCategory.id }}\" name=\"marker-type-{{ markerCategory.id }}\" (change)=\"toggleType($event)\" [value]=\"markerCategory.id\" [checked]=\"markerCategory.selected\">\r\n        <label class=\"custom-control-label\" for=\"marker-type-{{ markerCategory.id }}\">{{ markerCategory.id }}</label>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -305,10 +322,42 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
 var MarkerFiltersComponent = /** @class */ (function () {
     function MarkerFiltersComponent() {
+        this.selectedMarkerTypesChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.markerCategories = [
+            { id: 100, selected: true },
+            { id: 498, selected: true },
+            { id: 932, selected: true },
+            { id: 2013, selected: true }
+        ];
     }
+    MarkerFiltersComponent.prototype.toggleType = function (event) {
+        var id = parseInt(event.target.value);
+        var selectedTypes = [];
+        for (var _i = 0, _a = this.markerCategories; _i < _a.length; _i++) {
+            var markerCategory = _a[_i];
+            if (markerCategory.id === id) {
+                markerCategory.selected = !markerCategory.selected;
+            }
+            if (markerCategory.selected) {
+                selectedTypes.push(markerCategory.id);
+            }
+        }
+        this.selectedMarkerTypesChanged.emit(selectedTypes);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], MarkerFiltersComponent.prototype, "selectedMarkerTypes", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], MarkerFiltersComponent.prototype, "selectedMarkerTypesChanged", void 0);
     MarkerFiltersComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-marker-filters',

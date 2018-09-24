@@ -3,9 +3,12 @@
 
     <!--<div id="search"></div>-->
 
-    <!--<app-marker-filters></app-marker-filters>-->
+    <app-marker-filters
+        [selectedMarkerTypes]="selectedMarkerTypes"
+        (selectedMarkerTypesChanged)="onSelectedMarkerTypesChanged($event)"
+    ></app-marker-filters>
 
-    <app-marker-details></app-marker-details>
+    <!--<app-marker-details></app-marker-details>-->
 
     <app-map
         [selectedMarkerTypes]="selectedMarkerTypes"
