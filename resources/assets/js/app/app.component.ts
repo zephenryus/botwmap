@@ -13,4 +13,8 @@ export class AppComponent {
     private onMarkerSelected(event) {
         console.log(event);
     }
+
+    private onSelectedMarkerTypesChanged(selectedMarkerTypes: number[]) {
+        this.selectedMarkerTypes = selectedMarkerTypes;
+    }
 }
