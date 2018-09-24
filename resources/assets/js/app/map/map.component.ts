@@ -1,9 +1,9 @@
-import { Component, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { Marker } from "../marker.model";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 
 import * as Leaflet from 'leaflet/dist/leaflet.js';
 import { MarkersService } from "../markers.service";
 import { MarkerType } from "../MarkerType.model";
+import { Marker } from "../Marker.model";
 
 @Component({
     selector: 'app-map',
@@ -14,7 +14,7 @@ export class MapComponent implements OnInit, OnChanges {
     @Input() selectedMarkerTypes: number[];
     @Input() selectedMarker: Marker;
 
-    // @Output() markerSelected: any;
+    @Output() markerSelected = new EventEmitter<Marker>();
 
     public isMapGenerated: boolean = false;
     private map: Leaflet;
@@ -95,7 +95,10 @@ export class MapComponent implements OnInit, OnChanges {
                     }),
                     title: marker.marker_name,
                     zIndexOffset: Math.floor(marker.y),
-                });
+                })
+                    .on('click', (event) => {
+                        this.showMarkerDetails(event.target);
+                    });
                 newMarker.markerId = marker.id;
                 newMarker.layerId = marker.marker_type_id;
 
@@ -107,5 +110,18 @@ export class MapComponent implements OnInit, OnChanges {
 
     private normalizeCoord(coord: number) {
         return (coord + 6000) * 0.03125
+    }
+
+    public showMarkerDetails(target) {
+        this.markersService.getById(target.markerId).subscribe(
+            (marker: Marker) => {
+                this.selectedMarker = marker;
+                this.markerSelected.emit(marker);
+                this.map.panTo([
+                    -this.normalizeCoord(marker.z),
+                    this.normalizeCoord(marker.x)
+                ])
+            }
+        );
     }
 }

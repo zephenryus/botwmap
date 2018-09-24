@@ -14,11 +14,20 @@ export class MarkersService {
     public getByType(types: number[]) {
         const typeString = types.join(',');
 
-        return this.http.get<Marker[]>('http://127.0.0.1:8000/markers?type=' + typeString)
+        return this.http.get<Marker[]>('/markers?type=' + typeString)
             .pipe(map(
                 (markers) => {
                     return markers;
                 }
             ));
+    }
+
+    public getById(id: number) {
+        return this.http.get<Marker>('/markers/' + id)
+            .pipe(map(
+                (marker) => {
+                    return marker;
+                }
+            ))
     }
 }

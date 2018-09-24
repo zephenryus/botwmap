@@ -1,1 +1,16 @@
-<p>marker details working!</p>
+<aside id="marker-details">
+    <div id="marker-details-wrapper">
+        <button class="btn" id="marker-details-close">Close</button>
+        <h3>{{ selectedMarker.marker_name }}</h3>
+
+        <p>{{ selectedMarker.marker_description }}</p>
+
+        <div class="marker-meta">
+            <small>
+                <div>&lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>
+                <div>Marker ID: {{ selectedMarker.id }}</div>
+                <div>Source: {{ selectedMarker.source }}</div>
+            </small>
+        </div>
+    </div>
+</aside>
