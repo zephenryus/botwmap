@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Marker } from "./marker.model";
 import { MarkerType } from "./MarkerType.model";
 import { map } from "rxjs/operators";
+import { BinarySearchTree } from "./BinarySearchTree";
 
 @Component({
     selector: 'app-root',
@@ -11,6 +12,7 @@ import { map } from "rxjs/operators";
 })
 export class AppComponent implements OnInit {
     markerTypes: MarkerType[];
+    markerTypesIndex: BinarySearchTree;
 
     selectedMarkerTypes: number[] = [1, 2];
     selectedMarker: Marker;
@@ -22,16 +24,21 @@ export class AppComponent implements OnInit {
             .pipe(map(
                 (markerTypes) => {
                     this.markerTypes = markerTypes;
+                    this.generateSearchTree(this.markerTypesIndex, this.markerTypes);
                 }
             ))
             .subscribe();
     }
 
-    private onMarkerSelected(event) {
-        console.log(event);
+    private onMarkerSelected(marker: Marker) {
+        this.selectedMarker = marker;
     }
 
     private onSelectedMarkerTypesChanged(selectedMarkerTypes: number[]) {
         this.selectedMarkerTypes = selectedMarkerTypes;
+    }
+
+    private generateSearchTree(binaryTree: BinarySearchTree, terms: any[]) {
+        terms = terms.sort();
     }
 }

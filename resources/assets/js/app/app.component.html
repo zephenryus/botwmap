@@ -9,7 +9,7 @@
         (selectedMarkerTypesChanged)="onSelectedMarkerTypesChanged($event)"
     ></app-marker-filters>
 
-    <!--<app-marker-details></app-marker-details>-->
+    <app-marker-details [selectedMarker]="selectedMarker"></app-marker-details>
 
     <app-map
         [markerTypes]="markerTypes"
