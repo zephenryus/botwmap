@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::get('/markers', 'MarkersController@index')->name('markers');
 Route::get('/markers/{marker}', 'MarkersController@show');
 Route::get('/marker-types', 'MarkerTypesController@index')->name('marker-types');
+Route::get('marker-categories', 'MarkerCategoriesController@index');
+Route::get('marker-categories/{marker-category}', 'MarkerCategoriesController@show');
 
 Auth::routes();
 

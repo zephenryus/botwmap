@@ -21,6 +21,7 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/leaflet.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -30,12 +31,13 @@
 <![endif]-->
 
 {{--<main id="app">--}}
-    @yield('content')
+@yield('content')
 {{--</main>--}}
 
-<script src="{{ asset('js/runtime.js') }}"></script>
-<script src="{{ asset('js/polyfills.js') }}"></script>
-<script src="{{ asset('js/vendor.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/runtime.06daa30a2963fa413676.js') }}"></script>
+<script src="{{ asset('js/polyfills.e2bffe4f592e8526110b.js') }}"></script>
+{{--<script src="{{ asset('js/vendor.js') }}"></script>--}}
+<script src="{{ asset('js/main.3afc1bd616b7cc701e91.js') }}"></script>
+
 </body>
 </html>

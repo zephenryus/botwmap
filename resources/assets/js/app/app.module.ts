@@ -1,32 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
-import { MapComponent } from './map/map.component';
-import { MapService } from './map/map.service';
+import { MapComponent } from "./map/map.component";
+import { MarkerFiltersComponent } from "./marker-filters/marker-filters.component";
 import { MarkerDetailsComponent } from "./marker-details/marker-details.component";
-import { MarkerFilterComponent } from "./marker-filter/marker-filter.component";
-import { HttpClientModule } from "@angular/common/http";
-import { MarkersService } from "./markers/markers.service";
-import { MarkerTypesService } from "./marker-types/marker-types.service";
-import { MarkerTypeComponent } from "./marker-filter/marker-type/marker-type.component";
+
+import { MarkersService } from "./markers.service";
 
 @NgModule({
     declarations: [
         AppComponent,
         MapComponent,
-        MarkerDetailsComponent,
-        MarkerFilterComponent,
-        MarkerTypeComponent
+        MarkerFiltersComponent,
+        MarkerDetailsComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule
     ],
     providers: [
-        MapService,
-        MarkersService,
-        MarkerTypesService
+        MarkersService
     ],
     bootstrap: [AppComponent]
 })

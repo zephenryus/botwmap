@@ -21,8 +21,8 @@ class CreateItemMarkerTable extends Migration
             $table->unsignedInteger('marker_id');
             $table->timestamps();
 
-            $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('marker_id')->references('id')->on('markers');
+            // $table->foreign('item_id')->references('id')->on('items');
+            // $table->foreign('marker_id')->references('id')->on('markers');
         });
     }
 

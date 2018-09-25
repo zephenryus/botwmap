@@ -13,12 +13,19 @@ class MarkersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index () {
-        if (request()->input('types')) {
-            $types = explode(',', request()->input('types'));
+        if (request()->input('type')) {
+            $types = explode(',', request()->input('type'));
 
             return Marker::whereIn('marker_type_id', $types)
                          ->orderBy('marker_name', 'desc')
-                         ->get();
+                         ->get([
+                             'id',
+                             'marker_type_id',
+                             'marker_name',
+                             'x',
+                             'y',
+                             'z'
+                         ]);
         }
         // else {
         //     $defaultFilters = [
