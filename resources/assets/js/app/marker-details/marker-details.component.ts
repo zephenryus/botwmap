@@ -6,5 +6,9 @@ import { Marker } from "../Marker.model";
     templateUrl: './marker-details.component.html'
 })
 export class MarkerDetailsComponent {
-    @Input() selectedMarker: Marker;
+    @Input() selectedMarker: Marker = null;
+
+    closeDialog() {
+        this.selectedMarker = null;
+    }
 }

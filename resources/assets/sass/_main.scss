@@ -25,7 +25,7 @@ body {
     width:    100vw;
     overflow: hidden;
 
-    #map-header, #map-modifiers, #marker-details {
+    #map-header, #marker-filters, #marker-details {
         position: absolute;
     }
 
@@ -101,75 +101,110 @@ body {
         }
     }
 
-    #map-modifiers {
+    #marker-filters {
         z-index:    900;
         //top:        100px; // move back to this point when the search bar is back
+        top:        0;
         bottom:     18px;
         right:      0;
-        overflow:   hidden;
-        text-align: right;
+        //overflow:   hidden;
+        text-align: left;
 
         @include media-breakpoint-up(md) {
-            top:    auto;
+            top:    0;
             bottom: 18px;
         }
 
-        #layers {
-            height:        64px;
-            width:         64px;
-            border-radius: 64px;
-            margin:        7.5px 15px 10px auto;
-            box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
+        #marker-filter-toggle {
+            position: absolute;
+            left:     -71.5px;
 
-            img {
-                height: 30px;
+            button {
+                height:        64px;
+                width:         64px;
+                border-radius: 64px;
+                margin:        7.5px 7.5px 0 0;
+
+                img {
+                    height: 32px;
+                    width:  32px;
+                }
             }
         }
 
-        #marker-filters {
-            width: 100vw;
-            //max-width: 450px;
+        & > .container {
+            background:    #fff;
+            width:         100%;
+            height:        calc(100% - 7.5px);
+            margin:        7.5px 0;
+            box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
+            border-radius: 5px;
+            overflow-y:    auto;
 
             main {
-                height:        calc(100vh - 128px);
-                overflow-x:    hidden;
-                overflow-y:    auto;
-                padding:       7.5px;
-                background:    #fff;
-                text-align:    left;
-                margin:        15px;
-                border-radius: 3px;
-
-                .marker-category-wrapper {
-                    width:       100%;
-                    line-height: 3rem;
-
-                    &.active {
-                        background: rgba($primary, 0.08);
-                    }
-
-                    button.expand {
-                        &::after {
-                            display:        inline-block;
-                            width:          0;
-                            height:         0;
-                            margin-left:    .255em;
-                            vertical-align: .255em;
-                            content:        "";
-                            border-top:     .3em solid;
-                            border-right:   .3em solid transparent;
-                            border-bottom:  0;
-                            border-left:    .3em solid transparent;
-                        }
-                    }
-                }
-
-                .marker-category-wrapper .marker-category-wrapper {
-                    padding-left: 30px;
-                }
-
+                padding:    15px;
+                width:      100%;
+                overflow-x: hidden;
+                overflow-y: auto;
             }
         }
+
+        //#layers {
+        //    height:        64px;
+        //    width:         64px;
+        //    border-radius: 64px;
+        //    margin:        7.5px 15px 10px auto;
+        //    box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
+        //
+        //    img {
+        //        height: 30px;
+        //    }
+        //}
+
+        //#marker-filters {
+        //    width: 100vw;
+        //max-width: 450px;
+
+        //main {
+        //    height:        calc(100vh - 128px);
+        //    overflow-x:    hidden;
+        //    overflow-y:    auto;
+        //    padding:       7.5px;
+        //    background:    #fff;
+        //    text-align:    left;
+        //    margin:        15px;
+        //    border-radius: 3px;
+        //
+        //    .marker-category-wrapper {
+        //        width:       100%;
+        //        line-height: 3rem;
+        //
+        //        &.active {
+        //            background: rgba($primary, 0.08);
+        //        }
+        //
+        //        button.expand {
+        //            &::after {
+        //                display:        inline-block;
+        //                width:          0;
+        //                height:         0;
+        //                margin-left:    .255em;
+        //                vertical-align: .255em;
+        //                content:        "";
+        //                border-top:     .3em solid;
+        //                border-right:   .3em solid transparent;
+        //                border-bottom:  0;
+        //                border-left:    .3em solid transparent;
+        //            }
+        //        }
+        //    }
+        //
+        //    .marker-category-wrapper .marker-category-wrapper {
+        //        padding-left: 30px;
+        //    }
+        //
+        //}
+        //}
     }
 
     &.is-loading {
@@ -311,7 +346,7 @@ body {
             box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
 
             @include media-breakpoint-up(md) {
-                padding-top: 80px;
+                //padding-top: 80px;
             }
 
             #marker-details-close {
@@ -320,14 +355,14 @@ body {
                 right:    0;
 
                 @include media-breakpoint-up(md) {
-                    top: 80px;
+                    //top: 80px;
                 }
             }
         }
     }
 
     #map {
-        width: 100vw;
+        width:  100vw;
         height: 100%;
     }
 }

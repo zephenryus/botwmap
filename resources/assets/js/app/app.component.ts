@@ -4,6 +4,7 @@ import { Marker } from "./marker.model";
 import { MarkerType } from "./MarkerType.model";
 import { map } from "rxjs/operators";
 import { BinarySearchTree } from "./BinarySearchTree";
+import { MarkerCategory } from "./MarkerCategory.model";
 
 @Component({
     selector: 'app-root',
@@ -12,9 +13,12 @@ import { BinarySearchTree } from "./BinarySearchTree";
 })
 export class AppComponent implements OnInit {
     markerTypes: MarkerType[];
-    markerTypesIndex: BinarySearchTree;
+    markerTypesIndex: BinarySearchTree = new BinarySearchTree();
 
-    selectedMarkerTypes: number[] = [1, 2];
+    markerCategories: MarkerCategory[];
+    markerCategoriesIndex: BinarySearchTree = new BinarySearchTree();
+
+    selectedMarkerTypes: number[] = [];
     selectedMarker: Marker;
 
     constructor(private http:HttpClient) {}
@@ -28,6 +32,15 @@ export class AppComponent implements OnInit {
                 }
             ))
             .subscribe();
+
+        this.http.get<MarkerCategory[]>('/marker-categories')
+            .pipe(map(
+                (markerCategories) => {
+                    this.markerCategories = markerCategories;
+                    this.generateSearchTree(this.markerCategoriesIndex, this.markerCategories);
+                }
+            ))
+            .subscribe();
     }
 
     private onMarkerSelected(marker: Marker) {
@@ -35,10 +48,18 @@ export class AppComponent implements OnInit {
     }
 
     private onSelectedMarkerTypesChanged(selectedMarkerTypes: number[]) {
-        this.selectedMarkerTypes = selectedMarkerTypes;
+        this.selectedMarkerTypes = Object.assign([], selectedMarkerTypes);
     }
 
     private generateSearchTree(binaryTree: BinarySearchTree, terms: any[]) {
-        terms = terms.sort();
+        let midpoint = Math.ceil(terms.length / 2);
+
+        for (let index = 0; index < midpoint; index++) {
+            binaryTree.insert(terms[midpoint - index].id, midpoint - index);
+
+            if (midpoint - index !== midpoint + index) {
+                binaryTree.insert(terms[midpoint + index].id, midpoint + index);
+            }
+        }
     }
 }
