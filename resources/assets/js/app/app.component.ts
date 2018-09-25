@@ -43,11 +43,11 @@ export class AppComponent implements OnInit {
             .subscribe();
     }
 
-    private onMarkerSelected(marker: Marker) {
+    onMarkerSelected(marker: Marker) {
         this.selectedMarker = marker;
     }
 
-    private onSelectedMarkerTypesChanged(selectedMarkerTypes: number[]) {
+    onSelectedMarkerTypesChanged(selectedMarkerTypes: number[]) {
         this.selectedMarkerTypes = Object.assign([], selectedMarkerTypes);
     }
 
