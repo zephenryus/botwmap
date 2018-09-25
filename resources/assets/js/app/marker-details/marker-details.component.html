@@ -1,6 +1,6 @@
-<aside id="marker-details">
+<aside id="marker-details" *ngIf="selectedMarker">
     <div id="marker-details-wrapper">
-        <button class="btn" id="marker-details-close">Close</button>
+        <button class="btn" id="marker-details-close" (click)="closeDialog()">Close</button>
         <h3>{{ selectedMarker.marker_name }}</h3>
 
         <p>{{ selectedMarker.marker_description }}</p>

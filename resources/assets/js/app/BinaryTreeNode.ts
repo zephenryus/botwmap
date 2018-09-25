@@ -43,6 +43,13 @@ export class BinaryTreeNode {
     }
 
     public toString() {
-        return "{key: " + this.key + ", value: " + this.value + ", left: " + this.left.toString() + ", right: " + this.right.toString() + "}";
+        let left = (this.left)
+            ? this.left.toString()
+            : 'null';
+        let right = (this.right)
+            ? this.right.toString()
+            : 'null';
+
+        return "{key: " + this.key + ", value: " + this.value + ", left: " + left + ", right: " + right + "}";
     }
 }

@@ -4,6 +4,7 @@ import * as Leaflet from 'leaflet/dist/leaflet.js';
 import { MarkersService } from "../markers.service";
 import { MarkerType } from "../MarkerType.model";
 import { Marker } from "../Marker.model";
+import { BinarySearchTree } from "../BinarySearchTree";
 
 @Component({
     selector: 'app-map',
@@ -11,7 +12,10 @@ import { Marker } from "../Marker.model";
 })
 export class MapComponent implements OnInit, OnChanges {
     @Input() markerTypes: MarkerType[];
+    @Input() markerTypesIndex: BinarySearchTree;
+
     @Input() selectedMarkerTypes: number[];
+    private previousSelectedMarkerTypes: number[] = [];
     @Input() selectedMarker: Marker;
 
     @Output() markerSelected = new EventEmitter<Marker>();
@@ -56,53 +60,65 @@ export class MapComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.hasOwnProperty('selectedMarkerTypes')) {
-            this.selectedMarkersChanged(changes.selectedMarkerTypes);
+            this.selectedMarkerTypesChanged(changes.selectedMarkerTypes);
         }
     }
 
-    selectedMarkersChanged(values: {currentValue: number[], previousValue: number[], firstChange: boolean}) {
-        if (! values.firstChange) {
-            let added = values.currentValue.filter(item => values.previousValue.indexOf(item) < 0);
-            let removed = values.previousValue.filter(item => values.currentValue.indexOf(item) < 0);
+    selectedMarkerTypesChanged(values: { currentValue: number[], previousValue: number[], firstChange: boolean }) {
+        if (!values.firstChange) {
+            let added = values.currentValue.filter(item => this.previousSelectedMarkerTypes.indexOf(item) < 0);
+            let removed = this.previousSelectedMarkerTypes.filter(item => values.currentValue.indexOf(item) < 0);
 
             if (added.length > 0) {
                 this.markersService.getByType(added).subscribe((markers: Marker[]) => {
+                    this.addMarkers(markers);
                 });
+            }
+
+            if (removed.length > 0) {
+                this.removeMarkers(removed);
             }
         } else {
             this.markersService.getByType(values.currentValue).subscribe((markers: Marker[]) => {
                 this.addMarkers(markers);
             });
         }
+
+        this.previousSelectedMarkerTypes = Object.assign([], this.selectedMarkerTypes);
     }
 
     private addMarkers(markers: Marker[]) {
-        for (let marker of markers) {
-            if (!this.mapLayers.hasOwnProperty(marker.marker_type_id.toString())) {
-                this.mapLayers[marker.marker_type_id.toString()] = Leaflet.layerGroup();
-            }
+        if (markers !== null) {
+            for (let marker of markers) {
+                if (!this.mapLayers.hasOwnProperty(marker.marker_type_id.toString())) {
+                    this.mapLayers[marker.marker_type_id.toString()] = Leaflet.layerGroup();
+                }
 
-            let markerTypeGroup = this.mapLayers[marker.marker_type_id.toString()] = Leaflet.layerGroup();
+                let markerTypeGroup = this.mapLayers[marker.marker_type_id.toString()];
 
-            if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
-                let newMarker = Leaflet.marker([
-                    -this.normalizeCoord(marker.z),
-                    this.normalizeCoord(marker.x)
-                ], {
-                    icon: Leaflet.icon({
-                        iconUrl: 'images/icons/markers/default.png',
-                        iconSize: [32, 32]
-                    }),
-                    title: marker.marker_name,
-                    zIndexOffset: Math.floor(marker.y),
-                })
-                    .on('click', (event) => {
-                        this.showMarkerDetails(event.target);
-                    });
-                newMarker.markerId = marker.id;
-                newMarker.layerId = marker.marker_type_id;
+                if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
+                    let markerTypeId = (this.markerTypesIndex.lookup(marker.marker_type_id)).value;
+                    let markerType = this.markerTypes[markerTypeId];
+                    let newMarker = Leaflet.marker([
+                        -this.normalizeCoord(marker.z),
+                        this.normalizeCoord(marker.x)
+                    ], {
+                        icon: Leaflet.icon({
+                            iconUrl: markerType.icon,
+                            iconSize: [32, 32]
+                        }),
+                        title: marker.marker_name,
+                        zIndexOffset: Math.floor(marker.y),
+                    })
+                        .on('click', (event) => {
+                            this.showMarkerDetails(event.target);
+                        });
+                    newMarker.markerId = marker.id;
+                    newMarker.layerId = marker.marker_type_id;
 
-                markerTypeGroup.addLayer(newMarker);
+                    markerTypeGroup.addLayer(newMarker);
+                }
+
                 this.map.addLayer(markerTypeGroup);
             }
         }
@@ -123,5 +139,15 @@ export class MapComponent implements OnInit, OnChanges {
                 ])
             }
         );
+    }
+
+    private removeMarkers(removed: number[]) {
+        for (let layerId of removed) {
+            if (this.map.hasLayer(this.mapLayers[layerId.toString()])) {
+                this.mapLayers[layerId.toString()].clearLayers();
+                this.map.removeLayer(this.mapLayers[layerId.toString()]);
+                delete this.mapLayers[layerId.toString()];
+            }
+        }
     }
 }

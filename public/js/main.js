@@ -23,6 +23,124 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
+/***/ "./resources/assets/js/app/BinarySearchTree.ts":
+/*!*****************************************************!*\
+  !*** ./resources/assets/js/app/BinarySearchTree.ts ***!
+  \*****************************************************/
+/*! exports provided: BinarySearchTree */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BinarySearchTree", function() { return BinarySearchTree; });
+/* harmony import */ var _BinaryTreeNode__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BinaryTreeNode */ "./resources/assets/js/app/BinaryTreeNode.ts");
+
+var BinarySearchTree = /** @class */ (function () {
+    function BinarySearchTree(rootNode) {
+        this.rootNode = rootNode;
+    }
+    BinarySearchTree.prototype.insert = function (key, value) {
+        if (this.rootNode == undefined) {
+            this.rootNode = new _BinaryTreeNode__WEBPACK_IMPORTED_MODULE_0__["BinaryTreeNode"](key, value);
+        }
+        else {
+            this.rootNode.insert(new _BinaryTreeNode__WEBPACK_IMPORTED_MODULE_0__["BinaryTreeNode"](key, value));
+        }
+    };
+    BinarySearchTree.prototype.lookup = function (key) {
+        if (this.rootNode.key == key) {
+            return this.rootNode;
+        }
+        else {
+            return this.rootNode.lookup(key);
+        }
+    };
+    BinarySearchTree.prototype.toString = function () {
+        return this.rootNode.toString();
+    };
+    return BinarySearchTree;
+}());
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/app/BinaryTreeNode.ts":
+/*!***************************************************!*\
+  !*** ./resources/assets/js/app/BinaryTreeNode.ts ***!
+  \***************************************************/
+/*! exports provided: BinaryTreeNode */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BinaryTreeNode", function() { return BinaryTreeNode; });
+var BinaryTreeNode = /** @class */ (function () {
+    function BinaryTreeNode(key, value, left, right) {
+        if (left === void 0) { left = null; }
+        if (right === void 0) { right = null; }
+        this.key = key;
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+    BinaryTreeNode.prototype.insert = function (node) {
+        if (node.key < this.key) {
+            if (this.left == null) {
+                this.left = node;
+            }
+            else {
+                this.left.insert(node);
+            }
+        }
+        else {
+            if (this.right == null) {
+                this.right = node;
+            }
+            else {
+                this.right.insert(node);
+            }
+        }
+    };
+    BinaryTreeNode.prototype.lookup = function (key) {
+        if (this.key == key) {
+            return this;
+        }
+        else {
+            if (key < this.key) {
+                if (this.left == null) {
+                    return null;
+                }
+                else {
+                    return this.left.lookup(key);
+                }
+            }
+            else {
+                if (this.right == null) {
+                    return null;
+                }
+                else {
+                    return this.right.lookup(key);
+                }
+            }
+        }
+    };
+    BinaryTreeNode.prototype.toString = function () {
+        var left = (this.left)
+            ? this.left.toString()
+            : 'null';
+        var right = (this.right)
+            ? this.right.toString()
+            : 'null';
+        return "{key: " + this.key + ", value: " + this.value + ", left: " + left + ", right: " + right + "}";
+    };
+    return BinaryTreeNode;
+}());
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/app/Marker.model.ts":
 /*!*************************************************!*\
   !*** ./resources/assets/js/app/Marker.model.ts ***!
@@ -69,7 +187,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"app\">\r\n    <!--<div id=\"menu\"></div>-->\r\n\r\n    <!--<div id=\"search\"></div>-->\r\n\r\n    <app-marker-filters\r\n        [markerTypes]=\"markerTypes\"\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        (selectedMarkerTypesChanged)=\"onSelectedMarkerTypesChanged($event)\"\r\n    ></app-marker-filters>\r\n\r\n    <app-marker-details [selectedMarker]=\"selectedMarker\"></app-marker-details>\r\n\r\n    <app-map\r\n        [markerTypes]=\"markerTypes\"\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        [selectedMarker]=\"selectedMarker\"\r\n        (markerSelected)=\"onMarkerSelected($event)\"\r\n    ></app-map>\r\n</div>"
+module.exports = "<div id=\"app\">\r\n    <!--<div id=\"menu\"></div>-->\r\n\r\n    <!--<div id=\"search\"></div>-->\r\n\r\n    <app-marker-filters\r\n        [markerCategories]=\"markerCategories\"\r\n        [markerCategoriesIndex]=\"markerCategoriesIndex\"\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        (selectedMarkerTypesChanged)=\"onSelectedMarkerTypesChanged($event)\"\r\n    ></app-marker-filters>\r\n\r\n    <app-marker-details [selectedMarker]=\"selectedMarker\"></app-marker-details>\r\n\r\n    <app-map\r\n        [markerTypes]=\"markerTypes\"\r\n        [markerTypesIndex]=\"markerTypesIndex\"\r\n        [selectedMarkerTypes]=\"selectedMarkerTypes\"\r\n        [selectedMarker]=\"selectedMarker\"\r\n        (markerSelected)=\"onMarkerSelected($event)\"\r\n    ></app-map>\r\n</div>"
 
 /***/ }),
 
@@ -86,6 +204,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _BinarySearchTree__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BinarySearchTree */ "./resources/assets/js/app/BinarySearchTree.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -98,10 +217,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = /** @class */ (function () {
     function AppComponent(http) {
         this.http = http;
-        this.selectedMarkerTypes = [1, 2];
+        this.markerTypesIndex = new _BinarySearchTree__WEBPACK_IMPORTED_MODULE_3__["BinarySearchTree"]();
+        this.markerCategoriesIndex = new _BinarySearchTree__WEBPACK_IMPORTED_MODULE_3__["BinarySearchTree"]();
+        this.selectedMarkerTypes = [];
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -111,15 +233,27 @@ var AppComponent = /** @class */ (function () {
             _this.generateSearchTree(_this.markerTypesIndex, _this.markerTypes);
         }))
             .subscribe();
+        this.http.get('/marker-categories')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (markerCategories) {
+            _this.markerCategories = markerCategories;
+            _this.generateSearchTree(_this.markerCategoriesIndex, _this.markerCategories);
+        }))
+            .subscribe();
     };
     AppComponent.prototype.onMarkerSelected = function (marker) {
         this.selectedMarker = marker;
     };
     AppComponent.prototype.onSelectedMarkerTypesChanged = function (selectedMarkerTypes) {
-        this.selectedMarkerTypes = selectedMarkerTypes;
+        this.selectedMarkerTypes = Object.assign([], selectedMarkerTypes);
     };
     AppComponent.prototype.generateSearchTree = function (binaryTree, terms) {
-        terms = terms.sort();
+        var midpoint = Math.ceil(terms.length / 2);
+        for (var index = 0; index < midpoint; index++) {
+            binaryTree.insert(terms[midpoint - index].id, midpoint - index);
+            if (midpoint - index !== midpoint + index) {
+                binaryTree.insert(terms[midpoint + index].id, midpoint + index);
+            }
+        }
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -222,6 +356,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _markers_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../markers.service */ "./resources/assets/js/app/markers.service.ts");
 /* harmony import */ var _Marker_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Marker.model */ "./resources/assets/js/app/Marker.model.ts");
+/* harmony import */ var _BinarySearchTree__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../BinarySearchTree */ "./resources/assets/js/app/BinarySearchTree.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -235,9 +370,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var MapComponent = /** @class */ (function () {
     function MapComponent(markersService) {
         this.markersService = markersService;
+        this.previousSelectedMarkerTypes = [];
         this.markerSelected = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.isMapGenerated = false;
         this.mapLayers = {};
@@ -270,17 +407,21 @@ var MapComponent = /** @class */ (function () {
     };
     MapComponent.prototype.ngOnChanges = function (changes) {
         if (changes.hasOwnProperty('selectedMarkerTypes')) {
-            this.selectedMarkersChanged(changes.selectedMarkerTypes);
+            this.selectedMarkerTypesChanged(changes.selectedMarkerTypes);
         }
     };
-    MapComponent.prototype.selectedMarkersChanged = function (values) {
+    MapComponent.prototype.selectedMarkerTypesChanged = function (values) {
         var _this = this;
         if (!values.firstChange) {
-            var added = values.currentValue.filter(function (item) { return values.previousValue.indexOf(item) < 0; });
-            var removed = values.previousValue.filter(function (item) { return values.currentValue.indexOf(item) < 0; });
+            var added = values.currentValue.filter(function (item) { return _this.previousSelectedMarkerTypes.indexOf(item) < 0; });
+            var removed = this.previousSelectedMarkerTypes.filter(function (item) { return values.currentValue.indexOf(item) < 0; });
             if (added.length > 0) {
                 this.markersService.getByType(added).subscribe(function (markers) {
+                    _this.addMarkers(markers);
                 });
+            }
+            if (removed.length > 0) {
+                this.removeMarkers(removed);
             }
         }
         else {
@@ -288,33 +429,38 @@ var MapComponent = /** @class */ (function () {
                 _this.addMarkers(markers);
             });
         }
+        this.previousSelectedMarkerTypes = Object.assign([], this.selectedMarkerTypes);
     };
     MapComponent.prototype.addMarkers = function (markers) {
         var _this = this;
-        for (var _i = 0, markers_1 = markers; _i < markers_1.length; _i++) {
-            var marker = markers_1[_i];
-            if (!this.mapLayers.hasOwnProperty(marker.marker_type_id.toString())) {
-                this.mapLayers[marker.marker_type_id.toString()] = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["layerGroup"]();
-            }
-            var markerTypeGroup = this.mapLayers[marker.marker_type_id.toString()] = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["layerGroup"]();
-            if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
-                var newMarker = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["marker"]([
-                    -this.normalizeCoord(marker.z),
-                    this.normalizeCoord(marker.x)
-                ], {
-                    icon: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["icon"]({
-                        iconUrl: 'images/icons/markers/default.png',
-                        iconSize: [32, 32]
-                    }),
-                    title: marker.marker_name,
-                    zIndexOffset: Math.floor(marker.y),
-                })
-                    .on('click', function (event) {
-                    _this.showMarkerDetails(event.target);
-                });
-                newMarker.markerId = marker.id;
-                newMarker.layerId = marker.marker_type_id;
-                markerTypeGroup.addLayer(newMarker);
+        if (markers !== null) {
+            for (var _i = 0, markers_1 = markers; _i < markers_1.length; _i++) {
+                var marker = markers_1[_i];
+                if (!this.mapLayers.hasOwnProperty(marker.marker_type_id.toString())) {
+                    this.mapLayers[marker.marker_type_id.toString()] = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["layerGroup"]();
+                }
+                var markerTypeGroup = this.mapLayers[marker.marker_type_id.toString()];
+                if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
+                    var markerTypeId = (this.markerTypesIndex.lookup(marker.marker_type_id)).value;
+                    var markerType = this.markerTypes[markerTypeId];
+                    var newMarker = leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["marker"]([
+                        -this.normalizeCoord(marker.z),
+                        this.normalizeCoord(marker.x)
+                    ], {
+                        icon: leaflet_dist_leaflet_js__WEBPACK_IMPORTED_MODULE_1__["icon"]({
+                            iconUrl: markerType.icon,
+                            iconSize: [32, 32]
+                        }),
+                        title: marker.marker_name,
+                        zIndexOffset: Math.floor(marker.y),
+                    })
+                        .on('click', function (event) {
+                        _this.showMarkerDetails(event.target);
+                    });
+                    newMarker.markerId = marker.id;
+                    newMarker.layerId = marker.marker_type_id;
+                    markerTypeGroup.addLayer(newMarker);
+                }
                 this.map.addLayer(markerTypeGroup);
             }
         }
@@ -333,10 +479,24 @@ var MapComponent = /** @class */ (function () {
             ]);
         });
     };
+    MapComponent.prototype.removeMarkers = function (removed) {
+        for (var _i = 0, removed_1 = removed; _i < removed_1.length; _i++) {
+            var layerId = removed_1[_i];
+            if (this.map.hasLayer(this.mapLayers[layerId.toString()])) {
+                this.mapLayers[layerId.toString()].clearLayers();
+                this.map.removeLayer(this.mapLayers[layerId.toString()]);
+                delete this.mapLayers[layerId.toString()];
+            }
+        }
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Array)
     ], MapComponent.prototype, "markerTypes", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", _BinarySearchTree__WEBPACK_IMPORTED_MODULE_4__["BinarySearchTree"])
+    ], MapComponent.prototype, "markerTypesIndex", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Array)
@@ -370,7 +530,7 @@ var MapComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<aside id=\"marker-details\">\r\n    <div id=\"marker-details-wrapper\">\r\n        <button class=\"btn\" id=\"marker-details-close\">Close</button>\r\n        <h3>{{ selectedMarker.marker_name }}</h3>\r\n\r\n        <p>{{ selectedMarker.marker_description }}</p>\r\n\r\n        <div class=\"marker-meta\">\r\n            <small>\r\n                <div>&lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>\r\n                <div>Marker ID: {{ selectedMarker.id }}</div>\r\n                <div>Source: {{ selectedMarker.source }}</div>\r\n            </small>\r\n        </div>\r\n    </div>\r\n</aside>"
+module.exports = "<aside id=\"marker-details\" *ngIf=\"selectedMarker\">\r\n    <div id=\"marker-details-wrapper\">\r\n        <button class=\"btn\" id=\"marker-details-close\" (click)=\"closeDialog()\">Close</button>\r\n        <h3>{{ selectedMarker.marker_name }}</h3>\r\n\r\n        <p>{{ selectedMarker.marker_description }}</p>\r\n\r\n        <div class=\"marker-meta\">\r\n            <small>\r\n                <div>&lt;{{ selectedMarker.x }}, {{ selectedMarker.y }}, {{ selectedMarker.z }}&gt;</div>\r\n                <div>Marker ID: {{ selectedMarker.id }}</div>\r\n                <div>Source: {{ selectedMarker.source }}</div>\r\n            </small>\r\n        </div>\r\n    </div>\r\n</aside>"
 
 /***/ }),
 
@@ -399,7 +559,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var MarkerDetailsComponent = /** @class */ (function () {
     function MarkerDetailsComponent() {
+        this.selectedMarker = null;
     }
+    MarkerDetailsComponent.prototype.closeDialog = function () {
+        this.selectedMarker = null;
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", _Marker_model__WEBPACK_IMPORTED_MODULE_1__["Marker"])
@@ -424,7 +588,7 @@ var MarkerDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"marker-filters\">\r\n    <div class=\"custom-control custom-checkbox\" *ngFor=\"let markerCategory of markerCategories\">\r\n        <input type=\"checkbox\" class=\"custom-control-input\" id=\"marker-type-{{ markerCategory.id }}\" name=\"marker-type-{{ markerCategory.id }}\" (change)=\"toggleType($event)\" [value]=\"markerCategory.id\" [checked]=\"markerCategory.selected\">\r\n        <label class=\"custom-control-label\" for=\"marker-type-{{ markerCategory.id }}\">{{ markerCategory.id }}</label>\r\n    </div>\r\n</div>"
+module.exports = "<div id=\"marker-filters\">\r\n    <div id=\"marker-filter-toggle\">\r\n        <button class=\"btn btn-primary\" (click)=\"toggleDialog()\">\r\n            <img src=\"/images/icons/markers/markers.svg\" *ngIf=\"!isOpen\" alt=\"\">\r\n            <img src=\"/images/icons/markers/close.svg\" *ngIf=\"isOpen\" alt=\"\">\r\n        </button>\r\n    </div>\r\n    \r\n    <div class=\"container\" *ngIf=\"isOpen\">\r\n        <main>\r\n            <div class=\"custom-control custom-checkbox\" *ngFor=\"let markerCategory of markerCategories\">\r\n                <input type=\"checkbox\" class=\"custom-control-input\" id=\"marker-type-{{ markerCategory.id }}\"\r\n                       name=\"marker-type-{{ markerCategory.id }}\"\r\n                       (change)=\"toggleType($event)\" [value]=\"markerCategory.id\" [checked]=\"markerCategory.selected\">\r\n                <label class=\"custom-control-label\" for=\"marker-type-{{ markerCategory.id }}\">{{ markerCategory.marker_category_name }}</label>\r\n            </div>\r\n        </main>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -439,6 +603,7 @@ module.exports = "<div id=\"marker-filters\">\r\n    <div class=\"custom-control
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkerFiltersComponent", function() { return MarkerFiltersComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _BinarySearchTree__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../BinarySearchTree */ "./resources/assets/js/app/BinarySearchTree.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -449,32 +614,42 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var MarkerFiltersComponent = /** @class */ (function () {
     function MarkerFiltersComponent() {
         this.selectedMarkerTypesChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-        this.markerCategories = [
-            { id: 1, selected: true },
-            { id: 2, selected: true }
-        ];
+        this.isOpen = true;
     }
     MarkerFiltersComponent.prototype.toggleType = function (event) {
-        var id = parseInt(event.target.value);
-        var selectedTypes = [];
-        for (var _i = 0, _a = this.markerCategories; _i < _a.length; _i++) {
-            var markerCategory = _a[_i];
-            if (markerCategory.id === id) {
-                markerCategory.selected = !markerCategory.selected;
+        var index = (this.markerCategoriesIndex.lookup(parseInt(event.target.value))).value;
+        this.markerCategories[index].selected = !this.markerCategories[index].selected;
+        var selectedTypes = this.selectedMarkerTypes;
+        for (var _i = 0, _a = this.markerCategories[index].marker_types; _i < _a.length; _i++) {
+            var markerType = _a[_i];
+            if (this.markerCategories[index].selected) {
+                if (!selectedTypes.includes(markerType.id)) {
+                    selectedTypes.push(markerType.id);
+                }
             }
-            if (markerCategory.selected) {
-                selectedTypes.push(markerCategory.id);
+            else {
+                if (selectedTypes.includes(markerType.id)) {
+                    selectedTypes.splice(selectedTypes.indexOf(markerType.id), 1);
+                }
             }
         }
         this.selectedMarkerTypesChanged.emit(selectedTypes);
     };
+    MarkerFiltersComponent.prototype.toggleDialog = function () {
+        this.isOpen = !this.isOpen;
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Array)
-    ], MarkerFiltersComponent.prototype, "markerTypes", void 0);
+    ], MarkerFiltersComponent.prototype, "markerCategories", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", _BinarySearchTree__WEBPACK_IMPORTED_MODULE_1__["BinarySearchTree"])
+    ], MarkerFiltersComponent.prototype, "markerCategoriesIndex", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Array)
