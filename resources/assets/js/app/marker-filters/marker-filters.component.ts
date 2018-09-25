@@ -14,7 +14,7 @@ export class MarkerFiltersComponent {
 
     @Output() selectedMarkerTypesChanged = new EventEmitter<number[]>();
 
-    public isOpen = true;
+    public isOpen = false;
 
     toggleType(event) {
         const index = (this.markerCategoriesIndex.lookup(parseInt(event.target.value))).value;

@@ -31,12 +31,13 @@
 <![endif]-->
 
 {{--<main id="app">--}}
-    @yield('content')
+@yield('content')
 {{--</main>--}}
 
-<script src="{{ asset('js/runtime.js') }}"></script>
-<script src="{{ asset('js/polyfills.js') }}"></script>
-<script src="{{ asset('js/vendor.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/runtime.06daa30a2963fa413676.js') }}"></script>
+<script src="{{ asset('js/polyfills.e2bffe4f592e8526110b.js') }}"></script>
+{{--<script src="{{ asset('js/vendor.js') }}"></script>--}}
+<script src="{{ asset('js/main.3afc1bd616b7cc701e91.js') }}"></script>
+
 </body>
 </html>
