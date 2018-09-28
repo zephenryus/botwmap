@@ -43,7 +43,7 @@ body {
         #header-wrapper {
             background:    white;
             border:        1px solid white;
-            border-radius: 3px;
+            border-radius: 0.25rem;
             min-height:    64px;
             margin:        7.5px 15px 10px;
             padding:       7.5px 15px;
@@ -102,109 +102,134 @@ body {
     }
 
     #marker-filters {
-        z-index:    900;
         //top:        100px; // move back to this point when the search bar is back
-        top:        0;
-        bottom:     18px;
         right:      0;
-        //overflow:   hidden;
+        bottom:     0;
+        width:      0;
+        height:     0;
+        z-index:    900;
         text-align: left;
+        //background: rgba(0, 0, 0, 0.4);
 
         @include media-breakpoint-up(md) {
-            top:    0;
-            bottom: 18px;
+            //top:    0;
+            //bottom: 18px;
         }
 
-        #marker-filter-toggle {
-            position: absolute;
-            left:     -71.5px;
+        &.is-open {
+            bottom: 0;
+            right:  0;
+            width:  100%;
+            height: 100%;
 
-            button {
-                height:        64px;
-                width:         64px;
-                border-radius: 64px;
-                margin:        7.5px 7.5px 0 0;
-
-                img {
-                    height: 32px;
-                    width:  32px;
+            #markers-filter-wrapper {
+                #marker-filter-toggle {
+                    bottom: 6px;
                 }
             }
         }
 
-        & > .container {
-            background:    #fff;
-            width:         100%;
-            height:        calc(100% - 7.5px);
-            margin:        7.5px 0;
-            box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
-            border-radius: 5px;
-            overflow-y:    auto;
+        #markers-filter-wrapper {
+            position: relative;
+            height:   100%;
+            width:    100%;
+            //overflow: hidden;
 
-            main {
-                padding:    15px;
-                width:      100%;
-                overflow-x: hidden;
-                overflow-y: auto;
+            #marker-filter-toggle {
+                position: absolute;
+                bottom:   0;
+                right:    0;
+
+                button {
+                    height:        64px;
+                    width:         64px;
+                    border-radius: 64px;
+                    margin:        7.5px 7.5px 25.5px;
+
+                    img {
+                        height: 32px;
+                        width:  32px;
+                    }
+                }
             }
+
+            & > .container-fluid {
+                //background:    #fff;
+                background:    url("/images/shiekah-fibers.png") center center repeat, linear-gradient(to right, rgba(#2a567c, 0.4) 0%, rgba(#0d1c3b, 0.3) 100%);
+                //background:    linear-gradient(to right, rgba(#2a567c, 0.4) 0%, rgba(#0d1c3b, 0.4) 100%);
+                width:         calc(100% - 15px);
+                height:        calc(100% - 112px);
+                margin:        7.5px 7.5px 0;
+                box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
+                border-radius: 0.25rem;
+                overflow-y:    auto;
+
+                main {
+                    padding:    15px;
+                    width:      100%;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    color:      rgba(255, 255, 255, 0.95);
+                }
+            }
+
+            //#layers {
+            //    height:        64px;
+            //    width:         64px;
+            //    border-radius: 0.25remx;
+            //    margin:        7.5px 15px 10px auto;
+            //    box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
+            //
+            //    img {
+            //        height: 30px;
+            //    }
+            //}
+
+            //#marker-filters {
+            //    width: 100vw;
+            //max-width: 450px;
+
+            //main {
+            //    height:        calc(100vh - 128px);
+            //    overflow-x:    hidden;
+            //    overflow-y:    auto;
+            //    padding:       7.5px;
+            //    background:    #fff;
+            //    text-align:    left;
+            //    margin:        15px;
+            //    border-radius: 0.25rem;
+            //
+            //    .marker-category-wrapper {
+            //        width:       100%;
+            //        line-height: 3rem;
+            //
+            //        &.active {
+            //            background: rgba($primary, 0.08);
+            //        }
+            //
+            //        button.expand {
+            //            &::after {
+            //                display:        inline-block;
+            //                width:          0;
+            //                height:         0;
+            //                margin-left:    .255em;
+            //                vertical-align: .255em;
+            //                content:        "";
+            //                border-top:     .3em solid;
+            //                border-right:   .3em solid transparent;
+            //                border-bottom:  0;
+            //                border-left:    .3em solid transparent;
+            //            }
+            //        }
+            //    }
+            //
+            //    .marker-category-wrapper .marker-category-wrapper {
+            //        padding-left: 30px;
+            //    }
+            //
+            //}
+            //}
         }
-
-        //#layers {
-        //    height:        64px;
-        //    width:         64px;
-        //    border-radius: 64px;
-        //    margin:        7.5px 15px 10px auto;
-        //    box-shadow:    0 5px 5px rgba(0, 0, 0, 0.08);
-        //
-        //    img {
-        //        height: 30px;
-        //    }
-        //}
-
-        //#marker-filters {
-        //    width: 100vw;
-        //max-width: 450px;
-
-        //main {
-        //    height:        calc(100vh - 128px);
-        //    overflow-x:    hidden;
-        //    overflow-y:    auto;
-        //    padding:       7.5px;
-        //    background:    #fff;
-        //    text-align:    left;
-        //    margin:        15px;
-        //    border-radius: 3px;
-        //
-        //    .marker-category-wrapper {
-        //        width:       100%;
-        //        line-height: 3rem;
-        //
-        //        &.active {
-        //            background: rgba($primary, 0.08);
-        //        }
-        //
-        //        button.expand {
-        //            &::after {
-        //                display:        inline-block;
-        //                width:          0;
-        //                height:         0;
-        //                margin-left:    .255em;
-        //                vertical-align: .255em;
-        //                content:        "";
-        //                border-top:     .3em solid;
-        //                border-right:   .3em solid transparent;
-        //                border-bottom:  0;
-        //                border-left:    .3em solid transparent;
-        //            }
-        //        }
-        //    }
-        //
-        //    .marker-category-wrapper .marker-category-wrapper {
-        //        padding-left: 30px;
-        //    }
-        //
-        //}
-        //}
     }
 
     &.is-loading {
@@ -230,7 +255,7 @@ body {
                     background:    #ffffe8;
                     height:        6px;
                     width:         6px;
-                    border-radius: 6px;
+                    border-radius: 0.25rem;
                     box-shadow:    0 0 4px 2px rgba(255, 255, 232, 1);
                     transform:     translate(-50%, -50%) scale(1);
                     will-change:   transform;
@@ -334,12 +359,40 @@ body {
             }
         }
 
+        #marker-details-close-wrapper {
+            position: absolute;
+            top:      15px;
+            right:    -33px;
+            z-index:  1;
+
+            #marker-details-close {
+                height:                    48px;
+                width:                     48px;
+                padding:                   0;
+                position:                  absolute;
+                top:                       0;
+                right:                     0;
+                border-top-left-radius:    0;
+                border-bottom-left-radius: 0;
+
+                @include media-breakpoint-up(md) {
+                    //top: 80px;
+                }
+
+                img {
+                    height: 32px;
+                }
+            }
+        }
+
         #marker-details-wrapper {
             position:      relative;
             margin:        0 15px 7.5px;
             padding:       7.5px 15px;
-            background:    white;
-            border-radius: 3px;
+            background:    url("/images/shiekah-fibers.png") center center repeat, linear-gradient(to right, rgba(#2a567c, 0.4) 0%, rgba(#0d1c3b, 0.3) 100%);
+            //background:    linear-gradient(to right, rgba(#2a567c, 0.3) 0%, rgba(#0d1c3b, 0.3) 100%);
+            color:         rgba(255, 255, 255, 0.95);
+            border-radius: 0.25rem;
             height:        calc(100% - 7.5px);
             overflow-x:    hidden;
             overflow-y:    auto;
@@ -348,21 +401,12 @@ body {
             @include media-breakpoint-up(md) {
                 //padding-top: 80px;
             }
-
-            #marker-details-close {
-                position: absolute;
-                top:      0;
-                right:    0;
-
-                @include media-breakpoint-up(md) {
-                    //top: 80px;
-                }
-            }
         }
     }
 
     #map {
-        width:  100vw;
-        height: 100%;
+        width:      100vw;
+        height:     100%;
+        background: url('/images/map-background.gif') center center repeat;
     }
 }

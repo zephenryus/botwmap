@@ -1,6 +1,11 @@
 <aside id="marker-details" *ngIf="selectedMarker">
+    <div id="marker-details-close-wrapper">
+        <button class="btn btn-secondary" id="marker-details-close" (click)="closeDialog()">
+            <img src="/images/icons/markers/close.svg" alt="">
+        </button>
+    </div>
+
     <div id="marker-details-wrapper">
-        <button class="btn" id="marker-details-close" (click)="closeDialog()">Close</button>
         <h3>{{ selectedMarker.marker_name }}</h3>
 
         <p>{{ selectedMarker.marker_description }}</p>
