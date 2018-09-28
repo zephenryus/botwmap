@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     markerCategories: MarkerCategory[];
     markerCategoriesIndex: BinarySearchTree = new BinarySearchTree();
 
-    selectedMarkerTypes: number[] = [];
+    selectedMarkerTypes: number[] = [1401];
     selectedMarker: Marker;
 
     constructor(private http:HttpClient) {}

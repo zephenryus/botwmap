@@ -1,19 +1,21 @@
-<div id="marker-filters">
-    <div id="marker-filter-toggle">
-        <button class="btn btn-primary" (click)="toggleDialog()">
-            <img src="/images/icons/markers/markers.svg" *ngIf="!isOpen" alt="">
-            <img src="/images/icons/markers/close.svg" *ngIf="isOpen" alt="">
-        </button>
-    </div>
-    
-    <div class="container" *ngIf="isOpen">
-        <main>
-            <div class="custom-control custom-checkbox" *ngFor="let markerCategory of markerCategories">
-                <input type="checkbox" class="custom-control-input" id="marker-type-{{ markerCategory.id }}"
-                       name="marker-type-{{ markerCategory.id }}"
-                       (change)="toggleType($event)" [value]="markerCategory.id" [checked]="markerCategory.selected">
-                <label class="custom-control-label" for="marker-type-{{ markerCategory.id }}">{{ markerCategory.marker_category_name }}</label>
-            </div>
-        </main>
+<div id="marker-filters" [ngClass]="{'is-open': isOpen}">
+    <div id="markers-filter-wrapper">
+        <div class="container-fluid" *ngIf="isOpen">
+            <main>
+                <div class="custom-control custom-checkbox" *ngFor="let markerCategory of markerCategories">
+                    <input type="checkbox" class="custom-control-input" id="marker-type-{{ markerCategory.id }}"
+                           name="marker-type-{{ markerCategory.id }}"
+                           (change)="toggleType($event)" [value]="markerCategory.id" [checked]="markerCategory.selected">
+                    <label class="custom-control-label" for="marker-type-{{ markerCategory.id }}">{{ markerCategory.marker_category_name }}</label>
+                </div>
+            </main>
+        </div>
+
+        <div id="marker-filter-toggle">
+            <button class="btn btn-primary" (click)="toggleDialog()">
+                <img src="/images/icons/markers/markers.svg" *ngIf="!isOpen" alt="">
+                <img src="/images/icons/markers/close.svg" *ngIf="isOpen" alt="">
+            </button>
+        </div>
     </div>
 </div>
