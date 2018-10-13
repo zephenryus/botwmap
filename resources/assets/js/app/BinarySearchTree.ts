@@ -12,10 +12,14 @@ export class BinarySearchTree {
     }
 
     public lookup(key: number) {
-        if (this.rootNode.key == key) {
-            return this.rootNode;
+        if (this.rootNode != undefined) {
+            if (this.rootNode.key == key) {
+                return this.rootNode;
+            } else {
+                return this.rootNode.lookup(key);
+            }
         } else {
-            return this.rootNode.lookup(key);
+            return this.rootNode;
         }
     }
 

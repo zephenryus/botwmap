@@ -52,13 +52,15 @@ export class AppComponent implements OnInit {
     }
 
     private generateSearchTree(binaryTree: BinarySearchTree, terms: any[]) {
-        let midpoint = Math.ceil(terms.length / 2);
+        if (binaryTree.rootNode != undefined && terms.length > 0) {
+            let midpoint = Math.ceil(terms.length / 2);
 
-        for (let index = 0; index < midpoint; index++) {
-            binaryTree.insert(terms[midpoint - index].id, midpoint - index);
+            for (let index = 0; index < midpoint; index++) {
+                binaryTree.insert(terms[midpoint - index].id, midpoint - index);
 
-            if (midpoint - index !== midpoint + index) {
-                binaryTree.insert(terms[midpoint + index].id, midpoint + index);
+                if (midpoint - index !== midpoint + index) {
+                    binaryTree.insert(terms[midpoint + index].id, midpoint + index);
+                }
             }
         }
     }

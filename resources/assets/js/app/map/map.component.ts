@@ -97,26 +97,30 @@ export class MapComponent implements OnInit, OnChanges {
                 let markerTypeGroup = this.mapLayers[marker.marker_type_id.toString()];
 
                 if (this.selectedMarkerTypes.includes(marker.marker_type_id)) {
-                    let markerTypeId = (this.markerTypesIndex.lookup(marker.marker_type_id)).value;
-                    let markerType = this.markerTypes[markerTypeId];
-                    let newMarker = Leaflet.marker([
-                        -this.normalizeCoord(marker.z),
-                        this.normalizeCoord(marker.x)
-                    ], {
-                        icon: Leaflet.icon({
-                            iconUrl: markerType.icon,
-                            iconSize: [32, 32]
-                        }),
-                        title: marker.marker_name,
-                        zIndexOffset: Math.floor(marker.y),
-                    })
-                        .on('click', (event) => {
-                            this.showMarkerDetails(event.target);
-                        });
-                    newMarker.markerId = marker.id;
-                    newMarker.layerId = marker.marker_type_id;
+                    let markerTypeId = (this.markerTypesIndex.lookup(marker.marker_type_id));
 
-                    markerTypeGroup.addLayer(newMarker);
+                    if (markerTypeId != undefined && markerTypeId.hasOwnProperty('value')) {
+                        let markerType = this.markerTypes[markerTypeId.value];
+
+                        let newMarker = Leaflet.marker([
+                            -this.normalizeCoord(marker.z),
+                            this.normalizeCoord(marker.x)
+                        ], {
+                            icon: Leaflet.icon({
+                                iconUrl: markerType.icon,
+                                iconSize: [32, 32]
+                            }),
+                            title: marker.marker_name,
+                            zIndexOffset: Math.floor(marker.y),
+                        })
+                            .on('click', (event) => {
+                                this.showMarkerDetails(event.target);
+                            });
+                        newMarker.markerId = marker.id;
+                        newMarker.layerId = marker.marker_type_id;
+
+                        markerTypeGroup.addLayer(newMarker);
+                    }
                 }
 
                 this.map.addLayer(markerTypeGroup);
