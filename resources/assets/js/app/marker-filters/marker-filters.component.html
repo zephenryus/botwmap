@@ -2,11 +2,36 @@
     <div id="markers-filter-wrapper">
         <div class="container-fluid" *ngIf="isOpen">
             <main>
-                <div class="custom-control custom-checkbox" *ngFor="let markerCategory of markerCategories">
-                    <input type="checkbox" class="custom-control-input" id="marker-type-{{ markerCategory.id }}"
-                           name="marker-type-{{ markerCategory.id }}"
-                           (change)="toggleType($event)" [value]="markerCategory.id" [checked]="markerCategory.selected">
-                    <label class="custom-control-label" for="marker-type-{{ markerCategory.id }}">{{ markerCategory.marker_category_name }}</label>
+                <!--<app-marker-filter [markerCategories]="markerCategoryTree" (categorySelected)="mainChanged($event)"></app-marker-filter>-->
+                <div>
+                    <h4>Korok Seeds</h4>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="korokLocation" name="korokLocation" [checked]="korokLocation.selected" (change)="toggleType(korokLocation)">
+                        <label class="custom-control-label" for="korokLocation">Korok Seeds</label>
+                    </div>
+
+                    <h4>Locations</h4>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="divineBeasts" name="divineBeasts" [checked]="divineBeasts.selected" (change)="toggleType(divineBeasts)">
+                        <label class="custom-control-label" for="divineBeasts">Divine Beasts</label>
+                    </div>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="shrines" name="shrines" [checked]="shrines.selected" (change)="toggleType(shrines)">
+                        <label class="custom-control-label" for="shrines">Shrines</label>
+                    </div>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stables" name="stables" [checked]="stables.selected" (change)="toggleType(stables)">
+                        <label class="custom-control-label" for="stables">Stables</label>
+                    </div>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="towers" name="towers" [checked]="towers.selected" (change)="toggleType(towers)">
+                        <label class="custom-control-label" for="towers">Towers</label>
+                    </div>
                 </div>
             </main>
         </div>

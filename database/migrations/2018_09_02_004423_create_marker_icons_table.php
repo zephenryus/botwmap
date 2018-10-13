@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarkerTypesTable extends Migration
+class CreateMarkerIconsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateMarkerTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('marker_types', function (Blueprint $table) {
+        Schema::create('marker_icons', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('marker_type_name');
-            $table->string('marker_type_slug')->unique();
-            $table->unsignedInteger('marker_icon_id')->default(1);
-            $table->text('marker_type_description')->nullable();
+            $table->string('icon_url')->unique();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateMarkerTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marker_types');
+        Schema::dropIfExists('marker_icons');
     }
 }

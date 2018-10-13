@@ -1,0 +1,8 @@
+<div class="custom-control custom-checkbox" *ngFor="let markerCategory of markerCategories">
+    <input type="checkbox" class="custom-control-input" id="marker-type-{{ markerCategory.category.id }}"
+           name="marker-type-{{ markerCategory.category.id }}"
+           (change)="toggleType(markerCategory)" [value]="markerCategory.category.id" [checked]="markerCategory.category.selected">
+    <label class="custom-control-label" for="marker-type-{{ markerCategory.category.id }}">{{ markerCategory.category.marker_category_name }}</label>
+
+    <app-marker-filter [markerCategories]="markerCategory.children" (categorySelected)="onCategorySelected($event)"></app-marker-filter>
+</div>

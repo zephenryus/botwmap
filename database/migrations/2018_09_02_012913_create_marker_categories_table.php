@@ -16,7 +16,7 @@ class CreateMarkerCategoriesTable extends Migration {
 
             $table->increments('id');
             $table->unsignedInteger('parent_category_id')->nullable();
-            $table->string('marker_category_name');
+            $table->string('marker_category_name')->unique();
             $table->timestamps();
 
             // $table->foreign('parent_category_id')->references('id')->on('marker_categories');

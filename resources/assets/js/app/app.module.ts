@@ -8,12 +8,14 @@ import { MarkerFiltersComponent } from "./marker-filters/marker-filters.componen
 import { MarkerDetailsComponent } from "./marker-details/marker-details.component";
 
 import { MarkersService } from "./markers.service";
+import { MarkerFilterComponent } from "./marker-filters/marker-filter/marker-filter.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         MapComponent,
         MarkerFiltersComponent,
+        MarkerFilterComponent,
         MarkerDetailsComponent
     ],
     imports: [

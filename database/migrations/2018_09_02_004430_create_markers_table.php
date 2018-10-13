@@ -19,6 +19,7 @@ class CreateMarkersTable extends Migration {
             $table->unsignedInteger('map_region_id')->default(1);
             $table->unsignedInteger('marker_type_id');
             $table->unsignedInteger('source_file_id');
+            $table->boolean('has_item')->default(false);
             $table->unsignedInteger('hash_id')->nullable();
             $table->unsignedInteger('srt_hash')->nullable();
             $table->string('marker_name');
