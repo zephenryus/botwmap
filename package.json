@@ -37,7 +37,7 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "laravel-mix": "^2.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.13",
     "protractor": "~5.4.0",
     "ts-loader": "^5.0.0",
     "ts-node": "~5.0.1",
