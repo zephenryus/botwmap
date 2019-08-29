@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/leaflet.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background: #000d18;">
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
@@ -34,10 +34,10 @@
 @yield('content')
 {{--</main>--}}
 
-<script src="{{ asset('js/runtime.06daa30a2963fa413676.js') }}"></script>
-<script src="{{ asset('js/polyfills.e2bffe4f592e8526110b.js') }}"></script>
-{{--<script src="{{ asset('js/vendor.js') }}"></script>--}}
-<script src="{{ asset('js/main.3afc1bd616b7cc701e91.js') }}"></script>
+<script type="text/javascript" src="js/runtime.js"></script>
+<script type="text/javascript" src="js/polyfills.js"></script>
+<script type="text/javascript" src="js/vendor.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 
 </body>
 </html>

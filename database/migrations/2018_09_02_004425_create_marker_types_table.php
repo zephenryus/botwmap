@@ -19,7 +19,7 @@ class CreateMarkerTypesTable extends Migration
             $table->increments('id');
             $table->string('marker_type_name');
             $table->string('marker_type_slug')->unique();
-            $table->string('icon')->default('images/markers/default.png');
+            $table->unsignedInteger('marker_icon_id')->default(1);
             $table->text('marker_type_description')->nullable();
             $table->timestamps();
         });

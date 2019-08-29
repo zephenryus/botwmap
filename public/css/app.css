@@ -6819,7 +6819,7 @@ body {
     #app #map-header #header-wrapper {
       background: white;
       border: 1px solid white;
-      border-radius: 3px;
+      border-radius: 0.25rem;
       min-height: 64px;
       margin: 7.5px 15px 10px;
       padding: 7.5px 15px;
@@ -6859,39 +6859,49 @@ body {
             #app #map-header #header-wrapper #main-menu #search #q:focus {
               outline: none; }
   #app #marker-filters {
-    z-index: 900;
-    top: 0;
-    bottom: 18px;
     right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    z-index: 900;
     text-align: left; }
-    @media (min-width: 768px) {
-      #app #marker-filters {
-        top: 0;
-        bottom: 18px; } }
-    #app #marker-filters #marker-filter-toggle {
-      position: absolute;
-      left: -71.5px; }
-      #app #marker-filters #marker-filter-toggle button {
-        height: 64px;
-        width: 64px;
-        border-radius: 64px;
-        margin: 7.5px 7.5px 0 0; }
-        #app #marker-filters #marker-filter-toggle button img {
-          height: 32px;
-          width: 32px; }
-    #app #marker-filters > .container {
-      background: #fff;
+    #app #marker-filters.is-open {
+      bottom: 0;
+      right: 0;
       width: 100%;
-      height: calc(100% - 7.5px);
-      margin: 7.5px 0;
-      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.08);
-      border-radius: 5px;
-      overflow-y: auto; }
-      #app #marker-filters > .container main {
-        padding: 15px;
-        width: 100%;
-        overflow-x: hidden;
+      height: 100%; }
+      #app #marker-filters.is-open #markers-filter-wrapper #marker-filter-toggle {
+        bottom: 6px; }
+    #app #marker-filters #markers-filter-wrapper {
+      position: relative;
+      height: 100%;
+      width: 100%; }
+      #app #marker-filters #markers-filter-wrapper #marker-filter-toggle {
+        position: absolute;
+        bottom: 0;
+        right: 0; }
+        #app #marker-filters #markers-filter-wrapper #marker-filter-toggle button {
+          height: 64px;
+          width: 64px;
+          border-radius: 64px;
+          margin: 7.5px 7.5px 25.5px; }
+          #app #marker-filters #markers-filter-wrapper #marker-filter-toggle button img {
+            height: 32px;
+            width: 32px; }
+      #app #marker-filters #markers-filter-wrapper > .container-fluid {
+        background: url("/images/shiekah-fibers.png") center center repeat, linear-gradient(to right, rgba(42, 86, 124, 0.4) 0%, rgba(13, 28, 59, 0.3) 100%);
+        width: calc(100% - 15px);
+        height: calc(100% - 112px);
+        margin: 7.5px 7.5px 0;
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.08);
+        border-radius: 0.25rem;
         overflow-y: auto; }
+        #app #marker-filters #markers-filter-wrapper > .container-fluid main {
+          padding: 15px;
+          width: 100%;
+          overflow-x: hidden;
+          overflow-y: auto;
+          color: rgba(255, 255, 255, 0.95); }
   #app.is-loading #loader {
     position: absolute;
     z-index: 4000;
@@ -6912,7 +6922,7 @@ body {
         background: #ffffe8;
         height: 6px;
         width: 6px;
-        border-radius: 6px;
+        border-radius: 0.25rem;
         box-shadow: 0 0 4px 2px #ffffe8;
         transform: translate(-50%, -50%) scale(1);
         will-change: transform; }
@@ -6973,22 +6983,36 @@ body {
     @media (max-width: 991.98px) {
       #app #marker-details.open {
         height: calc(100vh - 100px); } }
+    #app #marker-details #marker-details-close-wrapper {
+      position: absolute;
+      top: 15px;
+      right: -33px;
+      z-index: 1; }
+      #app #marker-details #marker-details-close-wrapper #marker-details-close {
+        height: 48px;
+        width: 48px;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0; }
+        #app #marker-details #marker-details-close-wrapper #marker-details-close img {
+          height: 32px; }
     #app #marker-details #marker-details-wrapper {
       position: relative;
       margin: 0 15px 7.5px;
       padding: 7.5px 15px;
-      background: white;
-      border-radius: 3px;
+      background: url("/images/shiekah-fibers.png") center center repeat, linear-gradient(to right, rgba(42, 86, 124, 0.4) 0%, rgba(13, 28, 59, 0.3) 100%);
+      color: rgba(255, 255, 255, 0.95);
+      border-radius: 0.25rem;
       height: calc(100% - 7.5px);
       overflow-x: hidden;
       overflow-y: auto;
       box-shadow: 0 5px 5px rgba(0, 0, 0, 0.08); }
-      #app #marker-details #marker-details-wrapper #marker-details-close {
-        position: absolute;
-        top: 0;
-        right: 0; }
   #app #map {
     width: 100vw;
-    height: 100%; }
+    height: 100%;
+    background: url("/images/map-background.gif") center center repeat; }
 
 /*# sourceMappingURL=app.css.map */
